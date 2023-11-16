@@ -2,7 +2,7 @@ package server
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/eleniums/mining-post/mem"
@@ -33,7 +33,7 @@ func NewServer(items ItemStorage) *Server {
 // readBody will parse the request body into a given struct.
 func readBody(req *http.Request, msg interface{}) error {
 	defer req.Body.Close()
-	body, err := ioutil.ReadAll(req.Body)
+	body, err := io.ReadAll(req.Body)
 	if err != nil {
 		return err
 	}

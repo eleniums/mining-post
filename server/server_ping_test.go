@@ -2,7 +2,7 @@ package server
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -30,7 +30,7 @@ func Test_Unit_Server_Ping_Success(t *testing.T) {
 
 func unmarshalBody(r *http.Response, v interface{}) error {
 	defer r.Body.Close()
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return err
 	}
