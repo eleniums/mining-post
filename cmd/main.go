@@ -42,7 +42,7 @@ func main() {
 	flag.StringVar(&dbURI, "db-uri", getEnvStr("DB_URI", ""), "DB_URI: connection string to database")
 	flag.StringVar(&certFile, "tls-cert-file", getEnvStr("TLS_CERT_FILE", ""), "TLS_CERT_FILE: cert file for enabling a TLS connection")
 	flag.StringVar(&keyFile, "tls-key-file", getEnvStr("TLS_KEY_FILE", ""), "TLS_KEY_FILE: key file for enabling a TLS connection")
-	flag.StringVar(&logLevel, "log-level", getEnvStr("LOG_LEVEL", "info"), "LOG_LEVEL: level to use for logs (debug|info|warn|error|fatal|panic)")
+	flag.StringVar(&logLevel, "log-level", getEnvStr("LOG_LEVEL", "info"), "LOG_LEVEL: level to use for logs (debug|info|warn|error)")
 	flag.StringVar(&logFormat, "log-format", getEnvStr("LOG_FORMAT", "text"), "LOG_FORMAT: format to use for logs (text|json)")
 	flag.Parse()
 
@@ -155,29 +155,41 @@ func serve(srv *server.Server) {
 }
 
 // initLog will initialize the logger.
-func initLog(level, format string) {
-	// use stdout since default for logrus is stderr
-	slog.SetOutput(os.Stdout)
-
-	// set log level
-	l, err := slog.ParseLevel(level)
-	if err != nil {
-		l = slog.InfoLevel
+func initLog(level string, format string) {
+	// parse log level
+	logLevel := &slog.LevelVar{}
+	switch strings.ToLower(level) {
+	case "debug":
+		logLevel.Set(slog.LevelDebug)
+	case "info":
+		logLevel.Set(slog.LevelInfo)
+	case "warn":
+		logLevel.Set(slog.LevelWarn)
+	case "error":
+		logLevel.Set(slog.LevelError)
+	default:
+		logLevel.Set(slog.LevelInfo)
 	}
-	slog.SetLevel(l)
 
-	// set log format
+	// parse log format
+	opts := &slog.HandlerOptions{
+		Level: logLevel,
+	}
+	var logHandler slog.Handler
 	switch strings.ToLower(format) {
 	case "json":
-		slog.SetFormatter(&slog.JSONFormatter{})
+		logHandler = slog.NewJSONHandler(os.Stdout, opts)
 	case "text":
+		logHandler = slog.NewTextHandler(os.Stdout, opts)
 	default:
-		slog.SetFormatter(&slog.TextFormatter{})
+		logHandler = slog.NewTextHandler(os.Stdout, opts)
 	}
+
+	slog.SetDefault(slog.New(logHandler))
 }
 
 // createTLSConfig will load a cert/key pair and return a TLS config.
-func createTLSConfig(certFile, keyFile string) (*tls.Config, error) {
+func createTLSConfig(certFile string, keyFile string) (*tls.Config, error) {
 	cert, err := tls.LoadX509KeyPair(certFile, keyFile)
 	if err != nil {
 		return nil, err
