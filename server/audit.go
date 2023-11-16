@@ -1,10 +1,9 @@
 package server
 
 import (
+	"log/slog"
 	"net/http"
 	"time"
-
-	log "github.com/sirupsen/logrus"
 )
 
 // Audit interceptor to log method calls.
@@ -16,10 +15,9 @@ func Audit(next http.Handler) http.Handler {
 		elapsed := time.Since(start)
 
 		// log completion and time elapsed
-		log.WithFields(log.Fields{
-			"verb":    req.Method,
-			"method":  req.URL.Path,
-			"elapsed": elapsed.Nanoseconds(),
-		}).Info("Handled request")
+		slog.Info("Handled request",
+			"verb", req.Method,
+			"method", req.URL.Path,
+			"elapsed", elapsed.Nanoseconds())
 	})
 }
