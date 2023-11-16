@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"flag"
 	"fmt"
+	"log/slog"
 	"net"
 	"net/http"
 	"os"
@@ -17,8 +18,6 @@ import (
 	"github.com/eleniums/mining-post/mem"
 	"github.com/eleniums/mining-post/server"
 	"github.com/go-chi/chi"
-
-	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -49,15 +48,17 @@ func main() {
 
 	initLog(logLevel, logFormat)
 
-	log.Infof("%s - version: %s", serviceName, version)
+	slog.Info("Starting service", "service", serviceName, "version", version)
 
 	// debug print all flags with values
+	flags := []any{}
 	flag.VisitAll(func(f *flag.Flag) {
-		log.Debugf("%s=%s", f.Name, f.Value.String())
+		flags = append(flags, slog.String(f.Name, f.Value.String()))
 	})
+	slog.Debug("flags", flags...)
 
 	// create item storage accessor
-	log.Info("Using in-memory cache for data storage")
+	slog.Info("Using in-memory cache for data storage")
 	db := mem.NewCache()
 
 	// create the server
@@ -97,52 +98,56 @@ func serve(srv *server.Server) {
 	// determine if TLS should be used
 	var lis net.Listener
 	if certFile != "" && keyFile != "" {
-		log.Info("Adding TLS credentials (HTTPS)")
+		slog.Info("Adding TLS credentials (HTTPS)")
 
 		tlsConfig, err := createTLSConfig(certFile, keyFile)
 		if err != nil {
-			log.WithError(err).Fatal("Failed to load TLS credentials")
+			slog.Error("Failed to load TLS credentials", server.ErrAttr(err))
+			os.Exit(1)
 		}
 
 		// start listening
 		lis, err = tls.Listen("tcp", fmt.Sprintf("%s:%s", httpHost, httpPort), tlsConfig)
 		if err != nil {
-			log.WithError(err).Fatal("Failed to listen")
+			slog.Error("Failed to listen", server.ErrAttr(err))
+			os.Exit(1)
 		}
 
-		log.Infof("Listening for HTTPS requests at: %v", lis.Addr().String())
+		slog.Info("Listening for HTTPS requests", "address", lis.Addr().String())
 	} else {
-		log.Info("Using insecure endpoint (HTTP - no TLS)")
+		slog.Info("Using insecure endpoint (HTTP - no TLS)")
 
 		// start listening
 		var err error
 		lis, err = net.Listen("tcp", fmt.Sprintf("%s:%s", httpHost, httpPort))
 		if err != nil {
-			log.WithError(err).Fatal("Failed to listen")
+			slog.Error("Failed to listen", server.ErrAttr(err))
+			os.Exit(1)
 		}
 
-		log.Infof("Listening for HTTP requests at: %v", lis.Addr().String())
+		slog.Info("Listening for HTTP requests", "address", lis.Addr().String())
 	}
 
 	var wg sync.WaitGroup
 	onShutdown(func() {
 		wg.Add(1)
 		defer wg.Done()
-		log.Infof("Shutting down the server...")
+		slog.Info("Shutting down the server...")
 		ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(60*time.Second))
 		defer cancel()
 		err := s.Shutdown(ctx)
 		if err != nil {
-			log.WithError(err).Error("Error occurred while shutting down server")
+			slog.Error("Error occurred while shutting down server", server.ErrAttr(err))
 			return
 		}
-		log.Infof("Server shutdown successfully")
+		slog.Info("Server shutdown successfully")
 	})
 
 	// start the server
 	err := s.Serve(lis)
 	if err != nil && err != http.ErrServerClosed {
-		log.WithError(err).Fatal("Error occurred while serving")
+		slog.Error("Error occurred while serving", server.ErrAttr(err))
+		os.Exit(1)
 	}
 
 	// wait for shutdown to finish
@@ -152,22 +157,22 @@ func serve(srv *server.Server) {
 // initLog will initialize the logger.
 func initLog(level, format string) {
 	// use stdout since default for logrus is stderr
-	log.SetOutput(os.Stdout)
+	slog.SetOutput(os.Stdout)
 
 	// set log level
-	l, err := log.ParseLevel(level)
+	l, err := slog.ParseLevel(level)
 	if err != nil {
-		l = log.InfoLevel
+		l = slog.InfoLevel
 	}
-	log.SetLevel(l)
+	slog.SetLevel(l)
 
 	// set log format
 	switch strings.ToLower(format) {
 	case "json":
-		log.SetFormatter(&log.JSONFormatter{})
+		slog.SetFormatter(&slog.JSONFormatter{})
 	case "text":
 	default:
-		log.SetFormatter(&log.TextFormatter{})
+		slog.SetFormatter(&slog.TextFormatter{})
 	}
 }
 
