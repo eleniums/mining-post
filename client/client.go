@@ -3,6 +3,7 @@ package client
 import (
 	"bytes"
 	"crypto/tls"
+	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -93,6 +94,8 @@ func CallHTTP(client *http.Client, method, url string, body []byte) (int, []byte
 	if err != nil {
 		return 0, nil, err
 	}
+
+	fmt.Printf("Response code: %v, body: %s\n", resp.StatusCode, string(respBody))
 
 	return resp.StatusCode, respBody, nil
 }
