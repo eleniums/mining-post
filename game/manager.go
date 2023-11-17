@@ -21,6 +21,9 @@ func NewManager() *Manager {
 		Stock: GetInitialStock(),
 	}
 
+	// randomize all listings for the initial loop
+	market.Randomize()
+
 	// add players
 	players := &sync.Map{}
 	players.Store("snelson", Player{
