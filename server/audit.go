@@ -12,12 +12,11 @@ func Audit(next http.Handler) http.Handler {
 		// execute method
 		start := time.Now()
 		next.ServeHTTP(w, req)
-		elapsed := time.Since(start)
 
 		// log completion and time elapsed
 		slog.Info("Handled request",
 			"verb", req.Method,
 			"method", req.URL.Path,
-			"elapsed", elapsed.Nanoseconds())
+			"elapsed", time.Since(start))
 	})
 }
