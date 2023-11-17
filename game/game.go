@@ -64,9 +64,9 @@ func (m *Manager) Stop() error {
 
 // Update happens on a regular time interval.
 func (m *Manager) update() {
-	slog.Info("Game update started")
+	startTime := time.Now()
 
 	// TODO: implement updates
 
-	slog.Info("Game update finished")
+	slog.Info("Game update finished", "elapsed", time.Since(startTime))
 }
