@@ -6,7 +6,7 @@ import (
 	"github.com/eleniums/mining-post/models"
 )
 
-// List stats for player, including the entire inventory.
+// List entire market inventory.
 func (s *Server) MarketListStock(w http.ResponseWriter, req *http.Request) {
 	var in models.MarketListStockRequest
 	err := readBody(req, &in)
@@ -15,14 +15,11 @@ func (s *Server) MarketListStock(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// TODO: list market stock
-	resp := models.MarketListStockResponse{}
+	market := s.manager.GetMarketStock()
 
-	// id, err := s.items.Add(mapItemToDBItem(&in))
-	// if err != nil {
-	// 	http.Error(w, fmt.Sprintf("error saving item: %v", err), http.StatusInternalServerError)
-	// 	return
-	// }
+	resp := models.MarketListStockResponse{
+		Market: market,
+	}
 
 	writeResponse(w, resp)
 }

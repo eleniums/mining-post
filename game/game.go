@@ -12,14 +12,37 @@ const updateInterval = 10 * time.Second
 
 type Manager struct {
 	market  models.Market
-	players sync.Map
+	players *sync.Map
 	ticker  *time.Ticker
 }
 
 func NewManager() *Manager {
+	// create market
+	market := models.Market{
+		Stock: []models.Listing{
+			{
+				Resource: models.Resource{
+					Name:        "Granite",
+					Description: "Rough hewn igneous rock.",
+				},
+				Quantity:  1000,
+				BuyPrice:  10.00,
+				SellPrice: 8.00,
+			},
+		},
+	}
+
+	// add players
+	players := &sync.Map{}
+	players.Store("snelson", models.Player{
+		Name:      "snelson",
+		Money:     100.00,
+		Inventory: []models.Item{},
+	})
+
 	return &Manager{
-		market:  models.Market{},
-		players: sync.Map{},
+		market:  market,
+		players: players,
 	}
 }
 

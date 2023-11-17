@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/eleniums/mining-post/models"
@@ -15,14 +16,15 @@ func (s *Server) PlayerListInventory(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// TODO: list player inventory
-	resp := models.PlayerListInventoryResponse{}
+	player, err := s.manager.GetPlayer(in.Name)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error retrieving player: %v", err), http.StatusBadRequest)
+		return
+	}
 
-	// id, err := s.items.Add(mapItemToDBItem(&in))
-	// if err != nil {
-	// 	http.Error(w, fmt.Sprintf("error saving item: %v", err), http.StatusInternalServerError)
-	// 	return
-	// }
+	resp := models.PlayerListInventoryResponse{
+		Player: player,
+	}
 
 	writeResponse(w, resp)
 }
