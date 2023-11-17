@@ -1,4 +1,4 @@
-package models
+package game
 
 type Resource struct {
 	Name        string `json:"name"`

@@ -1,7 +1,17 @@
 package game
 
-import "github.com/eleniums/mining-post/models"
+type Market struct {
+	Stock []Listing `json:"stock"`
+}
 
-func (m *Manager) GetMarketStock() models.Market {
+type Listing struct {
+	Resource
+
+	Quantity  int64   `json:"quantity"`
+	SellPrice float64 `json:"sell_price"`
+	BuyPrice  float64 `json:"buy_price"`
+}
+
+func (m *Manager) GetMarketStock() Market {
 	return m.market
 }

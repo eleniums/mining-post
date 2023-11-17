@@ -2,14 +2,24 @@ package game
 
 import (
 	"fmt"
-
-	"github.com/eleniums/mining-post/models"
 )
 
-func (m *Manager) GetPlayer(name string) (models.Player, error) {
+type Player struct {
+	Name      string  `json:"name"`
+	Money     float64 `json:"money"`
+	Inventory []Item  `json:"inventory"`
+}
+
+type Item struct {
+	Resource
+
+	Quantity int64 `json:"quantity"`
+}
+
+func (m *Manager) GetPlayer(name string) (Player, error) {
 	player, ok := m.players.Load(name)
 	if !ok {
-		return models.Player{}, fmt.Errorf("player does not exist with name: %s", name)
+		return Player{}, fmt.Errorf("player does not exist with name: %s", name)
 	}
-	return player.(models.Player), nil
+	return player.(Player), nil
 }

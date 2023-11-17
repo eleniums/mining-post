@@ -4,24 +4,22 @@ import (
 	"log/slog"
 	"sync"
 	"time"
-
-	"github.com/eleniums/mining-post/models"
 )
 
 const updateInterval = 10 * time.Second
 
 type Manager struct {
-	market  models.Market
+	market  Market
 	players *sync.Map
 	ticker  *time.Ticker
 }
 
 func NewManager() *Manager {
 	// create market
-	market := models.Market{
-		Stock: []models.Listing{
+	market := Market{
+		Stock: []Listing{
 			{
-				Resource: models.Resource{
+				Resource: Resource{
 					Name:        "Granite",
 					Description: "Rough hewn igneous rock.",
 				},
@@ -34,10 +32,10 @@ func NewManager() *Manager {
 
 	// add players
 	players := &sync.Map{}
-	players.Store("snelson", models.Player{
+	players.Store("snelson", Player{
 		Name:      "snelson",
 		Money:     100.00,
-		Inventory: []models.Item{},
+		Inventory: []Item{},
 	})
 
 	return &Manager{

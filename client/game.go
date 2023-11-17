@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/eleniums/mining-post/models"
+	"github.com/eleniums/mining-post/server"
 )
 
 type GameClient struct {
@@ -20,37 +20,37 @@ func NewGameClient(url string) *GameClient {
 	}
 }
 
-func (c *GameClient) GetPlayerInventory(name string) (models.GetPlayerInventoryResponse, error) {
+func (c *GameClient) GetPlayerInventory(name string) (server.GetPlayerInventoryResponse, error) {
 	code, body, err := c.client.Get(fmt.Sprintf("%s/player/%s/inventory", c.rootURL, name))
 	if err != nil {
-		return models.GetPlayerInventoryResponse{}, fmt.Errorf("error calling service: %v", err)
+		return server.GetPlayerInventoryResponse{}, fmt.Errorf("error calling service: %v", err)
 	}
 	if code != http.StatusOK {
-		return models.GetPlayerInventoryResponse{}, fmt.Errorf("invalid status code: %d, message: %v", code, string(body))
+		return server.GetPlayerInventoryResponse{}, fmt.Errorf("invalid status code: %d, message: %v", code, string(body))
 	}
 
-	var resp models.GetPlayerInventoryResponse
+	var resp server.GetPlayerInventoryResponse
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
-		return models.GetPlayerInventoryResponse{}, fmt.Errorf("error unmarshaling response body: %v", err)
+		return server.GetPlayerInventoryResponse{}, fmt.Errorf("error unmarshaling response body: %v", err)
 	}
 
 	return resp, nil
 }
 
-func (c *GameClient) ListMarketStock() (models.ListMarketStockResponse, error) {
+func (c *GameClient) ListMarketStock() (server.ListMarketStockResponse, error) {
 	code, body, err := c.client.Get(fmt.Sprintf("%s/market/stock", c.rootURL))
 	if err != nil {
-		return models.ListMarketStockResponse{}, fmt.Errorf("error calling service: %v", err)
+		return server.ListMarketStockResponse{}, fmt.Errorf("error calling service: %v", err)
 	}
 	if code != http.StatusOK {
-		return models.ListMarketStockResponse{}, fmt.Errorf("invalid status code: %d, message: %v", code, string(body))
+		return server.ListMarketStockResponse{}, fmt.Errorf("invalid status code: %d, message: %v", code, string(body))
 	}
 
-	var resp models.ListMarketStockResponse
+	var resp server.ListMarketStockResponse
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
-		return models.ListMarketStockResponse{}, fmt.Errorf("error unmarshaling response body: %v", err)
+		return server.ListMarketStockResponse{}, fmt.Errorf("error unmarshaling response body: %v", err)
 	}
 
 	return resp, nil
