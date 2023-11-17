@@ -1,8 +1,8 @@
 package game
 
 // Get default list of all stock and prices.
-func GetInitialStock() []Listing {
-	stock := []Listing{
+func getInitialStock() []Listing {
+	return []Listing{
 		{
 			Resource: Resource{
 				Name:        "Limestone",
@@ -48,6 +48,4 @@ func GetInitialStock() []Listing {
 			sellDelta:         9,
 		},
 	}
-
-	return stock
 }

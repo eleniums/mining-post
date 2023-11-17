@@ -10,32 +10,33 @@ import (
 const updateInterval = 10 * time.Second
 
 type Manager struct {
-	market  *Market
-	players *sync.Map
+	market  Market
+	players sync.Map
 	ticker  *time.Ticker
+
+	marketLock       sync.RWMutex
+	singlePlayerLock sync.Map
 }
 
 func NewManager() *Manager {
+	var manager Manager
+
 	// create market
-	market := &Market{
-		Stock: GetInitialStock(),
+	manager.market = Market{
+		Stock: getInitialStock(),
 	}
 
 	// randomize all listings for the initial loop
-	market.Randomize()
+	manager.market.Randomize()
 
-	// add players
-	players := &sync.Map{}
-	players.Store("snelson", Player{
-		Name:      "snelson",
-		Money:     100.00,
-		Inventory: []Item{},
-	})
-
-	return &Manager{
-		market:  market,
-		players: players,
+	// load players
+	players := loadPlayers()
+	for name, player := range players {
+		manager.players.Store(name, player)
+		manager.singlePlayerLock.Store(name, sync.RWMutex{})
 	}
+
+	return &manager
 }
 
 // Start game engine with regular updates.
@@ -60,6 +61,10 @@ func (m *Manager) Stop() error {
 func (m *Manager) update() {
 	startTime := time.Now()
 
+	// stop the market while updating
+	m.marketLock.Lock()
+	defer m.marketLock.Unlock()
+
 	// as a last step, randomize all market prices and quantities for the next round
 	m.market.Randomize()
 
@@ -67,15 +72,18 @@ func (m *Manager) update() {
 }
 
 func (m *Manager) GetMarketStock() []Listing {
-	m.market.lock.RLock()
-	defer m.market.lock.RUnlock()
+	m.marketLock.RLock()
+	defer m.marketLock.RUnlock()
+
 	return DeepCopy(m.market.Stock)
 }
 
 func (m *Manager) GetPlayer(name string) (Player, error) {
-	player, ok := m.players.Load(name)
+	p, ok := m.players.Load(name)
 	if !ok {
 		return Player{}, fmt.Errorf("player does not exist with name: %s", name)
 	}
-	return player.(Player), nil
+	player := p.(*Player)
+
+	return *player, nil
 }

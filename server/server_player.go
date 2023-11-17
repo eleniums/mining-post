@@ -9,7 +9,7 @@ import (
 )
 
 type GetPlayerInventoryResponse struct {
-	game.Player
+	Player game.Player `json:"player"`
 }
 
 // List stats for player, including the entire inventory.
