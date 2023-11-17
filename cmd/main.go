@@ -59,6 +59,7 @@ func main() {
 
 	// initialize the game manager
 	manager := game.NewManager()
+	manager.Start()
 
 	// create the server
 	srv := server.NewServer(manager)
@@ -129,6 +130,11 @@ func serve(srv *server.Server) {
 		wg.Add(1)
 		defer wg.Done()
 		slog.Info("Shutting down the server...")
+
+		// clean up any server resources
+		srv.Shutdown()
+
+		// stop listening
 		ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(60*time.Second))
 		defer cancel()
 		err := s.Shutdown(ctx)

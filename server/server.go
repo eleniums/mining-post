@@ -10,14 +10,18 @@ import (
 
 // Server contains the implementation.
 type Server struct {
-	gameManager *game.Manager
+	manager *game.Manager
 }
 
 // NewServer creates a new instance of Server.
-func NewServer(gm *game.Manager) *Server {
+func NewServer(manager *game.Manager) *Server {
 	return &Server{
-		gameManager: gm,
+		manager: manager,
 	}
+}
+
+func (s *Server) Shutdown() error {
+	return s.manager.Stop()
 }
 
 // readBody will parse the request body into a given struct.
