@@ -1,6 +1,7 @@
 package game
 
 import (
+	"fmt"
 	"log/slog"
 	"sync"
 	"time"
@@ -59,4 +60,16 @@ func (m *Manager) update() {
 	// TODO: implement updates
 
 	slog.Info("Game update finished", "elapsed", time.Since(startTime))
+}
+
+func (m *Manager) GetMarketStock() Market {
+	return m.market
+}
+
+func (m *Manager) GetPlayer(name string) (Player, error) {
+	player, ok := m.players.Load(name)
+	if !ok {
+		return Player{}, fmt.Errorf("player does not exist with name: %s", name)
+	}
+	return player.(Player), nil
 }
