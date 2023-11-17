@@ -3,6 +3,7 @@ package client
 import (
 	"bytes"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -95,7 +96,10 @@ func CallHTTP(client *http.Client, method, url string, body []byte) (int, []byte
 		return 0, nil, err
 	}
 
-	fmt.Printf("Response code: %v, body: %s\n", resp.StatusCode, string(respBody))
+	var prettyResp bytes.Buffer
+	json.Indent(&prettyResp, respBody, "", "    ")
+
+	fmt.Printf("Response code: %d\n%s\n", resp.StatusCode, prettyResp.String())
 
 	return resp.StatusCode, respBody, nil
 }
