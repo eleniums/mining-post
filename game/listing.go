@@ -17,6 +17,6 @@ type Listing struct {
 // Randomize the quantity and prices for this listing.
 func (l *Listing) Randomize() {
 	l.Quantity = randInt64(l.quantityRangeLow, l.quantityRangeHigh)
-	l.BuyPrice = randFloat64(l.buyRangeLow, l.buyRangeHigh)
-	l.SellPrice = l.BuyPrice - randFloat64(0.01, l.sellDelta)
+	l.BuyPrice = roundFloat64(randFloat64(l.buyRangeLow, l.buyRangeHigh), 2)
+	l.SellPrice = roundFloat64(l.BuyPrice-randFloat64(0.01, l.sellDelta), 2)
 }
