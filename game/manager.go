@@ -10,16 +10,18 @@ import (
 const updateInterval = 10 * time.Second
 
 type Manager struct {
-	market  Market
-	players sync.Map
-	ticker  *time.Ticker
-
-	marketLock       sync.RWMutex
-	singlePlayerLock sync.Map
+	market     Market // TODO: maybe move this to be a sync.Map of just the listings
+	players    *sync.Map
+	ticker     *time.Ticker
+	marketLock sync.RWMutex
+	playerLock *sync.Map
 }
 
 func NewManager() *Manager {
-	var manager Manager
+	manager := &Manager{
+		players:    &sync.Map{},
+		playerLock: &sync.Map{},
+	}
 
 	// create market
 	manager.market = Market{
@@ -33,10 +35,10 @@ func NewManager() *Manager {
 	players := loadPlayers()
 	for name, player := range players {
 		manager.players.Store(name, player)
-		manager.singlePlayerLock.Store(name, sync.RWMutex{})
+		manager.playerLock.Store(name, &sync.RWMutex{})
 	}
 
-	return &manager
+	return manager
 }
 
 // Start game engine with regular updates.
@@ -72,6 +74,7 @@ func (m *Manager) update() {
 }
 
 func (m *Manager) GetMarketStock() []Listing {
+	// TODO: going to have to lock each market listing... otherwise will have to lock the entire market to make a sale
 	m.marketLock.RLock()
 	defer m.marketLock.RUnlock()
 
@@ -79,11 +82,16 @@ func (m *Manager) GetMarketStock() []Listing {
 }
 
 func (m *Manager) GetPlayer(name string) (Player, error) {
-	p, ok := m.players.Load(name)
+	lock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, name)
+	if !ok {
+		return Player{}, fmt.Errorf("error locking for player: %s", name)
+	}
+	defer lock.RLock()
+
+	player, ok := MapLoad[string, *Player](m.players, name)
 	if !ok {
 		return Player{}, fmt.Errorf("player does not exist with name: %s", name)
 	}
-	player := p.(*Player)
 
 	return *player, nil
 }
