@@ -10,14 +10,14 @@ import (
 const updateInterval = 10 * time.Second
 
 type Manager struct {
-	market  Market
+	market  *Market
 	players *sync.Map
 	ticker  *time.Ticker
 }
 
 func NewManager() *Manager {
 	// create market
-	market := Market{
+	market := &Market{
 		Stock: GetInitialStock(),
 	}
 
@@ -66,8 +66,10 @@ func (m *Manager) update() {
 	slog.Info("Game update finished", "elapsed", time.Since(startTime))
 }
 
-func (m *Manager) GetMarketStock() Market {
-	return m.market
+func (m *Manager) GetMarketStock() []Listing {
+	m.market.lock.RLock()
+	defer m.market.lock.RUnlock()
+	return DeepCopy(m.market.Stock)
 }
 
 func (m *Manager) GetPlayer(name string) (Player, error) {

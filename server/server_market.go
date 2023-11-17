@@ -7,15 +7,15 @@ import (
 )
 
 type ListMarketStockResponse struct {
-	game.Market
+	Stock []game.Listing `json:"stock"`
 }
 
 // List entire market inventory.
 func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
-	market := s.manager.GetMarketStock()
+	listings := s.manager.GetMarketStock()
 
 	resp := ListMarketStockResponse{
-		Market: market,
+		Stock: listings,
 	}
 
 	writeResponse(w, resp)
