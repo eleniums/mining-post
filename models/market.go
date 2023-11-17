@@ -1,7 +1,5 @@
 package models
 
-type ListMarketStockRequest struct{}
-
 type ListMarketStockResponse struct {
 	Market
 }

@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	"testing"
 
 	assert "github.com/stretchr/testify/require"
@@ -14,6 +13,4 @@ func Test_Integration_GetPlayerInventory_Success(t *testing.T) {
 	// assert
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-
-	fmt.Println("resp:", resp)
 }

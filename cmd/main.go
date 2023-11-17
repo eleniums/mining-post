@@ -78,7 +78,7 @@ func serve(srv *server.Server) {
 	// register handlers
 	r.Get("/ping", srv.Ping)
 	r.Route("/player", func(r chi.Router) {
-		r.Get("/inventory", srv.GetPlayerInventory)
+		r.Get("/{player-name}/inventory", srv.GetPlayerInventory)
 	})
 	r.Route("/market", func(r chi.Router) {
 		r.Get("/stock", srv.ListMarketStock)

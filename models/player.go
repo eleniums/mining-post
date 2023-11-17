@@ -1,9 +1,5 @@
 package models
 
-type GetPlayerInventoryRequest struct {
-	Name string `json:"name"`
-}
-
 type GetPlayerInventoryResponse struct {
 	Player
 }

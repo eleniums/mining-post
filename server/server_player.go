@@ -5,18 +5,14 @@ import (
 	"net/http"
 
 	"github.com/eleniums/mining-post/models"
+	"github.com/go-chi/chi"
 )
 
 // List stats for player, including the entire inventory.
 func (s *Server) GetPlayerInventory(w http.ResponseWriter, req *http.Request) {
-	var in models.GetPlayerInventoryRequest
-	err := readBody(req, &in)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
+	playerName := chi.URLParam(req, "player-name")
 
-	player, err := s.manager.GetPlayer(in.Name)
+	player, err := s.manager.GetPlayer(playerName)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("error retrieving player: %v", err), http.StatusBadRequest)
 		return

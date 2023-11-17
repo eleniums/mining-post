@@ -21,7 +21,7 @@ func NewGameClient(url string) *GameClient {
 }
 
 func (c *GameClient) GetPlayerInventory(name string) (models.GetPlayerInventoryResponse, error) {
-	code, body, err := c.client.Get(fmt.Sprintf("%s/player/inventory", c.rootURL))
+	code, body, err := c.client.Get(fmt.Sprintf("%s/player/%s/inventory", c.rootURL, name))
 	if err != nil {
 		return models.GetPlayerInventoryResponse{}, fmt.Errorf("error calling service: %v", err)
 	}
