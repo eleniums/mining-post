@@ -58,10 +58,10 @@ func main() {
 	slog.Debug("flags", flags...)
 
 	// initialize the game manager
-	gm := game.NewManager()
+	manager := game.NewManager()
 
 	// create the server
-	srv := server.NewServer(gm)
+	srv := server.NewServer(manager)
 
 	// serve the endpoint
 	serve(srv)

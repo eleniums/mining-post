@@ -17,3 +17,7 @@ func NewManager() *Manager {
 		players: sync.Map{},
 	}
 }
+
+func (m *Manager) Update() {
+
+}
