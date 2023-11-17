@@ -22,7 +22,7 @@ func roundFloat64(val float64, precision int) float64 {
 	s := strconv.FormatFloat(val, 'f', precision, 64)
 	f, err := strconv.ParseFloat(s, 64)
 	if err != nil {
-		slog.Error("error parsing float for rounding operation") //TODO: , server.ErrAttr(err))
+		slog.Error("error parsing float for rounding operation", ErrAttr(err))
 		return 0
 	}
 	return f

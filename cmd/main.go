@@ -99,14 +99,14 @@ func serve(srv *server.Server) {
 
 		tlsConfig, err := createTLSConfig(certFile, keyFile)
 		if err != nil {
-			slog.Error("Failed to load TLS credentials", server.ErrAttr(err))
+			slog.Error("Failed to load TLS credentials", game.ErrAttr(err))
 			os.Exit(1)
 		}
 
 		// start listening
 		lis, err = tls.Listen("tcp", fmt.Sprintf("%s:%s", httpHost, httpPort), tlsConfig)
 		if err != nil {
-			slog.Error("Failed to listen", server.ErrAttr(err))
+			slog.Error("Failed to listen", game.ErrAttr(err))
 			os.Exit(1)
 		}
 
@@ -118,7 +118,7 @@ func serve(srv *server.Server) {
 		var err error
 		lis, err = net.Listen("tcp", fmt.Sprintf("%s:%s", httpHost, httpPort))
 		if err != nil {
-			slog.Error("Failed to listen", server.ErrAttr(err))
+			slog.Error("Failed to listen", game.ErrAttr(err))
 			os.Exit(1)
 		}
 
@@ -139,7 +139,7 @@ func serve(srv *server.Server) {
 		defer cancel()
 		err := s.Shutdown(ctx)
 		if err != nil {
-			slog.Error("Error occurred while shutting down server", server.ErrAttr(err))
+			slog.Error("Error occurred while shutting down server", game.ErrAttr(err))
 			return
 		}
 		slog.Info("Server shutdown successfully")
@@ -148,7 +148,7 @@ func serve(srv *server.Server) {
 	// start the server
 	err := s.Serve(lis)
 	if err != nil && err != http.ErrServerClosed {
-		slog.Error("Error occurred while serving", server.ErrAttr(err))
+		slog.Error("Error occurred while serving", game.ErrAttr(err))
 		os.Exit(1)
 	}
 
