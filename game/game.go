@@ -17,17 +17,7 @@ type Manager struct {
 func NewManager() *Manager {
 	// create market
 	market := Market{
-		Stock: []Listing{
-			{
-				Resource: Resource{
-					Name:        "Granite",
-					Description: "Rough hewn igneous rock.",
-				},
-				Quantity:  1000,
-				BuyPrice:  10.00,
-				SellPrice: 8.00,
-			},
-		},
+		Stock: GetInitialStock(),
 	}
 
 	// add players
