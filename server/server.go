@@ -4,29 +4,20 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"sync"
 
-	"github.com/eleniums/mining-post/mem"
 	"github.com/go-chi/chi"
 )
 
-// ItemStorage defines actions for storing and retrieving items.
-type ItemStorage interface {
-	Add(item *mem.Item) (string, error)
-	Update(id string, item *mem.Item) error
-	Get(id string) (*mem.Item, error)
-	GetAll() (map[string]*mem.Item, error)
-	Remove(id string) error
-}
-
 // Server contains the implementation.
 type Server struct {
-	items ItemStorage
+	players sync.Map
 }
 
 // NewServer creates a new instance of Server.
-func NewServer(items ItemStorage) *Server {
+func NewServer() *Server {
 	return &Server{
-		items: items,
+		players: sync.Map{},
 	}
 }
 

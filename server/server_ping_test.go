@@ -7,15 +7,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/eleniums/mining-post/mem"
-
 	assert "github.com/stretchr/testify/require"
 )
 
 func Test_Unit_Server_Ping_Success(t *testing.T) {
 	// arrange
-	cache := mem.NewCache()
-	server := NewServer(cache)
+	server := NewServer()
 
 	w := httptest.NewRecorder()
 	rq := httptest.NewRequest(http.MethodGet, "/ping", nil)

@@ -15,7 +15,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/eleniums/mining-post/mem"
 	"github.com/eleniums/mining-post/server"
 	"github.com/go-chi/chi"
 )
@@ -57,12 +56,8 @@ func main() {
 	})
 	slog.Debug("flags", flags...)
 
-	// create item storage accessor
-	slog.Info("Using in-memory cache for data storage")
-	db := mem.NewCache()
-
 	// create the server
-	srv := server.NewServer(db)
+	srv := server.NewServer()
 
 	// serve the endpoint
 	serve(srv)
@@ -77,14 +72,11 @@ func serve(srv *server.Server) {
 
 	// register handlers
 	r.Get("/ping", srv.Ping)
-	r.Route("/items", func(r chi.Router) {
-		r.Get("/", srv.GetItems)
-		r.Post("/", srv.InsertItem)
-		r.Route("/{itemID}", func(r chi.Router) {
-			r.Get("/", srv.GetItemByID)
-			r.Put("/", srv.UpdateItem)
-			r.Delete("/", srv.DeleteItem)
-		})
+	r.Route("/player", func(r chi.Router) {
+		r.Get("/inventory", srv.PlayerListInventory)
+	})
+	r.Route("/market", func(r chi.Router) {
+		r.Get("/stock", srv.MarketListStock)
 	})
 
 	// create http server
