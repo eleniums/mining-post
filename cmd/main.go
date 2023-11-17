@@ -15,6 +15,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/eleniums/mining-post/game"
 	"github.com/eleniums/mining-post/server"
 	"github.com/go-chi/chi"
 )
@@ -56,8 +57,11 @@ func main() {
 	})
 	slog.Debug("flags", flags...)
 
+	// initialize the game manager
+	gm := game.NewGameManager()
+
 	// create the server
-	srv := server.NewServer()
+	srv := server.NewServer(gm)
 
 	// serve the endpoint
 	serve(srv)

@@ -4,20 +4,19 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"sync"
 
-	"github.com/go-chi/chi"
+	"github.com/eleniums/mining-post/game"
 )
 
 // Server contains the implementation.
 type Server struct {
-	players sync.Map
+	gameManager *game.GameManager
 }
 
 // NewServer creates a new instance of Server.
-func NewServer() *Server {
+func NewServer(gm *game.GameManager) *Server {
 	return &Server{
-		players: sync.Map{},
+		gameManager: gm,
 	}
 }
 
@@ -41,9 +40,4 @@ func writeResponse(w http.ResponseWriter, resp interface{}) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(r)
-}
-
-// getURLParamItemID will return the itemID URL parameter or an empty string if it doesn't exist.
-func getURLParamItemID(r *http.Request) string {
-	return chi.URLParam(r, "itemID")
 }
