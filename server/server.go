@@ -10,11 +10,11 @@ import (
 
 // Server contains the implementation.
 type Server struct {
-	gameManager *game.GameManager
+	gameManager *game.Manager
 }
 
 // NewServer creates a new instance of Server.
-func NewServer(gm *game.GameManager) *Server {
+func NewServer(gm *game.Manager) *Server {
 	return &Server{
 		gameManager: gm,
 	}

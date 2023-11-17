@@ -6,13 +6,13 @@ import (
 	"github.com/eleniums/mining-post/models"
 )
 
-type GameManager struct {
+type Manager struct {
 	market  models.Market
 	players sync.Map
 }
 
-func NewGameManager() *GameManager {
-	return &GameManager{
+func NewManager() *Manager {
+	return &Manager{
 		market:  models.Market{},
 		players: sync.Map{},
 	}

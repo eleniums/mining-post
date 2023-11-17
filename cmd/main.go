@@ -58,7 +58,7 @@ func main() {
 	slog.Debug("flags", flags...)
 
 	// initialize the game manager
-	gm := game.NewGameManager()
+	gm := game.NewManager()
 
 	// create the server
 	srv := server.NewServer(gm)
