@@ -8,8 +8,8 @@ import (
 )
 
 // List stats for player, including the entire inventory.
-func (s *Server) PlayerListInventory(w http.ResponseWriter, req *http.Request) {
-	var in models.PlayerListInventoryRequest
+func (s *Server) GetPlayerInventory(w http.ResponseWriter, req *http.Request) {
+	var in models.GetPlayerInventoryRequest
 	err := readBody(req, &in)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -22,7 +22,7 @@ func (s *Server) PlayerListInventory(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	resp := models.PlayerListInventoryResponse{
+	resp := models.GetPlayerInventoryResponse{
 		Player: player,
 	}
 

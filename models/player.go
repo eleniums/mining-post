@@ -1,10 +1,10 @@
 package models
 
-type PlayerListInventoryRequest struct {
+type GetPlayerInventoryRequest struct {
 	Name string `json:"name"`
 }
 
-type PlayerListInventoryResponse struct {
+type GetPlayerInventoryResponse struct {
 	Player
 }
 

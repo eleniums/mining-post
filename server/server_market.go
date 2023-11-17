@@ -7,8 +7,8 @@ import (
 )
 
 // List entire market inventory.
-func (s *Server) MarketListStock(w http.ResponseWriter, req *http.Request) {
-	var in models.MarketListStockRequest
+func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
+	var in models.ListMarketStockRequest
 	err := readBody(req, &in)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -17,7 +17,7 @@ func (s *Server) MarketListStock(w http.ResponseWriter, req *http.Request) {
 
 	market := s.manager.GetMarketStock()
 
-	resp := models.MarketListStockResponse{
+	resp := models.ListMarketStockResponse{
 		Market: market,
 	}
 

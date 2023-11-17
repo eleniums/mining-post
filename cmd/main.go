@@ -78,10 +78,10 @@ func serve(srv *server.Server) {
 	// register handlers
 	r.Get("/ping", srv.Ping)
 	r.Route("/player", func(r chi.Router) {
-		r.Get("/inventory", srv.PlayerListInventory)
+		r.Get("/inventory", srv.GetPlayerInventory)
 	})
 	r.Route("/market", func(r chi.Router) {
-		r.Get("/stock", srv.MarketListStock)
+		r.Get("/stock", srv.ListMarketStock)
 	})
 
 	// create http server
