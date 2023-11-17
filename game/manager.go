@@ -56,11 +56,12 @@ func (m *Manager) Stop() error {
 	return nil
 }
 
-// Update happens on a regular time interval.
+// Update happens on a regular time interval. This is the main game loop.
 func (m *Manager) update() {
 	startTime := time.Now()
 
-	// TODO: implement updates
+	// as a last step, randomize all market prices and quantities for the next round
+	m.market.Randomize()
 
 	slog.Info("Game update finished", "elapsed", time.Since(startTime))
 }
