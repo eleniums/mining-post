@@ -13,6 +13,11 @@ type Listing struct {
 	// If set, this function will be called before this item can be bought. Can
 	// be used to check for prereqs to purchasing equipment.
 	prebuy func(player *Player, item *Item)
+
+	// If set and in player inventory, this function will be called every world
+	// update. Useful for generating materials or something extra from
+	// equipment.
+	update func(player *Player, item *Item)
 }
 
 // Adjust the market price for this listing.

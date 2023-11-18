@@ -10,8 +10,8 @@ import (
 const updateInterval = 10 * time.Second
 
 type Manager struct {
-	worldLock  sync.RWMutex
 	market     *sync.Map
+	marketLock sync.RWMutex
 	players    *sync.Map
 	playerLock *sync.Map
 	ticker     *time.Ticker
@@ -66,8 +66,8 @@ func (m *Manager) update() {
 	startTime := time.Now()
 
 	// stop the world while updating
-	m.worldLock.Lock()
-	defer m.worldLock.Unlock()
+	m.marketLock.Lock()
+	defer m.marketLock.Unlock()
 
 	// randomize all market prices and quantities for the next round
 	m.adjustMarketPrices()
@@ -116,8 +116,8 @@ func (m *Manager) adjustMarketPrices() {
 }
 
 func (m *Manager) GetMarketStock() []*Listing {
-	m.worldLock.RLock()
-	defer m.worldLock.RUnlock()
+	m.marketLock.RLock()
+	defer m.marketLock.RUnlock()
 
 	return MapFlatten[string, *Listing](m.market)
 }
@@ -136,4 +136,49 @@ func (m *Manager) GetPlayer(name string) (*Player, error) {
 	}
 
 	return player, nil
+}
+
+func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) error {
+	playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, playerName)
+	if !ok {
+		return fmt.Errorf("error finding lock for player: %s", playerName)
+	}
+	playerLock.Lock()
+	defer playerLock.Unlock()
+
+	player, ok := MapLoad[string, *Player](m.players, playerName)
+	if !ok {
+		return fmt.Errorf("player does not exist with name: %s", playerName)
+	}
+
+	m.marketLock.RLock()
+	defer m.marketLock.RUnlock()
+
+	// get item from market and determine cost
+	listing, ok := MapLoad[string, *Listing](m.market, itemName)
+	if !ok {
+		return fmt.Errorf("item not found for purchase: %s", itemName)
+	}
+
+	// determine cost of item at requested quantity
+	cost := listing.BuyPrice * float64(quantity)
+
+	// determine if player can afford to purchase the requested quantity
+	if player.Money < cost {
+		return fmt.Errorf("insufficient funds to purchase %d of item: %s, cost: %.2f", quantity, itemName, cost)
+	}
+
+	// buy item for player
+	player.Money -= cost
+
+	// add item to player's inventory
+	item := NewItem(listing)
+	item.Quantity = quantity
+	player.AddItem(item)
+
+	return nil
+}
+
+func (m *Manager) SellOrder() {
+
 }

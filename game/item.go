@@ -9,3 +9,12 @@ type Item struct {
 	// generating materials or something extra from equipment.
 	update func(player *Player, item *Item)
 }
+
+// Create an item from a listing with zero quantity.
+func NewItem(l *Listing) *Item {
+	return &Item{
+		Resource: l.Resource,
+		Quantity: 0,
+		update:   l.update,
+	}
+}

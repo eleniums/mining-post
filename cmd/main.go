@@ -82,6 +82,8 @@ func serve(srv *server.Server) {
 	})
 	r.Route("/market", func(r chi.Router) {
 		r.Get("/stock", srv.ListMarketStock)
+		r.Post("/buy", srv.BuyOrder)
+		r.Post("/sell", srv.SellOrder)
 	})
 
 	// create http server

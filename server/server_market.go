@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/eleniums/mining-post/game"
@@ -19,4 +20,47 @@ func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 	}
 
 	writeResponse(w, resp)
+}
+
+type BuyOrderRequest struct {
+	PlayerName string `json:"player"`
+	ItemName   string `json:"item"`
+	Quantity   int64  `json:"quantity"`
+}
+
+type BuyOrderResponse struct {
+	Message string `json:"message"`
+}
+
+// List entire market inventory.
+func (s *Server) BuyOrder(w http.ResponseWriter, req *http.Request) {
+	var in BuyOrderRequest
+	err := readBody(req, &in)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err = s.manager.BuyOrder(in.PlayerName, in.ItemName, in.Quantity)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to purchase %d of item: %s, err: %v", in.Quantity, in.ItemName, err), http.StatusBadRequest)
+		return
+	}
+
+	resp := BuyOrderResponse{
+		Message: fmt.Sprintf("Successfully purchased %d of item: %s", in.Quantity, in.ItemName),
+	}
+
+	writeResponse(w, resp)
+}
+
+// List entire market inventory.
+func (s *Server) SellOrder(w http.ResponseWriter, req *http.Request) {
+	// s.manager.SellOrder()
+
+	// resp := ListMarketStockResponse{
+	// 	Stock: listings,
+	// }
+
+	// writeResponse(w, resp)
 }
