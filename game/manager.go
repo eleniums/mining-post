@@ -75,8 +75,20 @@ func (m *Manager) update() {
 	// run updates for each player
 	m.players.Range(func(key, val any) bool {
 		player := val.(*Player)
+
+		playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, player.Name)
+		if !ok {
+			slog.Error("error finding lock for player", "username", player.Name)
+			return true
+		}
+		playerLock.RLock()
+		defer playerLock.RUnlock()
+
+		// give player salary
+		player.Money += player.Salary
+
+		// run updates on any items as needed
 		for _, item := range player.Inventory {
-			// run updates on any items as needed
 			if item.update != nil {
 				item.update(player, item)
 			}
@@ -105,7 +117,7 @@ func (m *Manager) GetMarketStock() []*Listing {
 func (m *Manager) GetPlayer(name string) (*Player, error) {
 	playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, name)
 	if !ok {
-		return nil, fmt.Errorf("error locking for player: %s", name)
+		return nil, fmt.Errorf("error finding lock for player: %s", name)
 	}
 	playerLock.RLock()
 	defer playerLock.RUnlock()
