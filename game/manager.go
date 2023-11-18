@@ -81,8 +81,8 @@ func (m *Manager) update() {
 			slog.Error("error finding lock for player", "username", player.Name)
 			return true
 		}
-		playerLock.RLock()
-		defer playerLock.RUnlock()
+		playerLock.Lock()
+		defer playerLock.Unlock()
 
 		// give player salary
 		player.Money += player.Salary
