@@ -55,3 +55,26 @@ func (c *GameClient) ListMarketStock() (server.ListMarketStockResponse, error) {
 
 	return resp, nil
 }
+
+func (c *GameClient) BuyOrder(req server.BuyOrderRequest) (server.BuyOrderResponse, error) {
+	payload, err := json.Marshal(req)
+	if err != nil {
+		return server.BuyOrderResponse{}, fmt.Errorf("error marshaling request: %v", err)
+	}
+
+	code, body, err := c.client.Post(fmt.Sprintf("%s/market/buy", c.rootURL), payload)
+	if err != nil {
+		return server.BuyOrderResponse{}, fmt.Errorf("error calling service: %v", err)
+	}
+	if code != http.StatusOK {
+		return server.BuyOrderResponse{}, fmt.Errorf("invalid status code: %d, message: %v", code, string(body))
+	}
+
+	var resp server.BuyOrderResponse
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		return server.BuyOrderResponse{}, fmt.Errorf("error unmarshaling response body: %v", err)
+	}
+
+	return resp, nil
+}
