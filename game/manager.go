@@ -12,7 +12,6 @@ const updateInterval = 10 * time.Second
 type Manager struct {
 	worldLock  sync.RWMutex
 	market     *sync.Map
-	marketLock *sync.Map
 	players    *sync.Map
 	playerLock *sync.Map
 	ticker     *time.Ticker
@@ -21,7 +20,6 @@ type Manager struct {
 func NewManager() *Manager {
 	manager := &Manager{
 		market:     &sync.Map{},
-		marketLock: &sync.Map{},
 		players:    &sync.Map{},
 		playerLock: &sync.Map{},
 	}
@@ -30,7 +28,6 @@ func NewManager() *Manager {
 	listings := getInitialStock()
 	for _, listing := range listings {
 		manager.market.Store(listing.Name, listing)
-		manager.marketLock.Store(listing.Name, &sync.RWMutex{})
 	}
 
 	// load players
@@ -48,7 +45,7 @@ func NewManager() *Manager {
 
 // Start game engine with regular updates.
 func (m *Manager) Start() {
-	slog.Info("Initialize the game and start updates")
+	slog.Info("Initialize the game and start updates", "loop-interval", updateInterval)
 	m.ticker = time.NewTicker(updateInterval)
 	go func() {
 		for range m.ticker.C {

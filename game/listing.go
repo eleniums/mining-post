@@ -6,11 +6,9 @@ type Listing struct {
 	BuyPrice  float64 `json:"buy_price"`
 	SellPrice float64 `json:"sell_price"`
 
-	quantityRangeLow  int64   // lowest possible quantity
-	quantityRangeHigh int64   // highest possible quantity
-	buyRangeLow       float64 // lowest possible buy price for resource
-	buyRangeHigh      float64 // highest possible buy price for resource
-	sellDelta         float64 // highest potential difference of selling price. Selling price is always lower than buying price
+	buyRangeLow  float64 // lowest possible buy price for resource
+	buyRangeHigh float64 // highest possible buy price for resource
+	sellDelta    float64 // highest potential difference of selling price. Selling price is always lower than buying price
 
 	// If set, this function will be called before this item can be bought. Can
 	// be used to check for prereqs to purchasing equipment.
