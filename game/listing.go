@@ -12,7 +12,11 @@ type Listing struct {
 
 	// If set, this function will be called before this item can be bought. Can
 	// be used to check for prereqs to purchasing equipment.
-	prebuy func(player *Player, item *Item)
+	prebuy func(player *Player) bool
+
+	// If set, this function will be called before this item can be sold. Can be
+	// used to check for prereqs to selling equipment.
+	presell func(player *Player) bool
 
 	// If set and in player inventory, this function will be called every world
 	// update. Useful for generating materials or something extra from

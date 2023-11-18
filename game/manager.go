@@ -154,10 +154,14 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) e
 	m.marketLock.RLock()
 	defer m.marketLock.RUnlock()
 
-	// get item from market and determine cost
 	listing, ok := MapLoad[string, *Listing](m.market, itemName)
 	if !ok {
 		return fmt.Errorf("item not found for purchase: %s", itemName)
+	}
+
+	// check if player meets prerequisites to purchase item
+	if listing.prebuy != nil && !listing.prebuy(player) {
+		return fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
 	}
 
 	// determine cost of item at requested quantity
