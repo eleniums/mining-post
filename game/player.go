@@ -2,6 +2,8 @@ package game
 
 type Player struct {
 	Name      string  `json:"name"`
+	Title     string  `json:"title"`
+	Rank      int     `json:"-"`
 	Money     float64 `json:"money"`
 	Salary    float64 `json:"salary"`
 	Inventory []*Item `json:"inventory"`
@@ -10,7 +12,9 @@ type Player struct {
 func NewPlayer(name string) *Player {
 	return &Player{
 		Name:      name,
-		Money:     200000.0,
+		Title:     ranks[0].Name,
+		Rank:      0,
+		Money:     10000.0,
 		Salary:    1000.0,
 		Inventory: []*Item{},
 	}

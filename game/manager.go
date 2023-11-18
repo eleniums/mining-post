@@ -93,6 +93,14 @@ func (m *Manager) update() {
 				item.update(player, item)
 			}
 		}
+
+		// check for player promotion
+		if ranks[player.Rank].eligibleForPromotion(player) {
+			player.Rank++
+			player.Title = ranks[player.Rank].Name
+			slog.Info("player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
+		}
+
 		return true
 	})
 
