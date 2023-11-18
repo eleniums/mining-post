@@ -138,17 +138,17 @@ func (m *Manager) GetPlayer(name string) (*Player, error) {
 	return player, nil
 }
 
-func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) error {
+func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (float64, error) {
 	playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, playerName)
 	if !ok {
-		return fmt.Errorf("error finding lock for player: %s", playerName)
+		return 0, fmt.Errorf("error finding lock for player: %s", playerName)
 	}
 	playerLock.Lock()
 	defer playerLock.Unlock()
 
 	player, ok := MapLoad[string, *Player](m.players, playerName)
 	if !ok {
-		return fmt.Errorf("player does not exist with name: %s", playerName)
+		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
 	}
 
 	m.marketLock.RLock()
@@ -156,20 +156,20 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) e
 
 	listing, ok := MapLoad[string, *Listing](m.market, itemName)
 	if !ok {
-		return fmt.Errorf("item not found for purchase: %s", itemName)
+		return 0, fmt.Errorf("item not found for purchase: %s", itemName)
 	}
 
 	// check if player meets prerequisites to purchase item
 	if listing.prebuy != nil && !listing.prebuy(player) {
-		return fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
+		return 0, fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
 	}
 
 	// determine cost of item at requested quantity
-	cost := listing.BuyPrice * float64(quantity)
+	cost := roundFloat64(listing.BuyPrice*float64(quantity), 2)
 
 	// determine if player can afford to purchase the requested quantity
 	if player.Money < cost {
-		return fmt.Errorf("insufficient funds to purchase %d of item: %s, cost: %.2f", quantity, itemName, cost)
+		return 0, fmt.Errorf("insufficient funds to purchase %d of item: %s, cost: %.2f", quantity, itemName, cost)
 	}
 
 	// buy item for player
@@ -180,7 +180,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) e
 	item.Quantity = quantity
 	player.AddItem(item)
 
-	return nil
+	return cost, nil
 }
 
 func (m *Manager) SellOrder() {

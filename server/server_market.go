@@ -29,7 +29,8 @@ type BuyOrderRequest struct {
 }
 
 type BuyOrderResponse struct {
-	Message string `json:"message"`
+	Cost    float64 `json:"cost"`
+	Message string  `json:"message"`
 }
 
 // List entire market inventory.
@@ -41,14 +42,15 @@ func (s *Server) BuyOrder(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	err = s.manager.BuyOrder(in.PlayerName, in.ItemName, in.Quantity)
+	cost, err := s.manager.BuyOrder(in.PlayerName, in.ItemName, in.Quantity)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to purchase %d of item: %s, err: %v", in.Quantity, in.ItemName, err), http.StatusBadRequest)
 		return
 	}
 
 	resp := BuyOrderResponse{
-		Message: fmt.Sprintf("Successfully purchased %d of item: %s", in.Quantity, in.ItemName),
+		Cost:    cost,
+		Message: fmt.Sprintf("Successfully purchased %d of item: %s, total cost: %.2f", in.Quantity, in.ItemName, cost),
 	}
 
 	writeResponse(w, resp)
