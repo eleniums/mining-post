@@ -183,6 +183,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	return cost, nil
 }
 
-func (m *Manager) SellOrder() {
-
+func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) (float64, error) {
+	// TODO: implement sell order
+	return 0, nil
 }
