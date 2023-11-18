@@ -10,33 +10,38 @@ import (
 const updateInterval = 10 * time.Second
 
 type Manager struct {
-	market     Market // TODO: maybe move this to be a sync.Map of just the listings
+	worldLock  sync.RWMutex
+	market     *sync.Map
+	marketLock *sync.Map
 	players    *sync.Map
-	ticker     *time.Ticker
-	marketLock sync.RWMutex
 	playerLock *sync.Map
+	ticker     *time.Ticker
 }
 
 func NewManager() *Manager {
 	manager := &Manager{
+		market:     &sync.Map{},
+		marketLock: &sync.Map{},
 		players:    &sync.Map{},
 		playerLock: &sync.Map{},
 	}
 
-	// create market
-	manager.market = Market{
-		Stock: getInitialStock(),
+	// create market listing
+	listings := getInitialStock()
+	for _, listing := range listings {
+		manager.market.Store(listing.Name, listing)
+		manager.marketLock.Store(listing.Name, &sync.RWMutex{})
 	}
-
-	// randomize all listings for the initial loop
-	manager.market.Randomize()
 
 	// load players
 	players := loadPlayers()
-	for name, player := range players {
-		manager.players.Store(name, player)
-		manager.playerLock.Store(name, &sync.RWMutex{})
+	for _, player := range players {
+		manager.players.Store(player.Name, player)
+		manager.playerLock.Store(player.Name, &sync.RWMutex{})
 	}
+
+	// randomize prices for all listings for the initial loop
+	manager.adjustMarketPrices()
 
 	return manager
 }
@@ -63,35 +68,55 @@ func (m *Manager) Stop() error {
 func (m *Manager) update() {
 	startTime := time.Now()
 
-	// stop the market while updating
-	m.marketLock.Lock()
-	defer m.marketLock.Unlock()
+	// stop the world while updating
+	m.worldLock.Lock()
+	defer m.worldLock.Unlock()
 
-	// as a last step, randomize all market prices and quantities for the next round
-	m.market.Randomize()
+	// randomize all market prices and quantities for the next round
+	m.adjustMarketPrices()
+
+	// run updates for each player
+	m.players.Range(func(key, val any) bool {
+		player := val.(*Player)
+		for _, item := range player.Inventory {
+			// run updates on any items as needed
+			if item.update != nil {
+				item.update(player, item)
+			}
+		}
+		return true
+	})
 
 	slog.Info("Game update finished", "elapsed", time.Since(startTime))
 }
 
-func (m *Manager) GetMarketStock() []Listing {
-	// TODO: going to have to lock each market listing... otherwise will have to lock the entire market to make a sale
-	m.marketLock.RLock()
-	defer m.marketLock.RUnlock()
-
-	return DeepCopy(m.market.Stock)
+func (m *Manager) adjustMarketPrices() {
+	m.market.Range(func(key, val any) bool {
+		listing := val.(*Listing)
+		listing.adjustMarketPrice()
+		return true
+	})
 }
 
-func (m *Manager) GetPlayer(name string) (Player, error) {
-	lock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, name)
+func (m *Manager) GetMarketStock() []*Listing {
+	m.worldLock.RLock()
+	defer m.worldLock.RUnlock()
+
+	return MapFlatten[string, *Listing](m.market)
+}
+
+func (m *Manager) GetPlayer(name string) (*Player, error) {
+	playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, name)
 	if !ok {
-		return Player{}, fmt.Errorf("error locking for player: %s", name)
+		return nil, fmt.Errorf("error locking for player: %s", name)
 	}
-	defer lock.RLock()
+	playerLock.RLock()
+	defer playerLock.RUnlock()
 
 	player, ok := MapLoad[string, *Player](m.players, name)
 	if !ok {
-		return Player{}, fmt.Errorf("player does not exist with name: %s", name)
+		return nil, fmt.Errorf("player does not exist with name: %s", name)
 	}
 
-	return *player, nil
+	return player, nil
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type ListMarketStockResponse struct {
-	Stock []game.Listing `json:"stock"`
+	Stock []*game.Listing `json:"stock"`
 }
 
 // List entire market inventory.

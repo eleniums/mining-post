@@ -3,37 +3,41 @@ package game
 type Player struct {
 	Name      string  `json:"name"`
 	Money     float64 `json:"money"`
-	Inventory []Item  `json:"inventory"`
+	Inventory []*Item `json:"inventory"`
 }
 
 type Item struct {
 	Resource
 
 	Quantity int64 `json:"quantity"`
+
+	// If set, this function will be called every world update. Useful for
+	// generating materials or something extra from equipment.
+	update func(player *Player, item *Item)
 }
 
 // Load players into memory.
-func loadPlayers() map[string]*Player {
-	return map[string]*Player{
-		"snelson": {
+func loadPlayers() []*Player {
+	return []*Player{
+		{
 			Name:      "snelson",
 			Money:     100.00,
-			Inventory: []Item{},
+			Inventory: []*Item{},
 		},
-		"tstark": {
+		{
 			Name:      "tstark",
 			Money:     100.00,
-			Inventory: []Item{},
+			Inventory: []*Item{},
 		},
-		"hhughes": {
+		{
 			Name:      "hhughes",
 			Money:     100.00,
-			Inventory: []Item{},
+			Inventory: []*Item{},
 		},
-		"dhayter": {
+		{
 			Name:      "dhayter",
 			Money:     100.00,
-			Inventory: []Item{},
+			Inventory: []*Item{},
 		},
 	}
 }
