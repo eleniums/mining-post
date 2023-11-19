@@ -175,15 +175,65 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	// buy item for player
 	player.Money -= cost
 
-	// add item to player's inventory
-	item := NewItem(listing)
-	item.Quantity = quantity
-	player.AddItem(item)
+	if item := player.GetItem(listing.Name); item != nil {
+		// if item already exists, just add to quantity
+		item.Quantity += quantity
+	} else {
+		// if item doesn't exist, add item to player's inventory
+		item := NewItem(listing)
+		item.Quantity = quantity
+		player.AddItem(item)
+	}
 
 	return cost, nil
 }
 
 func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) (float64, error) {
-	// TODO: implement sell order
-	return 0, nil
+	playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, playerName)
+	if !ok {
+		return 0, fmt.Errorf("error finding lock for player: %s", playerName)
+	}
+	playerLock.Lock()
+	defer playerLock.Unlock()
+
+	player, ok := MapLoad[string, *Player](m.players, playerName)
+	if !ok {
+		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
+	}
+
+	m.marketLock.RLock()
+	defer m.marketLock.RUnlock()
+
+	listing, ok := MapLoad[string, *Listing](m.market, itemName)
+	if !ok {
+		return 0, fmt.Errorf("item not found for sale: %s", itemName)
+	}
+
+	// check if player meets prerequisites to sell item
+	if listing.presell != nil && !listing.presell(player) {
+		return 0, fmt.Errorf("player does not meet prerequisites to sell item: %s", itemName)
+	}
+
+	// determine profit of item at requested quantity
+	profit := roundFloat64(listing.SellPrice*float64(quantity), 2)
+
+	// determine if player has enough quantity to sell
+	item := player.GetItem(itemName)
+	if item == nil {
+		return 0, fmt.Errorf("player does not have item in inventory: %s", itemName)
+	}
+	if item.Quantity < quantity {
+		return 0, fmt.Errorf("insufficient quantity to sell %d of item: %s", quantity, itemName)
+	}
+
+	// sell item for player
+	player.Money += profit
+
+	// remove quantity from player's inventory
+	item.Quantity -= quantity
+	if item.Quantity <= 0 {
+		player.RemoveItem(itemName)
+	}
+
+	return profit, nil
 }

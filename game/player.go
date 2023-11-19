@@ -20,19 +20,29 @@ func NewPlayer(name string) *Player {
 	}
 }
 
-// Add quantity of item to player's inventory.
+// Add item to player's inventory.
 func (p *Player) AddItem(item *Item) {
-	// if item already exists, just add to quantity
-	found, ok := Find(p.Inventory, item, func(a *Item, b *Item) bool {
-		return a.Name == b.Name
-	})
-	if ok {
-		found.Quantity += item.Quantity
-		return
-	}
-
-	// if item doesn't exist, add it
 	p.Inventory = append(p.Inventory, item)
+}
+
+// Get item from player's inventory.
+func (p *Player) GetItem(itemName string) *Item {
+	for _, item := range p.Inventory {
+		if item.Name == itemName {
+			return item
+		}
+	}
+	return nil
+}
+
+// Remove item from player's inventory.
+func (p *Player) RemoveItem(itemName string) {
+	for i, item := range p.Inventory {
+		if item.Name == itemName {
+			p.Inventory = append(p.Inventory[:i], p.Inventory[i+1:]...)
+			return
+		}
+	}
 }
 
 // Load players into memory.
