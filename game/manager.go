@@ -159,17 +159,17 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 		return 0, fmt.Errorf("item not found for purchase: %s", itemName)
 	}
 
-	// check if player meets prerequisites to purchase item
-	if listing.prebuy != nil && !listing.prebuy(player) {
-		return 0, fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
-	}
-
 	// determine cost of item at requested quantity
 	cost := roundFloat64(listing.BuyPrice*float64(quantity), 2)
 
 	// determine if player can afford to purchase the requested quantity
 	if player.Money < cost {
 		return 0, fmt.Errorf("insufficient funds to purchase %d of item: %s, cost: %.2f", quantity, itemName, cost)
+	}
+
+	// check if player meets prerequisites to purchase item (and adjust player inventory as needed)
+	if listing.prebuy != nil && !listing.prebuy(player) {
+		return 0, fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
 	}
 
 	// buy item for player
@@ -209,11 +209,6 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 		return 0, fmt.Errorf("item not found for sale: %s", itemName)
 	}
 
-	// check if player meets prerequisites to sell item
-	if listing.presell != nil && !listing.presell(player) {
-		return 0, fmt.Errorf("player does not meet prerequisites to sell item: %s", itemName)
-	}
-
 	// determine profit of item at requested quantity
 	profit := roundFloat64(listing.SellPrice*float64(quantity), 2)
 
@@ -224,6 +219,11 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	}
 	if item.Quantity < quantity {
 		return 0, fmt.Errorf("insufficient quantity to sell %d of item: %s", quantity, itemName)
+	}
+
+	// check if player meets prerequisites to sell item (and adjust player inventory as needed)
+	if listing.presell != nil && !listing.presell(player) {
+		return 0, fmt.Errorf("player does not meet prerequisites to sell item: %s", itemName)
 	}
 
 	// sell item for player
