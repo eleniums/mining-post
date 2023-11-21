@@ -37,5 +37,6 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Better locking system. Helper methods maybe?
 - [ ] Need a way to save player data. Postgres or maybe just hack JSON file for now?
 - [ ] More ranks? Like amatuer and apprentice and mining engineer?
+- [ ] Related to ranks, adjust salaries. Should start with a very low salary.
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
 - [ ] Maybe a prospect option to find more land?
