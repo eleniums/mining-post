@@ -85,6 +85,15 @@ func CallHTTP(client *http.Client, method, url string, body []byte) (int, []byte
 		return 0, nil, err
 	}
 
+	// print request
+	if body != nil {
+		var prettyReq bytes.Buffer
+		json.Indent(&prettyReq, body, "", "    ")
+		fmt.Printf("%s %s\n%s\n\n", method, url, prettyReq.String())
+	} else {
+		fmt.Printf("%s %s\n\n", method, url)
+	}
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return 0, nil, err
@@ -96,10 +105,14 @@ func CallHTTP(client *http.Client, method, url string, body []byte) (int, []byte
 		return 0, nil, err
 	}
 
-	var prettyResp bytes.Buffer
-	json.Indent(&prettyResp, respBody, "", "    ")
-
-	fmt.Printf("Response code: %d\n%s\n", resp.StatusCode, prettyResp.String())
+	// print response
+	if len(respBody) > 0 {
+		var prettyResp bytes.Buffer
+		json.Indent(&prettyResp, respBody, "", "    ")
+		fmt.Printf("%s\n%s\n", resp.Status, prettyResp.String())
+	} else {
+		fmt.Printf("%s\n", resp.Status)
+	}
 
 	return resp.StatusCode, respBody, nil
 }
