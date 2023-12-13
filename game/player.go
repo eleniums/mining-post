@@ -14,8 +14,8 @@ func NewPlayer(name string) *Player {
 		Name:      name,
 		Title:     ranks[0].Name,
 		Rank:      0,
-		Money:     10000.0,
-		Salary:    1000.0,
+		Money:     50.0,
+		Salary:    10.0,
 		Inventory: []*Item{},
 	}
 }
