@@ -7,6 +7,7 @@ type Rank struct {
 	eligibleForPromotion func(player *Player) bool
 }
 
+// TODO: make sure salaries and promotions make sense
 var ranks = []Rank{
 	{
 		Name:   "Amateur Miner L1",

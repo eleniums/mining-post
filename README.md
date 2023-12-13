@@ -35,8 +35,14 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Add type to listings and filter capability
 - [ ] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
 - [ ] Better locking system. Helper methods maybe?
-- [ ] Need a way to save player data. Postgres or maybe just hack JSON file for now?
+- [ ] Need a way to save player data. Postgres or maybe just hack JSON file for now? There are some decent free embedded databases, like maybe bolt or sqlite?
 - [ ] More ranks? Like amatuer and apprentice and mining engineer?
 - [ ] Related to ranks, adjust salaries. Should start with a very low salary.
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
 - [ ] Maybe a prospect option to find more land?
+
+# Types of stock
+- Resource
+- Equipment (Pickaxe, Mining Cart, Dynamite)
+- Land (Claim, Mine)
+- Employee (Worker, Specialist, Mining Engineer)
