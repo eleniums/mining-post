@@ -32,6 +32,7 @@ docker run --rm -p 9090:9090 miningpost
 ```
 
 ## TODOs
+- [ ] Need a way to calculate net worth outside of current money (use net worth for promotions). Net worth would be value of resources, equipment, employees, land, etc.
 - [ ] Add type to listings and filter capability
 - [ ] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
 - [ ] Better locking system. Helper methods maybe?
