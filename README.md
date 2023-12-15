@@ -43,7 +43,7 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Maybe a prospect option to find more land?
 
 # Types of stock
-- Resource
+- Commodity
 - Equipment (Pickaxe, Mining Cart, Dynamite)
 - Land (Claim, Mine)
 - Employee (Worker, Specialist, Mining Engineer)
