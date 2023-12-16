@@ -20,8 +20,8 @@ func Test_Integration_ListMarketStock_Success(t *testing.T) {
 func Test_Integration_BuyOrder_Success(t *testing.T) {
 	req := server.BuyOrderRequest{
 		PlayerName: "snelson",
-		ItemName:   "Granite",
-		Quantity:   10,
+		ItemName:   "Limestone",
+		Quantity:   3,
 	}
 
 	// act
