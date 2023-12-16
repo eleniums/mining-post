@@ -4,6 +4,7 @@ type Player struct {
 	Name      string  `json:"name"`
 	Title     string  `json:"title"`
 	Rank      int     `json:"-"`
+	NetWorth  float64 `json:"netWorth"`
 	Money     float64 `json:"money"`
 	Salary    float64 `json:"salary"`
 	Inventory []*Item `json:"inventory"`
@@ -14,6 +15,7 @@ func NewPlayer(name string) *Player {
 		Name:      name,
 		Title:     ranks[0].Name,
 		Rank:      0,
+		NetWorth:  50.0,
 		Money:     50.0,
 		Salary:    10.0,
 		Inventory: []*Item{},

@@ -94,6 +94,15 @@ func (m *Manager) update() {
 			}
 		}
 
+		// calculate player net worth
+		player.NetWorth = player.Money
+		for _, item := range player.Inventory {
+			if listing, ok := MapLoad[string, *Listing](m.market, item.Name); ok {
+				player.NetWorth += float64(item.Quantity) * listing.SellPrice
+			}
+		}
+		player.NetWorth = roundFloat64(player.NetWorth, 2)
+
 		// check for player promotion
 		if ranks[player.Rank].eligibleForPromotion(player) {
 			player.Rank++
