@@ -1,5 +1,9 @@
 package game
 
+import (
+	"github.com/google/uuid"
+)
+
 type Player struct {
 	Name      string  `json:"name"`
 	Title     string  `json:"title"`
@@ -49,10 +53,17 @@ func (p *Player) RemoveItem(itemName string) {
 
 // Load players into memory.
 func loadPlayers() []*Player {
-	return []*Player{
+	players := []*Player{
 		NewPlayer("snelson"),
 		NewPlayer("tstark"),
 		NewPlayer("hhughes"),
 		NewPlayer("dhayter"),
 	}
+
+	// TODO: add some random other players for perf testing
+	for i := 0; i < 1_000; i++ {
+		players = append(players, NewPlayer(uuid.NewString()))
+	}
+
+	return players
 }
