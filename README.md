@@ -41,6 +41,7 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Related to ranks, adjust salaries. Should start with a very low salary.
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
 - [ ] Maybe a prospect option to find more land?
+- [ ] Put instructions in a markdown file and use embed to add to handler
 
 # Types of stock
 - Commodity
