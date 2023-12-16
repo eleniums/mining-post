@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"testing"
 
-	game "github.com/eleniums/mining-post/client"
+	"github.com/eleniums/mining-post/client"
 )
 
 const (
@@ -16,8 +16,8 @@ const (
 )
 
 var (
-	baseURI string
-	client  *game.GameClient
+	baseURI    string
+	gameClient *client.GameClient
 )
 
 var (
@@ -40,7 +40,7 @@ func run(m *testing.M) int {
 	flag.Parse()
 
 	// create http client
-	var config game.Config
+	var config client.Config
 	if enableTLS {
 		baseURI = fmt.Sprintf("https://%s:%s", httpHost, httpPort)
 		config.TLSConfig = &tls.Config{
@@ -49,7 +49,7 @@ func run(m *testing.M) int {
 	} else {
 		baseURI = fmt.Sprintf("http://%s:%s", httpHost, httpPort)
 	}
-	client = game.NewGameClient(baseURI)
+	gameClient = client.NewGameClient(baseURI)
 
 	// run tests
 	result := m.Run()

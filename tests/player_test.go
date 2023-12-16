@@ -8,7 +8,7 @@ import (
 
 func Test_Integration_GetPlayerInventory_Success(t *testing.T) {
 	// act
-	resp, err := client.GetPlayerInventory(testPlayer)
+	resp, err := gameClient.GetPlayerInventory(testPlayer)
 
 	// assert
 	assert.NoError(t, err)
