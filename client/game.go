@@ -4,9 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/eleniums/mining-post/server"
 )
+
+type Filter struct {
+	Property string
+	Value    string
+}
 
 type GameClient struct {
 	rootURL string
@@ -38,8 +44,18 @@ func (c *GameClient) GetPlayerInventory(name string) (server.GetPlayerInventoryR
 	return resp, nil
 }
 
-func (c *GameClient) ListMarketStock() (server.ListMarketStockResponse, error) {
-	code, body, err := c.client.Get(fmt.Sprintf("%s/market/stock", c.rootURL))
+func (c *GameClient) ListMarketStock(filters ...Filter) (server.ListMarketStockResponse, error) {
+	queryParams := []string{}
+
+	filterParam := []string{}
+	for _, v := range filters {
+		filterParam = append(filterParam, fmt.Sprintf("%s=%s", v.Property, v.Value))
+	}
+	if len(filterParam) > 0 {
+		queryParams = append(queryParams, "filter", strings.Join(filterParam, ","))
+	}
+
+	code, body, err := c.client.Get(fmt.Sprintf("%s/market/stock", c.rootURL), queryParams...)
 	if err != nil {
 		return server.ListMarketStockResponse{}, fmt.Errorf("error calling service: %v", err)
 	}
