@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -54,44 +55,55 @@ func NewHTTPClient(c ...Config) *HTTPClient {
 }
 
 // Get will retrieve a resource or a collection.
-func (c *HTTPClient) Get(url string) (int, []byte, error) {
-	return c.Do(http.MethodGet, url, nil)
+func (c *HTTPClient) Get(url string, queryParams ...string) (int, []byte, error) {
+	return c.Do(http.MethodGet, url, nil, queryParams...)
 }
 
 // Post will create a resource.
-func (c *HTTPClient) Post(url string, body []byte) (int, []byte, error) {
-	return c.Do(http.MethodPost, url, body)
+func (c *HTTPClient) Post(url string, body []byte, queryParams ...string) (int, []byte, error) {
+	return c.Do(http.MethodPost, url, body, queryParams...)
 }
 
 // Put will replace a resource or a collection.
-func (c *HTTPClient) Put(url string, body []byte) (int, []byte, error) {
-	return c.Do(http.MethodPut, url, body)
+func (c *HTTPClient) Put(url string, body []byte, queryParams ...string) (int, []byte, error) {
+	return c.Do(http.MethodPut, url, body, queryParams...)
 }
 
 // Delete a resource.
-func (c *HTTPClient) Delete(url string) (int, []byte, error) {
-	return c.Do(http.MethodDelete, url, nil)
+func (c *HTTPClient) Delete(url string, queryParams ...string) (int, []byte, error) {
+	return c.Do(http.MethodDelete, url, nil, queryParams...)
 }
 
 // Do sends a RESTful HTTP request. Allows any method supported by net/http. Returns the status code and response body.
-func (c *HTTPClient) Do(method, url string, body []byte) (int, []byte, error) {
-	return CallHTTP(c.client, method, url, body)
+func (c *HTTPClient) Do(method, url string, body []byte, queryParams ...string) (int, []byte, error) {
+	return CallHTTP(c.client, method, url, body, queryParams...)
 }
 
 // CallHTTP sends a RESTful HTTP request. Allows any method supported by net/http. Returns the status code and response body.
-func CallHTTP(client *http.Client, method, url string, body []byte) (int, []byte, error) {
+func CallHTTP(client *http.Client, method, url string, body []byte, queryParams ...string) (int, []byte, error) {
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(body))
 	if err != nil {
 		return 0, nil, err
+	}
+
+	if len(queryParams) > 0 {
+		if len(queryParams)%2 != 0 {
+			return 0, nil, errors.New(`queryParams must have an even number of elements. Ex: "Name1", "Value1", "Name2", "Value2"`)
+		}
+		query := req.URL.Query()
+		for i := 0; i < len(queryParams)-1; i += 2 {
+			query.Add(queryParams[i], queryParams[i+1])
+		}
+		req.URL.RawQuery = query.Encode()
 	}
 
 	// print request
 	if body != nil {
 		var prettyReq bytes.Buffer
 		json.Indent(&prettyReq, body, "", "    ")
-		fmt.Printf("%s %s\n%s\n\n", method, url, prettyReq.String())
+		fmt.Printf("%s %s\n%s\n\n", req.Method, req.URL, prettyReq.String())
 	} else {
-		fmt.Printf("%s %s\n\n", method, url)
+		fmt.Printf("%s %s\n\n", req.Method, req.URL)
 	}
 
 	resp, err := client.Do(req)
