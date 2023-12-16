@@ -36,3 +36,14 @@ func Find[T any](s []T, val T, compare func(a, b T) bool) (T, bool) {
 	var zeroValue T
 	return zeroValue, false
 }
+
+// Filters the slice to only contain values that return true from the filter function.
+func Filter[T any](s []T, filter func(val T) bool) []T {
+	filtered := []T{}
+	for _, v := range s {
+		if filter(v) {
+			filtered = append(filtered, v)
+		}
+	}
+	return filtered
+}
