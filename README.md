@@ -43,6 +43,9 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Maybe a prospect option to find more land?
 - [ ] Put instructions in a markdown file and use embed to add to handler
 - [ ] Need to perf test updates with a large number of users, like 1 million users
+- [ ] Should not be able to buy or sell quantity 0 or negative
+- [ ] List market should show time remaining.
+- [ ] Should round values before returning to player. I saw this happen again with money somehow...
 
 # Types of stock
 - Commodity
