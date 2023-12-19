@@ -10,6 +10,8 @@ import (
 const updateInterval = 10 * time.Second
 
 type Manager struct {
+	NextUpdate time.Time
+
 	market     *sync.Map
 	marketLock sync.RWMutex
 	players    *sync.Map
@@ -47,8 +49,10 @@ func NewManager() *Manager {
 func (m *Manager) Start() {
 	slog.Info("Initialize the game and start updates", "loop-interval", updateInterval)
 	m.ticker = time.NewTicker(updateInterval)
+	m.NextUpdate = time.Now().Add(updateInterval).UTC()
 	go func() {
 		for range m.ticker.C {
+			m.NextUpdate = time.Now().Add(updateInterval).UTC()
 			m.update()
 		}
 	}()

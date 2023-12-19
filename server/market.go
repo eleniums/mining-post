@@ -4,17 +4,20 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/eleniums/mining-post/game"
 )
 
 type ListMarketStockResponse struct {
-	Stock []*game.Listing `json:"stock"`
+	NextMarketUpdate time.Time       `json:"nextMarketUpdate"`
+	Stock            []*game.Listing `json:"stock"`
 }
 
 // List entire market inventory.
 func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 	listings := s.manager.GetMarketStock()
+	nextUpdate := s.manager.NextUpdate
 
 	// apply filters if requested
 	filterParam := req.URL.Query().Get("filter")
@@ -42,7 +45,8 @@ func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 	}
 
 	resp := ListMarketStockResponse{
-		Stock: listings,
+		NextMarketUpdate: nextUpdate,
+		Stock:            listings,
 	}
 
 	writeResponse(w, resp)
