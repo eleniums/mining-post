@@ -26,6 +26,24 @@ func NewGameClient(url string) *GameClient {
 	}
 }
 
+func (c *GameClient) GameInfo() (*server.GameInfoResponse, error) {
+	code, body, err := c.client.Get(fmt.Sprintf("%s/game/info", c.rootURL))
+	if err != nil {
+		return nil, fmt.Errorf("error calling service: %v", err)
+	}
+	if code != http.StatusOK {
+		return nil, fmt.Errorf("invalid status code: %d, message: %v", code, string(body))
+	}
+
+	var resp server.GameInfoResponse
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("error unmarshaling response body: %v", err)
+	}
+
+	return &resp, nil
+}
+
 func (c *GameClient) GetPlayerInventory(name string) (server.GetPlayerInventoryResponse, error) {
 	code, body, err := c.client.Get(fmt.Sprintf("%s/player/%s/inventory", c.rootURL, name))
 	if err != nil {
