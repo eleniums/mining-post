@@ -45,7 +45,8 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Need to perf test updates with a large number of users, like 1 million users
 - [ ] Should not be able to buy or sell quantity 0 or negative
 - [ ] List market should show time remaining.
-- [ ] Should round values before returning to player. I saw this happen again with money somehow...
+- [ ] Should round values before returning to player. I saw this happen again with money somehow... Would be nice if money was formatted as a string like `"$12.30"`
+- [ ] Add retries to client?
 
 # Types of stock
 - Commodity
