@@ -14,7 +14,7 @@ type Manager struct {
 
 	market     map[string]*Listing
 	marketLock sync.RWMutex
-	players    *sync.Map
+	players    map[string]*Player
 	playerLock *sync.Map
 	ticker     *time.Ticker
 }
@@ -22,7 +22,7 @@ type Manager struct {
 func NewManager() *Manager {
 	manager := &Manager{
 		market:     map[string]*Listing{},
-		players:    &sync.Map{},
+		players:    map[string]*Player{},
 		playerLock: &sync.Map{},
 	}
 
@@ -35,7 +35,7 @@ func NewManager() *Manager {
 	// load players
 	players := loadPlayers()
 	for _, player := range players {
-		manager.players.Store(player.Name, player)
+		manager.players[player.Name] = player
 		manager.playerLock.Store(player.Name, &sync.RWMutex{})
 	}
 
@@ -77,13 +77,10 @@ func (m *Manager) update() {
 	m.adjustMarketPrices()
 
 	// run updates for each player
-	m.players.Range(func(key, val any) bool {
-		player := val.(*Player)
-
+	for _, player := range m.players {
 		playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, player.Name)
 		if !ok {
 			slog.Error("error finding lock for player", "username", player.Name)
-			return true
 		}
 		playerLock.Lock()
 		defer playerLock.Unlock()
@@ -113,9 +110,7 @@ func (m *Manager) update() {
 			player.Title = ranks[player.Rank].Name
 			slog.Info("player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
 		}
-
-		return true
-	})
+	}
 
 	slog.Info("Game update finished", "elapsed", time.Since(startTime))
 }
@@ -141,7 +136,7 @@ func (m *Manager) GetPlayer(name string) (*Player, error) {
 	playerLock.RLock()
 	defer playerLock.RUnlock()
 
-	player, ok := MapLoad[string, *Player](m.players, name)
+	player, ok := m.players[name]
 	if !ok {
 		return nil, fmt.Errorf("player does not exist with name: %s", name)
 	}
@@ -157,7 +152,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	playerLock.Lock()
 	defer playerLock.Unlock()
 
-	player, ok := MapLoad[string, *Player](m.players, playerName)
+	player, ok := m.players[playerName]
 	if !ok {
 		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
 	}
@@ -207,7 +202,7 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	playerLock.Lock()
 	defer playerLock.Unlock()
 
-	player, ok := MapLoad[string, *Player](m.players, playerName)
+	player, ok := m.players[playerName]
 	if !ok {
 		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
 	}
