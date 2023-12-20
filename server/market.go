@@ -10,14 +10,14 @@ import (
 )
 
 type ListMarketStockResponse struct {
-	NextMarketUpdate time.Time       `json:"nextMarketUpdate"`
+	NextMarketUpdate string          `json:"nextMarketUpdate"`
 	Stock            []*game.Listing `json:"stock"`
 }
 
 // List entire market inventory.
 func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 	listings := s.manager.GetMarketStock()
-	nextUpdate := s.manager.NextUpdate
+	nextUpdate := s.manager.NextUpdate.Format(time.RFC3339)
 
 	// apply filters if requested
 	filterParam := req.URL.Query().Get("filter")

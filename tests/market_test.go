@@ -1,7 +1,9 @@
 package tests
 
 import (
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/eleniums/mining-post/client"
 	"github.com/eleniums/mining-post/server"
@@ -18,6 +20,10 @@ func Test_Integration_ListMarketStock_Success(t *testing.T) {
 	assert.NotNil(t, resp)
 
 	assert.Greater(t, len(resp.Stock), 1)
+
+	nextUpdate, _ := time.Parse(time.RFC3339, resp.NextMarketUpdate)
+	nextUpdate = nextUpdate.Local()
+	fmt.Printf("Next market update is at: %v\n", nextUpdate.Format(time.RFC1123))
 }
 
 func Test_Integration_ListMarketStock_Filtered(t *testing.T) {
@@ -38,6 +44,10 @@ func Test_Integration_ListMarketStock_Filtered(t *testing.T) {
 	assert.NotNil(t, resp)
 
 	assert.Len(t, resp.Stock, 1)
+
+	nextUpdate, _ := time.Parse(time.RFC3339, resp.NextMarketUpdate)
+	nextUpdate = nextUpdate.Local()
+	fmt.Printf("Next market update is at: %v\n", nextUpdate.Format(time.RFC1123))
 }
 
 func Test_Integration_BuyOrder_Success(t *testing.T) {
