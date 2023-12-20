@@ -12,7 +12,7 @@ const updateInterval = 10 * time.Second
 type Manager struct {
 	NextUpdate time.Time
 
-	market     *sync.Map
+	market     map[string]*Listing
 	marketLock sync.RWMutex
 	players    *sync.Map
 	playerLock *sync.Map
@@ -21,7 +21,7 @@ type Manager struct {
 
 func NewManager() *Manager {
 	manager := &Manager{
-		market:     &sync.Map{},
+		market:     map[string]*Listing{},
 		players:    &sync.Map{},
 		playerLock: &sync.Map{},
 	}
@@ -29,7 +29,7 @@ func NewManager() *Manager {
 	// create market listing
 	listings := getInitialStock()
 	for _, listing := range listings {
-		manager.market.Store(listing.Name, listing)
+		manager.market[listing.Name] = listing
 	}
 
 	// load players
@@ -101,7 +101,7 @@ func (m *Manager) update() {
 		// calculate player net worth
 		player.NetWorth = player.Money
 		for _, item := range player.Inventory {
-			if listing, ok := MapLoad[string, *Listing](m.market, item.Name); ok {
+			if listing, ok := m.market[item.Name]; ok {
 				player.NetWorth += float64(item.Quantity) * listing.SellPrice
 			}
 		}
@@ -121,18 +121,16 @@ func (m *Manager) update() {
 }
 
 func (m *Manager) adjustMarketPrices() {
-	m.market.Range(func(key, val any) bool {
-		listing := val.(*Listing)
+	for _, listing := range m.market {
 		listing.adjustMarketPrice()
-		return true
-	})
+	}
 }
 
 func (m *Manager) GetMarketStock() []*Listing {
 	m.marketLock.RLock()
 	defer m.marketLock.RUnlock()
 
-	return MapFlatten[string, *Listing](m.market)
+	return MapValues(m.market)
 }
 
 func (m *Manager) GetPlayer(name string) (*Player, error) {
@@ -167,7 +165,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	m.marketLock.RLock()
 	defer m.marketLock.RUnlock()
 
-	listing, ok := MapLoad[string, *Listing](m.market, itemName)
+	listing, ok := m.market[itemName]
 	if !ok {
 		return 0, fmt.Errorf("item not found for purchase: %s", itemName)
 	}
@@ -217,7 +215,7 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	m.marketLock.RLock()
 	defer m.marketLock.RUnlock()
 
-	listing, ok := MapLoad[string, *Listing](m.market, itemName)
+	listing, ok := m.market[itemName]
 	if !ok {
 		return 0, fmt.Errorf("item not found for sale: %s", itemName)
 	}

@@ -15,6 +15,15 @@ func MapLoad[K comparable, V any](m *sync.Map, key K) (V, bool) {
 	return result, ok
 }
 
+// Copies the values of a map into a slice, ignoring the key.
+func MapValues[K comparable, V any](m map[K]V) []V {
+	flattened := []V{}
+	for _, v := range m {
+		flattened = append(flattened, v)
+	}
+	return flattened
+}
+
 // Copies the contents of a sync.Map into an array, ignoring the key.
 func MapFlatten[K comparable, V any](m *sync.Map) []V {
 	flattened := []V{}
