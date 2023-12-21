@@ -4,12 +4,15 @@ import (
 	"net/http"
 
 	"github.com/eleniums/mining-post/game"
-	"github.com/eleniums/mining-post/models"
 )
+
+type GameInfoResponse struct {
+	Info string `json:"info"`
+}
 
 // List entire market inventory.
 func (s *Server) GameInfo(w http.ResponseWriter, req *http.Request) {
-	resp := models.GameInfoResponse{
+	resp := GameInfoResponse{
 		Info: game.InfoFile,
 	}
 

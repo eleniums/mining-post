@@ -7,8 +7,12 @@ import (
 	"time"
 
 	"github.com/eleniums/mining-post/game"
-	"github.com/eleniums/mining-post/models"
 )
+
+type ListMarketStockResponse struct {
+	NextMarketUpdate string          `json:"nextMarketUpdate"`
+	Stock            []*game.Listing `json:"stock"`
+}
 
 // List entire market inventory.
 func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
@@ -40,7 +44,7 @@ func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	resp := models.ListMarketStockResponse{
+	resp := ListMarketStockResponse{
 		NextMarketUpdate: nextUpdate,
 		Stock:            listings,
 	}
@@ -48,9 +52,20 @@ func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 	writeResponse(w, resp)
 }
 
+type BuyOrderRequest struct {
+	PlayerName string `json:"player"`
+	ItemName   string `json:"item"`
+	Quantity   int64  `json:"quantity"`
+}
+
+type BuyOrderResponse struct {
+	Cost    float64 `json:"cost"`
+	Message string  `json:"message"`
+}
+
 // Buy an item from the market.
 func (s *Server) BuyOrder(w http.ResponseWriter, req *http.Request) {
-	var in models.BuyOrderRequest
+	var in BuyOrderRequest
 	err := readBody(req, &in)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -63,7 +78,7 @@ func (s *Server) BuyOrder(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	resp := models.BuyOrderResponse{
+	resp := BuyOrderResponse{
 		Cost:    cost,
 		Message: fmt.Sprintf("Successfully purchased %d of item: %s, total cost: %.2f", in.Quantity, in.ItemName, cost),
 	}
@@ -71,9 +86,20 @@ func (s *Server) BuyOrder(w http.ResponseWriter, req *http.Request) {
 	writeResponse(w, resp)
 }
 
+type SellOrderRequest struct {
+	PlayerName string `json:"player"`
+	ItemName   string `json:"item"`
+	Quantity   int64  `json:"quantity"`
+}
+
+type SellOrderResponse struct {
+	Profit  float64 `json:"profit"`
+	Message string  `json:"message"`
+}
+
 // Sell an item on the market.
 func (s *Server) SellOrder(w http.ResponseWriter, req *http.Request) {
-	var in models.SellOrderRequest
+	var in SellOrderRequest
 	err := readBody(req, &in)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -86,7 +112,7 @@ func (s *Server) SellOrder(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	resp := models.SellOrderResponse{
+	resp := SellOrderResponse{
 		Profit:  profit,
 		Message: fmt.Sprintf("Successfully sold %d of item: %s, total profit: %.2f", in.Quantity, in.ItemName, profit),
 	}
