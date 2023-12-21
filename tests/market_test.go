@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/eleniums/mining-post/client"
-	"github.com/eleniums/mining-post/server"
+	"github.com/eleniums/mining-post/models"
 
 	assert "github.com/stretchr/testify/require"
 )
@@ -51,7 +51,7 @@ func Test_Integration_ListMarketStock_Filtered(t *testing.T) {
 }
 
 func Test_Integration_BuyOrder_Success(t *testing.T) {
-	req := server.BuyOrderRequest{
+	req := models.BuyOrderRequest{
 		PlayerName: "snelson",
 		ItemName:   "Limestone",
 		Quantity:   3,
@@ -66,7 +66,7 @@ func Test_Integration_BuyOrder_Success(t *testing.T) {
 }
 
 func Test_Integration_SellOrder_Success(t *testing.T) {
-	req := server.SellOrderRequest{
+	req := models.SellOrderRequest{
 		PlayerName: "snelson",
 		ItemName:   "Limestone",
 		Quantity:   3,
