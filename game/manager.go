@@ -15,15 +15,13 @@ type Manager struct {
 	market     map[string]*Listing
 	marketLock sync.RWMutex
 	players    map[string]*Player
-	playerLock *sync.Map
 	ticker     *time.Ticker
 }
 
 func NewManager() *Manager {
 	manager := &Manager{
-		market:     map[string]*Listing{},
-		players:    map[string]*Player{},
-		playerLock: &sync.Map{},
+		market:  map[string]*Listing{},
+		players: map[string]*Player{},
 	}
 
 	// create market listing
@@ -36,7 +34,6 @@ func NewManager() *Manager {
 	players := loadPlayers()
 	for _, player := range players {
 		manager.players[player.Name] = player
-		manager.playerLock.Store(player.Name, &sync.RWMutex{})
 	}
 
 	// randomize prices for all listings for the initial loop
@@ -78,12 +75,8 @@ func (m *Manager) update() {
 
 	// run updates for each player
 	for _, player := range m.players {
-		playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, player.Name)
-		if !ok {
-			slog.Error("error finding lock for player", "username", player.Name)
-		}
-		playerLock.Lock()
-		defer playerLock.Unlock()
+		player.lock.Lock()
+		defer player.lock.Unlock()
 
 		// give player salary
 		player.Money += player.Salary
@@ -129,33 +122,26 @@ func (m *Manager) GetMarketStock() []*Listing {
 }
 
 func (m *Manager) GetPlayer(name string) (*Player, error) {
-	playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, name)
-	if !ok {
-		return nil, fmt.Errorf("error finding lock for player: %s", name)
-	}
-	playerLock.RLock()
-	defer playerLock.RUnlock()
-
 	player, ok := m.players[name]
 	if !ok {
 		return nil, fmt.Errorf("player does not exist with name: %s", name)
 	}
 
+	// TODO: I don't think this needs to be here? Unless I convert to a model to return or something
+	player.lock.RLock()
+	defer player.lock.RUnlock()
+
 	return player, nil
 }
 
 func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (float64, error) {
-	playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, playerName)
-	if !ok {
-		return 0, fmt.Errorf("error finding lock for player: %s", playerName)
-	}
-	playerLock.Lock()
-	defer playerLock.Unlock()
-
 	player, ok := m.players[playerName]
 	if !ok {
 		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
 	}
+
+	player.lock.Lock()
+	defer player.lock.Unlock()
 
 	m.marketLock.RLock()
 	defer m.marketLock.RUnlock()
@@ -195,17 +181,13 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 }
 
 func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) (float64, error) {
-	playerLock, ok := MapLoad[string, *sync.RWMutex](m.playerLock, playerName)
-	if !ok {
-		return 0, fmt.Errorf("error finding lock for player: %s", playerName)
-	}
-	playerLock.Lock()
-	defer playerLock.Unlock()
-
 	player, ok := m.players[playerName]
 	if !ok {
 		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
 	}
+
+	player.lock.Lock()
+	defer player.lock.Unlock()
 
 	m.marketLock.RLock()
 	defer m.marketLock.RUnlock()

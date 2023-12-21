@@ -1,6 +1,8 @@
 package game
 
 import (
+	"sync"
+
 	"github.com/google/uuid"
 )
 
@@ -12,6 +14,8 @@ type Player struct {
 	Money     float64 `json:"money"`
 	Salary    float64 `json:"salary"`
 	Inventory []*Item `json:"inventory"`
+
+	lock sync.RWMutex
 }
 
 func NewPlayer(name string) *Player {
