@@ -95,7 +95,6 @@ func (m *Manager) update() {
 				player.NetWorth += float64(item.Quantity) * listing.SellPrice
 			}
 		}
-		player.NetWorth = roundFloat64(player.NetWorth, 2)
 
 		// check for player promotion
 		if ranks[player.Rank].eligibleForPromotion(player) {
@@ -152,7 +151,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	}
 
 	// determine cost of item at requested quantity
-	cost := roundFloat64(listing.BuyPrice*float64(quantity), 2)
+	cost := listing.BuyPrice * float64(quantity)
 
 	// determine if player can afford to purchase the requested quantity
 	if player.Money < cost {
@@ -198,7 +197,7 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	}
 
 	// determine profit of item at requested quantity
-	profit := roundFloat64(listing.SellPrice*float64(quantity), 2)
+	profit := listing.SellPrice * float64(quantity)
 
 	// determine if player has enough quantity to sell
 	item := player.GetItem(itemName)

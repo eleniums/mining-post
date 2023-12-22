@@ -28,6 +28,6 @@ type Listing struct {
 
 // Adjust the market price for this listing.
 func (l *Listing) adjustMarketPrice() {
-	l.BuyPrice = roundFloat64(randFloat64(l.buyRangeLow, l.buyRangeHigh), 2)
-	l.SellPrice = roundFloat64(l.BuyPrice-randFloat64(0.01, l.sellDelta), 2)
+	l.BuyPrice = randFloat64(l.buyRangeLow, l.buyRangeHigh)
+	l.SellPrice = l.BuyPrice - randFloat64(0.01, l.sellDelta)
 }
