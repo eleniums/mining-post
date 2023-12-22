@@ -10,8 +10,8 @@ import (
 )
 
 type ListMarketStockResponse struct {
-	NextMarketUpdate string          `json:"nextMarketUpdate"`
-	Stock            []*game.Listing `json:"stock"`
+	NextMarketUpdate string     `json:"nextMarketUpdate"`
+	Stock            []*Listing `json:"stock"`
 }
 
 // List entire market inventory.
@@ -44,9 +44,14 @@ func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
+	stock := make([]*Listing, len(listings))
+	for i, v := range listings {
+		stock[i] = NewListing(v)
+	}
+
 	resp := ListMarketStockResponse{
 		NextMarketUpdate: nextUpdate,
-		Stock:            listings,
+		Stock:            stock,
 	}
 
 	writeResponse(w, resp)

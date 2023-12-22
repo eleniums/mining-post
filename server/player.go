@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/eleniums/mining-post/game"
 	"github.com/go-chi/chi"
 )
 
 type GetPlayerInventoryResponse struct {
-	Player *game.Player `json:"player"`
+	Player *Player `json:"player"`
 }
 
 // List stats for player, including the entire inventory.
@@ -23,7 +22,7 @@ func (s *Server) GetPlayerInventory(w http.ResponseWriter, req *http.Request) {
 	}
 
 	resp := GetPlayerInventoryResponse{
-		Player: player,
+		Player: NewPlayer(player),
 	}
 
 	writeResponse(w, resp)
