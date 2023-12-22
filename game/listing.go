@@ -3,8 +3,8 @@ package game
 type Listing struct {
 	Resource
 
-	BuyPrice  float64 `json:"buy_price"`
-	SellPrice float64 `json:"sell_price"`
+	BuyPrice  float64
+	SellPrice float64
 
 	buyRangeLow  float64 // lowest possible buy price for resource
 	buyRangeHigh float64 // highest possible buy price for resource

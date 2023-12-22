@@ -10,7 +10,7 @@ const (
 )
 
 type Resource struct {
-	Name        string       `json:"name"`
-	Description string       `json:"description"`
-	Type        ResourceType `json:"type"`
+	Name        string
+	Description string
+	Type        ResourceType
 }

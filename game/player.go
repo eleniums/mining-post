@@ -7,13 +7,13 @@ import (
 )
 
 type Player struct {
-	Name      string  `json:"name"`
-	Title     string  `json:"title"`
-	Rank      int     `json:"-"`
-	NetWorth  float64 `json:"netWorth"`
-	Money     float64 `json:"money"`
-	Salary    float64 `json:"salary"`
-	Inventory []*Item `json:"inventory"`
+	Name      string
+	Title     string
+	Rank      int
+	NetWorth  float64
+	Money     float64
+	Salary    float64
+	Inventory []*Item
 
 	lock sync.RWMutex
 }
