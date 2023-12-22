@@ -45,8 +45,8 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Need to perf test updates with a large number of users, like 1 million users
 - [ ] Should not be able to buy or sell quantity 0 or negative
 - [x] List market should show time remaining.
-- [ ] Should round values before returning to player. I saw this happen again with money somehow... Would be nice if money was formatted as a string like `"$12.30"`
-- [ ] Need to separate data models and contract models. I tried it both ways and keeping them combined, as expected, is turning into more of a pain than mapping
+- [x] Should round values before returning to player. I saw this happen again with money somehow... Would be nice if money was formatted as a string like `"$12.30"`
+- [x] Need to separate data models and contract models. I tried it both ways and keeping them combined, as expected, is turning into more of a pain than mapping
 - [ ] Add retries to client?
 
 # Types of stock
