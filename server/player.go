@@ -8,7 +8,7 @@ import (
 )
 
 type GetPlayerInventoryResponse struct {
-	Player *Player `json:"player"`
+	Player Player `json:"player"`
 }
 
 // List stats for player, including the entire inventory.
