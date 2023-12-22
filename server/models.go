@@ -1,16 +1,18 @@
 package server
 
 import (
+	"fmt"
+
 	"github.com/eleniums/mining-post/game"
 )
 
 type Player struct {
-	Name      string  `json:"name"`
-	Title     string  `json:"title"`
-	NetWorth  float64 `json:"netWorth"`
-	Money     float64 `json:"money"`
-	Salary    float64 `json:"salary"`
-	Inventory []Item  `json:"inventory"`
+	Name      string `json:"name"`
+	Title     string `json:"title"`
+	NetWorth  string `json:"netWorth"`
+	Money     string `json:"money"`
+	Salary    string `json:"salary"`
+	Inventory []Item `json:"inventory"`
 }
 
 func NewPlayer(src *game.Player) Player {
@@ -22,9 +24,9 @@ func NewPlayer(src *game.Player) Player {
 	return Player{
 		Name:      src.Name,
 		Title:     src.Title,
-		NetWorth:  src.NetWorth,
-		Money:     src.Money,
-		Salary:    src.Salary,
+		NetWorth:  formatMoney(src.NetWorth),
+		Money:     formatMoney(src.Money),
+		Salary:    formatMoney(src.Salary),
 		Inventory: inventory,
 	}
 }
@@ -59,14 +61,18 @@ func NewItem(src *game.Item) Item {
 type Listing struct {
 	Resource
 
-	BuyPrice  float64 `json:"buy_price"`
-	SellPrice float64 `json:"sell_price"`
+	BuyPrice  string `json:"buy_price"`
+	SellPrice string `json:"sell_price"`
 }
 
 func NewListing(src *game.Listing) Listing {
 	return Listing{
 		Resource:  NewResource(src.Resource),
-		BuyPrice:  src.BuyPrice,
-		SellPrice: src.SellPrice,
+		BuyPrice:  formatMoney(src.BuyPrice),
+		SellPrice: formatMoney(src.SellPrice),
 	}
+}
+
+func formatMoney(src float64) string {
+	return fmt.Sprintf("$%.2f", src)
 }
