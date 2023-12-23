@@ -12,16 +12,18 @@ const updateInterval = 10 * time.Second
 type Manager struct {
 	NextUpdate time.Time
 
-	market     map[string]*Listing
-	marketLock sync.RWMutex
-	players    map[string]*Player
-	ticker     *time.Ticker
+	market  map[string]*Listing
+	players map[string]*Player
+
+	worldLock *sync.RWMutex
+	ticker    *time.Ticker
 }
 
 func NewManager() *Manager {
 	manager := &Manager{
-		market:  map[string]*Listing{},
-		players: map[string]*Player{},
+		market:    map[string]*Listing{},
+		players:   map[string]*Player{},
+		worldLock: &sync.RWMutex{},
 	}
 
 	// create market listing
@@ -67,8 +69,8 @@ func (m *Manager) update() {
 	startTime := time.Now()
 
 	// stop the world while updating
-	m.marketLock.Lock()
-	defer m.marketLock.Unlock()
+	m.worldLock.Lock()
+	defer m.worldLock.Unlock()
 
 	// randomize all market prices and quantities for the next round
 	m.adjustMarketPrices()
@@ -114,8 +116,8 @@ func (m *Manager) adjustMarketPrices() {
 }
 
 func (m *Manager) GetMarketStock(filters ...ListingFilter) []*Listing {
-	m.marketLock.RLock()
-	defer m.marketLock.RUnlock()
+	m.worldLock.RLock()
+	defer m.worldLock.RUnlock()
 
 	listings := MapValues(m.market)
 
@@ -157,8 +159,8 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	player.lock.Lock()
 	defer player.lock.Unlock()
 
-	m.marketLock.RLock()
-	defer m.marketLock.RUnlock()
+	m.worldLock.RLock()
+	defer m.worldLock.RUnlock()
 
 	listing, ok := m.market[itemName]
 	if !ok {
@@ -203,8 +205,8 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	player.lock.Lock()
 	defer player.lock.Unlock()
 
-	m.marketLock.RLock()
-	defer m.marketLock.RUnlock()
+	m.worldLock.RLock()
+	defer m.worldLock.RUnlock()
 
 	listing, ok := m.market[itemName]
 	if !ok {

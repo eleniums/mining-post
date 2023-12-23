@@ -15,7 +15,7 @@ type Player struct {
 	Salary    float64
 	Inventory []*Item
 
-	lock sync.RWMutex
+	lock *sync.RWMutex
 }
 
 func NewPlayer(name string) *Player {
@@ -27,6 +27,7 @@ func NewPlayer(name string) *Player {
 		Money:     50.0,
 		Salary:    10.0,
 		Inventory: []*Item{},
+		lock:      &sync.RWMutex{},
 	}
 }
 
