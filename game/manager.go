@@ -1,6 +1,7 @@
 package game
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"sync"
@@ -150,6 +151,10 @@ func (m *Manager) GetPlayer(name string) (*Player, error) {
 }
 
 func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (float64, error) {
+	if quantity <= 0 {
+		return 0, errors.New("quantity must be greater than 0")
+	}
+
 	player, ok := m.players[playerName]
 	if !ok {
 		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
@@ -196,6 +201,10 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 }
 
 func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) (float64, error) {
+	if quantity <= 0 {
+		return 0, errors.New("quantity must be greater than 0")
+	}
+
 	player, ok := m.players[playerName]
 	if !ok {
 		return 0, fmt.Errorf("player does not exist with name: %s", playerName)

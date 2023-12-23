@@ -65,6 +65,21 @@ func Test_Integration_BuyOrder_Success(t *testing.T) {
 	assert.NotNil(t, resp)
 }
 
+func Test_Integration_BuyOrder_InvalidQuantity(t *testing.T) {
+	req := server.BuyOrderRequest{
+		PlayerName: "snelson",
+		ItemName:   "Limestone",
+		Quantity:   0,
+	}
+
+	// act
+	resp, err := gameClient.BuyOrder(req)
+
+	// assert
+	assert.Error(t, err)
+	assert.Nil(t, resp)
+}
+
 func Test_Integration_SellOrder_Success(t *testing.T) {
 	req := server.SellOrderRequest{
 		PlayerName: "snelson",
@@ -78,4 +93,19 @@ func Test_Integration_SellOrder_Success(t *testing.T) {
 	// assert
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
+}
+
+func Test_Integration_SellOrder_InvalidQuantity(t *testing.T) {
+	req := server.SellOrderRequest{
+		PlayerName: "snelson",
+		ItemName:   "Limestone",
+		Quantity:   0,
+	}
+
+	// act
+	resp, err := gameClient.SellOrder(req)
+
+	// assert
+	assert.Error(t, err)
+	assert.Nil(t, resp)
 }
