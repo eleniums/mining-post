@@ -134,7 +134,7 @@ func (m *Manager) GetMarketStock(filters ...ListingFilter) []*Listing {
 		}
 	}
 
-	return listings
+	return CopySlice(listings)
 }
 
 func (m *Manager) GetPlayer(name string) (*Player, error) {
@@ -143,11 +143,10 @@ func (m *Manager) GetPlayer(name string) (*Player, error) {
 		return nil, fmt.Errorf("player does not exist with name: %s", name)
 	}
 
-	// TODO: I don't think this needs to be here? Unless I convert to a model to return or something
 	player.lock.RLock()
 	defer player.lock.RUnlock()
 
-	return player, nil
+	return Copy(player), nil
 }
 
 func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (float64, error) {
