@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/eleniums/mining-post/client"
+	"github.com/eleniums/mining-post/game"
 	"github.com/eleniums/mining-post/server"
 
 	assert "github.com/stretchr/testify/require"
@@ -29,11 +29,11 @@ func Test_Integration_ListMarketStock_Success(t *testing.T) {
 func Test_Integration_ListMarketStock_Filtered(t *testing.T) {
 	// act
 	resp, err := gameClient.ListMarketStock(
-		client.Filter{
+		game.ListingFilter{
 			Property: "Type",
 			Value:    "Commodity",
 		},
-		client.Filter{
+		game.ListingFilter{
 			Property: "Name",
 			Value:    "Limestone",
 		},

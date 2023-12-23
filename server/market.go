@@ -16,10 +16,8 @@ type ListMarketStockResponse struct {
 
 // List entire market inventory.
 func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
-	listings := s.manager.GetMarketStock()
-	nextUpdate := s.manager.NextUpdate.Format(time.RFC3339)
-
 	// apply filters if requested
+	listingFilters := []game.ListingFilter{}
 	filterParam := req.URL.Query().Get("filter")
 	if filterParam != "" {
 		filters := strings.Split(filterParam, ",")
@@ -29,20 +27,17 @@ func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 				http.Error(w, "filter must be a comma-separated list of filters in the format: property=value", http.StatusBadRequest)
 				return
 			}
-			filterType := split[0]
+			filterProperty := split[0]
 			filterValue := split[1]
-			switch filterType {
-			case FILTER_NAME:
-				listings = game.Filter(listings, func(val *game.Listing) bool {
-					return val.Name == filterValue
-				})
-			case FILTER_TYPE:
-				listings = game.Filter(listings, func(val *game.Listing) bool {
-					return string(val.Type) == filterValue
-				})
-			}
+			listingFilters = append(listingFilters, game.ListingFilter{
+				Property: filterProperty,
+				Value:    filterValue,
+			})
 		}
 	}
+
+	listings := s.manager.GetMarketStock(listingFilters...)
+	nextUpdate := s.manager.NextUpdate.Format(time.RFC3339)
 
 	stock := make([]Listing, len(listings))
 	for i, v := range listings {

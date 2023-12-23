@@ -1,5 +1,15 @@
 package game
 
+const (
+	LISTING_FILTER_NAME = "Name"
+	LISTING_FILTER_TYPE = "Type"
+)
+
+type ListingFilter struct {
+	Property string
+	Value    string
+}
+
 type Listing struct {
 	Resource
 

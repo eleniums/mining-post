@@ -113,11 +113,26 @@ func (m *Manager) adjustMarketPrices() {
 	}
 }
 
-func (m *Manager) GetMarketStock() []*Listing {
+func (m *Manager) GetMarketStock(filters ...ListingFilter) []*Listing {
 	m.marketLock.RLock()
 	defer m.marketLock.RUnlock()
 
-	return MapValues(m.market)
+	listings := MapValues(m.market)
+
+	for _, filter := range filters {
+		switch filter.Property {
+		case LISTING_FILTER_NAME:
+			listings = Filter(listings, func(val *Listing) bool {
+				return val.Name == filter.Value
+			})
+		case LISTING_FILTER_TYPE:
+			listings = Filter(listings, func(val *Listing) bool {
+				return string(val.Type) == filter.Value
+			})
+		}
+	}
+
+	return listings
 }
 
 func (m *Manager) GetPlayer(name string) (*Player, error) {

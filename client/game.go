@@ -6,13 +6,9 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/eleniums/mining-post/game"
 	"github.com/eleniums/mining-post/server"
 )
-
-type Filter struct {
-	Property string
-	Value    string
-}
 
 type GameClient struct {
 	rootURL string
@@ -35,7 +31,7 @@ func (c *GameClient) GetPlayerInventory(name string) (*server.GetPlayerInventory
 
 }
 
-func (c *GameClient) ListMarketStock(filters ...Filter) (*server.ListMarketStockResponse, error) {
+func (c *GameClient) ListMarketStock(filters ...game.ListingFilter) (*server.ListMarketStockResponse, error) {
 	queryParams := []string{}
 
 	filterParam := []string{}
