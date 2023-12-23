@@ -35,7 +35,7 @@ docker run --rm -p 9090:9090 miningpost
 - [x] Need a way to calculate net worth outside of current money (use net worth for promotions). Net worth would be value of resources, equipment, employees, land, etc.
 - [x] Add type to listings and filter capability for name and type
 - [ ] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
-- [ ] Better locking system. Helper methods maybe?
+- [x] Better locking system.
 - [ ] Need a way to save player data. Postgres or maybe just hack JSON file for now? There are some decent free embedded databases, like maybe bolt or sqlite?
 - [x] More ranks? Like amatuer and apprentice and mining engineer?
 - [x] Related to ranks, adjust salaries. Should start with a very low salary.
