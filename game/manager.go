@@ -155,11 +155,11 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
 	}
 
-	player.lock.Lock()
-	defer player.lock.Unlock()
-
 	m.worldLock.RLock()
 	defer m.worldLock.RUnlock()
+
+	player.lock.Lock()
+	defer player.lock.Unlock()
 
 	listing, ok := m.market[itemName]
 	if !ok {
@@ -201,11 +201,11 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 		return 0, fmt.Errorf("player does not exist with name: %s", playerName)
 	}
 
-	player.lock.Lock()
-	defer player.lock.Unlock()
-
 	m.worldLock.RLock()
 	defer m.worldLock.RUnlock()
+
+	player.lock.Lock()
+	defer player.lock.Unlock()
 
 	listing, ok := m.market[itemName]
 	if !ok {
