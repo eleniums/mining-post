@@ -30,3 +30,18 @@ func Filter[T any](s []T, filter func(val T) bool) []T {
 	}
 	return filtered
 }
+
+// Creates a shallow copy of the given object.
+func Copy[T any](src *T) *T {
+	new := *src
+	return &new
+}
+
+// Creates a shallow copy of the objects in a slice.
+func CopySlice[T any](src []*T) []*T {
+	new := make([]*T, len(src))
+	for i, v := range src {
+		new[i] = Copy(v)
+	}
+	return new
+}
