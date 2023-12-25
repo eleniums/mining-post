@@ -8,8 +8,8 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
-// Audit interceptor to log method calls.
-func Audit(next http.Handler) http.Handler {
+// AccessLog interceptor to log method calls.
+func AccessLog(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		start := time.Now()
 

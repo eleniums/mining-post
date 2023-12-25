@@ -73,7 +73,7 @@ func serve(srv *server.Server) {
 	r := chi.NewRouter()
 
 	// add middleware
-	r.Use(server.Audit)
+	r.Use(server.AccessLog)
 
 	// register handlers
 	r.Get("/ping", srv.Ping)
