@@ -7,13 +7,24 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
+	"math/rand"
 	"net/http"
 	"time"
+
+	"github.com/Rican7/retry"
+	"github.com/Rican7/retry/backoff"
+	"github.com/Rican7/retry/jitter"
+	"github.com/Rican7/retry/strategy"
 )
 
 const (
-	DefaultTimeout = time.Second * 20
+	DefaultTimeout  = time.Second * 20
+	MaxRetries      = 3
+	BackoffDuration = 200 * time.Millisecond
 )
+
+var generator = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 type Config struct {
 	Timeout   time.Duration
@@ -106,15 +117,41 @@ func CallHTTP(client *http.Client, method, url string, body []byte, queryParams 
 		fmt.Printf("%s %s\n\n", req.Method, req.URL)
 	}
 
-	resp, err := client.Do(req)
-	if err != nil {
-		return 0, nil, err
-	}
-	defer resp.Body.Close()
+	var resp *http.Response
+	var respBody []byte
+	retry.Retry(
+		func(attempt uint) error {
+			if attempt > 1 {
+				slog.Warn("Retrying operation", "retryCount", attempt-1, "retryMax", MaxRetries)
+			}
 
-	respBody, err := io.ReadAll(resp.Body)
+			resp, err = client.Do(req)
+			if err != nil {
+				return nil
+			}
+			defer resp.Body.Close()
+
+			respBody, err = io.ReadAll(resp.Body)
+			if err != nil {
+				return nil
+			}
+
+			// determine if operation should be retried
+			if (resp.StatusCode >= 500 && resp.StatusCode <= 599) || resp.StatusCode == http.StatusRequestTimeout {
+				slog.Warn("Retrying http operation after receiving retryable status code", "status", resp.StatusCode)
+				return errors.New("retrying http operation after receiving retryable status code")
+			}
+
+			return nil
+		},
+		strategy.Limit(MaxRetries+1), // strategy.Limit is the total number of attempts, so original attempt + max retries
+		strategy.BackoffWithJitter(
+			backoff.BinaryExponential(BackoffDuration),
+			jitter.Deviation(generator, 0.5),
+		),
+	)
 	if err != nil {
-		return 0, nil, err
+		return 0, respBody, err
 	}
 
 	// print response
