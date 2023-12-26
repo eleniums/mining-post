@@ -24,7 +24,7 @@ func AccessLog(next http.Handler) http.Handler {
 			"verb", req.Method,
 			"method", req.URL.Path,
 			"elapsed", time.Since(start),
-			"code", ww.Status(),
+			"status", ww.Status(),
 		)
 	})
 }

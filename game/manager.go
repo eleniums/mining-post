@@ -47,7 +47,7 @@ func NewManager() *Manager {
 
 // Start game engine with regular updates.
 func (m *Manager) Start() {
-	slog.Info("Initialize the game and start updates", "loop-interval", updateInterval)
+	slog.Info("Initialize the game and start updates", "loopInterval", updateInterval)
 	m.ticker = time.NewTicker(updateInterval)
 	m.NextUpdate = time.Now().Add(updateInterval).UTC()
 	go func() {
