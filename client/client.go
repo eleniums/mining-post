@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log/slog"
 	"math/rand"
 	"net/http"
 	"time"
@@ -119,10 +118,10 @@ func CallHTTP(client *http.Client, method, url string, body []byte, queryParams 
 
 	var resp *http.Response
 	var respBody []byte
-	retry.Retry(
+	retryErr := retry.Retry(
 		func(attempt uint) error {
 			if attempt > 1 {
-				slog.Warn("Retrying operation", "retryCount", attempt-1, "retryMax", MaxRetries)
+				fmt.Printf("Retrying operation, attempt %v of %v\n", attempt-1, MaxRetries)
 			}
 
 			resp, err = client.Do(req)
@@ -138,7 +137,11 @@ func CallHTTP(client *http.Client, method, url string, body []byte, queryParams 
 
 			// determine if operation should be retried
 			if (resp.StatusCode >= 500 && resp.StatusCode <= 599) || resp.StatusCode == http.StatusRequestTimeout {
-				slog.Warn("Retrying http operation after receiving retryable status code", "status", resp.StatusCode)
+				if attempt <= MaxRetries {
+					fmt.Printf("Retrying http operation after receiving retryable status code: %v\n", resp.StatusCode)
+				} else {
+					fmt.Printf("Max retries reached - operation failed with status code: %v\n\n", resp.StatusCode)
+				}
 				return errors.New("retrying http operation after receiving retryable status code")
 			}
 
@@ -150,7 +153,9 @@ func CallHTTP(client *http.Client, method, url string, body []byte, queryParams 
 			jitter.Deviation(generator, 0.5),
 		),
 	)
-	if err != nil {
+
+	// check for any errors that may have occurred during retry
+	if err != nil && retryErr == nil {
 		return 0, respBody, err
 	}
 
