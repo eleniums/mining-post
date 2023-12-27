@@ -13,6 +13,12 @@ func AccessLog(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		start := time.Now()
 
+		// log method entry
+		slog.Info("Received request",
+			"verb", req.Method,
+			"method", req.URL.Path,
+		)
+
 		// wrap the ResponseWriter so we can retrieve the response status
 		ww := middleware.NewWrapResponseWriter(w, req.ProtoMajor)
 
