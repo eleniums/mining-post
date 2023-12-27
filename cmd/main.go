@@ -17,7 +17,7 @@ import (
 
 	"github.com/eleniums/mining-post/game"
 	"github.com/eleniums/mining-post/server"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 )
 
 var (
