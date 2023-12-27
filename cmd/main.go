@@ -79,6 +79,7 @@ func serve(srv *server.Server) {
 
 	// add middleware
 	r.Use(server.AccessLog)
+	r.Use(middleware.Recoverer)
 	r.Use(middleware.RequestSize(MaxRequestSizeBytes))
 
 	// register handlers
