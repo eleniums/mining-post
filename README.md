@@ -34,11 +34,11 @@ docker run --rm -p 9090:9090 miningpost
 ## TODOs
 - [x] Need a way to calculate net worth outside of current money (use net worth for promotions). Net worth would be value of resources, equipment, employees, land, etc.
 - [x] Add type to listings and filter capability for name and type
-- [ ] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
 - [x] Better locking system.
 - [ ] Need a way to save player data. Postgres or maybe just hack JSON file for now? There are some decent free embedded databases, like maybe bolt or sqlite? Keep everything in memory and just save at the end of every update. Works for now, but won't allow scaling horizontally.
 - [x] More ranks? Like amatuer and apprentice and mining engineer?
 - [x] Related to ranks, adjust salaries. Should start with a very low salary.
+- [ ] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
 - [ ] Maybe a prospect option to find more land?
 - [ ] Put instructions in a markdown file and use embed to add to handler
@@ -49,9 +49,9 @@ docker run --rm -p 9090:9090 miningpost
 - [x] Need to separate data models and contract models. I tried it both ways and keeping them combined, as expected, is turning into more of a pain than mapping
 - [x] Add retries to client. Use Rican7 package.
 - [x] Add middleware to limit request size. Is there pre-existing middleware in the chi library? Write it myself?
-- [ ] Add rate limiting for requests. Is there pre-existing middleware in the chi library? Write it myself with semaphore?
 - [ ] Create dummy auth endpoint that generates a JWT regardless of password.
 - [ ] Create authorizer middleware to properly validate JWT. Client ID should be passed in headers and/or context. Is there anything out there I can use? Or just write it myself?
+- [ ] Add rate limiting for requests. Is there pre-existing middleware in the chi library? (chi library only has throttling for total number of requests, not per user) Write it myself with semaphore? (need client id in headers/context from authorizer first)
 
 # Types of stock
 - Commodity

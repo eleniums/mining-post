@@ -78,9 +78,10 @@ func serve(srv *server.Server) {
 	r := chi.NewRouter()
 
 	// add middleware
-	r.Use(server.AccessLog)
-	r.Use(middleware.Recoverer)
-	r.Use(middleware.RequestSize(MaxRequestSizeBytes))
+	r.Use(server.AccessLog)                            // log entry and exit logs for methods
+	r.Use(middleware.Recoverer)                        // recover from panics
+	r.Use(middleware.CleanPath)                        // clean url paths
+	r.Use(middleware.RequestSize(MaxRequestSizeBytes)) // limit request size
 
 	// register handlers
 	r.Get("/ping", srv.Ping)
