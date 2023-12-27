@@ -54,7 +54,7 @@ func Test_Integration_BuyOrder_Success(t *testing.T) {
 	req := server.BuyOrderRequest{
 		PlayerName: "snelson",
 		ItemName:   "Limestone",
-		Quantity:   3,
+		Quantity:   2,
 	}
 
 	// act
@@ -84,7 +84,7 @@ func Test_Integration_SellOrder_Success(t *testing.T) {
 	req := server.SellOrderRequest{
 		PlayerName: "snelson",
 		ItemName:   "Limestone",
-		Quantity:   3,
+		Quantity:   2,
 	}
 
 	// act
