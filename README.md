@@ -48,7 +48,7 @@ docker run --rm -p 9090:9090 miningpost
 - [x] Should round values before returning to player. I saw this happen again with money somehow... Would be nice if money was formatted as a string like `"$12.30"`
 - [x] Need to separate data models and contract models. I tried it both ways and keeping them combined, as expected, is turning into more of a pain than mapping
 - [x] Add retries to client. Use Rican7 package.
-- [ ] Add middleware to limit request size. Is there pre-existing middleware in the chi library? Write it myself?
+- [x] Add middleware to limit request size. Is there pre-existing middleware in the chi library? Write it myself?
 - [ ] Add rate limiting for requests. Is there pre-existing middleware in the chi library? Write it myself with semaphore?
 - [ ] Create dummy auth endpoint that generates a JWT regardless of password.
 - [ ] Create authorizer middleware to properly validate JWT. Client ID should be passed in headers and/or context. Is there anything out there I can use? Or just write it myself?

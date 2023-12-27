@@ -18,6 +18,11 @@ import (
 	"github.com/eleniums/mining-post/game"
 	"github.com/eleniums/mining-post/server"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+)
+
+const (
+	MaxRequestSizeBytes = 1000
 )
 
 var (
@@ -74,6 +79,7 @@ func serve(srv *server.Server) {
 
 	// add middleware
 	r.Use(server.AccessLog)
+	r.Use(middleware.RequestSize(MaxRequestSizeBytes))
 
 	// register handlers
 	r.Get("/ping", srv.Ping)
