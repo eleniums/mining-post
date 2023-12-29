@@ -15,10 +15,10 @@ type GameClient struct {
 	client  *HTTPClient
 }
 
-func NewGameClient(url string) *GameClient {
+func NewGameClient(url string, c ...Config) *GameClient {
 	return &GameClient{
 		rootURL: url,
-		client:  NewHTTPClient(),
+		client:  NewHTTPClient(c...),
 	}
 }
 

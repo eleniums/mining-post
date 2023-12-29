@@ -49,7 +49,7 @@ func run(m *testing.M) int {
 	} else {
 		baseURI = fmt.Sprintf("http://%s:%s", httpHost, httpPort)
 	}
-	gameClient = client.NewGameClient(baseURI)
+	gameClient = client.NewGameClient(baseURI, config)
 
 	// run tests
 	result := m.Run()
