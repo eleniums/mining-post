@@ -56,8 +56,8 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Create authorizer middleware to properly validate JWT. Client ID should be passed in headers and/or context. Is there anything out there I can use? Or just write it myself?
 - [ ] Add rate limiting for requests. Is there pre-existing middleware in the chi library? (chi library only has throttling for total number of requests, not per user) Write it myself with semaphore? (need client id in headers/context from authorizer first)
 - [ ] Should I add middleware to allowlist certain content types and encodings? (go-chi has AllowContentType and AllowContentEncoding)
-- [ ] Enforce TLS 1.2 or greater on the server
-- [ ] Run locally using TLS with test certs
+- [x] Enforce TLS 1.2 or greater on the server (already enforced)
+- [x] Run locally using TLS with test certs (generated new test certs good for 100 years that work with 127.0.0.1. Had to do some weird stuff to add the IP SAN for 127.0.0.1 and insecureskipverify needs to be true since certs are self-signed)
 
 Potential options for rate limiting (besides writing it myself) that can limit per user per unit of time (like no more than 60 requests per minute for snelson):
 - https://github.com/didip/tollbooth
