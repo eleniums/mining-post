@@ -80,7 +80,7 @@ func (s *Server) BuyOrder(w http.ResponseWriter, req *http.Request) {
 
 	resp := BuyOrderResponse{
 		Cost:    cost,
-		Message: fmt.Sprintf("Successfully purchased %d of item: %s, total cost: %.2f", in.Quantity, in.ItemName, cost),
+		Message: fmt.Sprintf("Successfully purchased %d of item: %s, total cost: $%.2f", in.Quantity, in.ItemName, cost),
 	}
 
 	writeResponse(w, resp)
@@ -114,7 +114,7 @@ func (s *Server) SellOrder(w http.ResponseWriter, req *http.Request) {
 
 	resp := SellOrderResponse{
 		Profit:  profit,
-		Message: fmt.Sprintf("Successfully sold %d of item: %s, total profit: %.2f", in.Quantity, in.ItemName, profit),
+		Message: fmt.Sprintf("Successfully sold %d of item: %s, total profit: $%.2f", in.Quantity, in.ItemName, profit),
 	}
 
 	writeResponse(w, resp)
