@@ -15,12 +15,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/eleniums/mining-post/data"
 	"github.com/eleniums/mining-post/game"
 	"github.com/eleniums/mining-post/server"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-
-	bolt "go.etcd.io/bbolt"
 )
 
 const (
@@ -65,7 +64,8 @@ func main() {
 	slog.Debug("flags", flags...)
 
 	// open a connection to the database
-	db, err := bolt.Open(dbPath, 0600, nil)
+	db := data.NewBoltDB()
+	err := db.Open(dbPath)
 	if err != nil {
 		slog.Error("Failed to open database", game.ErrAttr(err))
 		os.Exit(1)
@@ -73,7 +73,7 @@ func main() {
 	defer db.Close()
 
 	// initialize the game manager
-	manager := game.NewManager()
+	manager := game.NewManager(db)
 	manager.Start()
 
 	// create the server
