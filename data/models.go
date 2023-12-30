@@ -11,8 +11,6 @@ type Player struct {
 }
 
 type Item struct {
-	Name        string
-	Description string
-	Type        string
-	Quantity    int64
+	Name     string
+	Quantity int64
 }

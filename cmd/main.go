@@ -73,7 +73,11 @@ func main() {
 	defer db.Close()
 
 	// initialize the game manager
-	manager := game.NewManager(db)
+	manager, err := game.NewManager(db)
+	if err != nil {
+		slog.Error("Failed to create game manager", game.ErrAttr(err))
+		os.Exit(1)
+	}
 	manager.Start()
 
 	// create the server

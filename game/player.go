@@ -3,6 +3,7 @@ package game
 import (
 	"sync"
 
+	"github.com/eleniums/mining-post/data"
 	"github.com/google/uuid"
 )
 
@@ -31,6 +32,22 @@ func NewPlayer(name string) *Player {
 	}
 }
 
+func NewPlayerFromDB(dbPlayer data.Player) *Player {
+	player := NewPlayer(dbPlayer.Name)
+	player.Title = dbPlayer.Title
+	player.Rank = dbPlayer.Rank
+	player.NetWorth = dbPlayer.NetWorth
+	player.Money = dbPlayer.Money
+	player.Salary = dbPlayer.Salary
+
+	player.Inventory = make([]*Item, len(dbPlayer.Inventory))
+	for i, dbItem := range dbPlayer.Inventory {
+		player.Inventory[i] = NewItemFromDB(dbItem)
+	}
+
+	return player
+}
+
 // Add item to player's inventory.
 func (p *Player) AddItem(item *Item) {
 	p.Inventory = append(p.Inventory, item)
@@ -57,7 +74,7 @@ func (p *Player) RemoveItem(itemName string) {
 }
 
 // Load players into memory.
-func loadPlayers() []*Player {
+func loadTestPlayers() []*Player {
 	// TODO: these are for testing purposes. Need to remove later.
 	players := []*Player{
 		NewPlayer("bbanner"),

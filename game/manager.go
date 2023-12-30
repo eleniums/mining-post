@@ -22,7 +22,7 @@ type Manager struct {
 	db Storage
 }
 
-func NewManager(db Storage) *Manager {
+func NewManager(db Storage) (*Manager, error) {
 	manager := &Manager{
 		market:    map[string]*Listing{},
 		players:   map[string]*Player{},
@@ -30,22 +30,24 @@ func NewManager(db Storage) *Manager {
 		db:        db,
 	}
 
-	// create market listing
-	listings := getInitialStock()
-	for _, listing := range listings {
-		manager.market[listing.Name] = listing
-	}
+	// create market listings
+	manager.market = stockMasterList
 
-	// load players
-	players := loadPlayers()
-	for _, player := range players {
-		manager.players[player.Name] = player
+	// load dbPlayers
+	dbPlayers, err := manager.db.LoadPlayers()
+	if err != nil {
+		return nil, err
+	}
+	//players := loadTestPlayers() // TODO: remove
+	for _, dbPlayer := range dbPlayers {
+		player := NewPlayer(dbPlayer.Name)
+		manager.players[dbPlayer.Name] = player
 	}
 
 	// randomize prices for all listings for the initial loop
 	manager.adjustMarketPrices()
 
-	return manager
+	return manager, nil
 }
 
 // Start game engine with regular updates.
