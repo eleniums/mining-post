@@ -19,5 +19,5 @@ then
     docker start $CONTAINER_NAME || docker run -p $DB_PORT:$DB_PORT --name $CONTAINER_NAME -e POSTGRES_PASSWORD=${DB_PASSWORD} -d postgres
 fi
 
-# display mongo container status
+# display container status
 docker ps -a | grep $CONTAINER_NAME
