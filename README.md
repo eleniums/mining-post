@@ -42,7 +42,7 @@ docker run --rm -p 9090:9090 miningpost
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
 - [ ] Maybe a prospect option to find more land?
 - [ ] Add high score table that lists the top ten players by net worth
-- [ ] Put instructions in a markdown file and use embed to add to handler
+- [x] Put instructions in a markdown file and use embed to add to handler
 - [ ] Need something to autogenerate developer docs. Swagger? OpenAPI?
 - [ ] Host developer docs on public endpoint
 - [ ] Need to perf test updates with a large number of users, like 1 million users
