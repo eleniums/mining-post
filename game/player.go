@@ -58,6 +58,7 @@ func (p *Player) RemoveItem(itemName string) {
 
 // Load players into memory.
 func loadPlayers() []*Player {
+	// TODO: these are for testing purposes. Need to remove later.
 	players := []*Player{
 		NewPlayer("bbanner"),
 		NewPlayer("tstark"),

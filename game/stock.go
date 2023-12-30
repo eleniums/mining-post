@@ -1,6 +1,6 @@
 package game
 
-// Get default list of all stock and prices.
+// Get list of all stock with price ranges.
 func getInitialStock() []*Listing {
 	return []*Listing{
 		{
