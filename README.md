@@ -59,7 +59,7 @@ docker run --rm -p 9090:9090 miningpost
 - [x] Enforce TLS 1.2 or greater on the server (already enforced)
 - [x] Run locally using TLS with test certs (generated new test certs good for 100 years that work with 127.0.0.1. Had to do some weird stuff to add the IP SAN for 127.0.0.1 and insecureskipverify needs to be true since certs are self-signed)
 
-Potential options for rate limiting (besides writing it myself) that can limit per user per unit of time (like no more than 60 requests per minute for snelson):
+Potential options for rate limiting (besides writing it myself) that can limit per user per unit of time (like no more than 60 requests per minute for player "tstark"):
 - https://github.com/didip/tollbooth
 - https://www.alexedwards.net/blog/how-to-rate-limit-http-requests
 - https://blog.logrocket.com/rate-limiting-go-application/

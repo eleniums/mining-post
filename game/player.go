@@ -59,7 +59,7 @@ func (p *Player) RemoveItem(itemName string) {
 // Load players into memory.
 func loadPlayers() []*Player {
 	players := []*Player{
-		NewPlayer("snelson"),
+		NewPlayer("bbanner"),
 		NewPlayer("tstark"),
 		NewPlayer("hhughes"),
 		NewPlayer("dhayter"),

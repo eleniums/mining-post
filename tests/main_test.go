@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	testPlayer = "snelson"
+	testPlayer = "tstark"
 )
 
 var (
