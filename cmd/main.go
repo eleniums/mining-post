@@ -35,7 +35,7 @@ var (
 var (
 	httpHost  string
 	httpPort  string
-	dbURI     string
+	dbPath    string
 	certFile  string
 	keyFile   string
 	logLevel  string
@@ -46,7 +46,7 @@ func main() {
 	// parse configuration - flags have highest priority, then env vars, and then defaults
 	flag.StringVar(&httpHost, "http-host", getEnvStr("HTTP_HOST", "127.0.0.1"), "HTTP_HOST: host to serve endpoint on")
 	flag.StringVar(&httpPort, "http-port", getEnvStr("HTTP_PORT", "9090"), "HTTP_PORT: port to serve endpoint on")
-	flag.StringVar(&dbURI, "db-uri", getEnvStr("DB_URI", "game.db"), "DB_URI: connection string to database")
+	flag.StringVar(&dbPath, "db-path", getEnvStr("DB_PATH", "game.db"), "DB_PATH: full path to database file")
 	flag.StringVar(&certFile, "tls-cert-file", getEnvStr("TLS_CERT_FILE", ""), "TLS_CERT_FILE: cert file for enabling a TLS connection")
 	flag.StringVar(&keyFile, "tls-key-file", getEnvStr("TLS_KEY_FILE", ""), "TLS_KEY_FILE: key file for enabling a TLS connection")
 	flag.StringVar(&logLevel, "log-level", getEnvStr("LOG_LEVEL", "info"), "LOG_LEVEL: level to use for logs (debug|info|warn|error)")
@@ -65,7 +65,7 @@ func main() {
 	slog.Debug("flags", flags...)
 
 	// open a connection to the database
-	db, err := bolt.Open(dbURI, 0600, nil)
+	db, err := bolt.Open(dbPath, 0600, nil)
 	if err != nil {
 		slog.Error("Failed to open database", game.ErrAttr(err))
 		os.Exit(1)
