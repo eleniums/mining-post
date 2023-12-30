@@ -18,13 +18,16 @@ type Manager struct {
 
 	worldLock *sync.RWMutex
 	ticker    *time.Ticker
+
+	db Storage
 }
 
-func NewManager() *Manager {
+func NewManager(db Storage) *Manager {
 	manager := &Manager{
 		market:    map[string]*Listing{},
 		players:   map[string]*Player{},
 		worldLock: &sync.RWMutex{},
+		db:        db,
 	}
 
 	// create market listing
@@ -106,6 +109,10 @@ func (m *Manager) update() {
 			slog.Info("player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
 		}
 	}
+
+	// TODO: save everything here
+	// TODO: I think I only need to save player data?
+	// TODO: which embedded db to use? Do I need relational or can I get away with NoSQL?
 
 	slog.Info("Game update finished", "elapsed", time.Since(startTime))
 }
