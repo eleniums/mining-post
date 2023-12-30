@@ -1,5 +1,6 @@
 package game
 
+// Master list of all resources used in the game. Modifying this map or an individual listing will affect all players.
 var stockMasterList = map[string]*Listing{
 	"Limestone": {
 		Resource: Resource{

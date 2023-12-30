@@ -32,6 +32,7 @@ func NewPlayer(name string) *Player {
 	}
 }
 
+// Map a database player to a game player.
 func NewPlayerFromDB(dbPlayer data.Player) *Player {
 	player := NewPlayer(dbPlayer.Name)
 	player.Title = dbPlayer.Title
@@ -46,6 +47,25 @@ func NewPlayerFromDB(dbPlayer data.Player) *Player {
 	}
 
 	return player
+}
+
+// Map game player to a database player.
+func (p *Player) ToDB() data.Player {
+	dbPlayer := data.Player{
+		Name:     p.Name,
+		Title:    p.Title,
+		Rank:     p.Rank,
+		NetWorth: p.NetWorth,
+		Money:    p.Money,
+		Salary:   p.Salary,
+	}
+
+	dbPlayer.Inventory = make([]data.Item, len(p.Inventory))
+	for i, item := range p.Inventory {
+		dbPlayer.Inventory[i] = item.ToDB()
+	}
+
+	return dbPlayer
 }
 
 // Add item to player's inventory.
@@ -73,7 +93,7 @@ func (p *Player) RemoveItem(itemName string) {
 	}
 }
 
-// Load players into memory.
+// Returns some fake players to test with.
 func loadTestPlayers() []*Player {
 	// TODO: these are for testing purposes. Need to remove later.
 	players := []*Player{

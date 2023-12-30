@@ -30,3 +30,11 @@ func NewItemFromDB(dbItem data.Item) *Item {
 	item.Quantity = dbItem.Quantity
 	return item
 }
+
+// Map game item to a database item.
+func (i *Item) ToDB() data.Item {
+	return data.Item{
+		Name:     i.Name,
+		Quantity: i.Quantity,
+	}
+}

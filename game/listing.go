@@ -10,6 +10,7 @@ type ListingFilter struct {
 	Value    string
 }
 
+// Represents a listing on the market.
 type Listing struct {
 	Resource
 

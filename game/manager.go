@@ -110,11 +110,13 @@ func (m *Manager) update() {
 			player.Title = ranks[player.Rank].Name
 			slog.Info("player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
 		}
-	}
 
-	// TODO: save everything here
-	// TODO: I think I only need to save player data?
-	// TODO: which embedded db to use? Do I need relational or can I get away with NoSQL?
+		// last of all, save player data
+		err := m.db.SavePlayer(player.ToDB())
+		if err != nil {
+			slog.Error("Failed to save player data", "username", player.Name, ErrAttr(err))
+		}
+	}
 
 	slog.Info("Game update finished", "elapsed", time.Since(startTime))
 }
