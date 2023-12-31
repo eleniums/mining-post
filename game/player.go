@@ -1,7 +1,6 @@
 package game
 
 import (
-	"strconv"
 	"sync"
 
 	"github.com/eleniums/mining-post/data"
@@ -104,9 +103,9 @@ func loadTestPlayers() []*Player {
 	}
 
 	// TODO: add some random other players for perf testing
-	for i := 0; i < 1_000; i++ {
-		players = append(players, NewPlayer(strconv.Itoa(i)))
-	}
+	// for i := 0; i < 1_000; i++ {
+	// 	players = append(players, NewPlayer(strconv.Itoa(i)))
+	// }
 
 	return players
 }

@@ -39,7 +39,7 @@ func NewManager(db Storage) (*Manager, error) {
 		return nil, err
 	}
 	for _, dbPlayer := range dbPlayers {
-		player := NewPlayer(dbPlayer.Name)
+		player := NewPlayerFromDB(dbPlayer)
 		manager.players[dbPlayer.Name] = player
 	}
 
