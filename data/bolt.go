@@ -71,18 +71,20 @@ func (b *BoltDB) LoadPlayers() ([]Player, error) {
 	return players, nil
 }
 
-func (b *BoltDB) SavePlayer(player Player) error {
+func (b *BoltDB) SavePlayers(players []Player) error {
 	err := b.DB.Update(func(tx *bolt.Tx) error {
 		playersBucket := tx.Bucket([]byte(playersBucketName))
 
-		serialized, err := json.Marshal(player)
-		if err != nil {
-			return err
-		}
+		for _, player := range players {
+			serialized, err := json.Marshal(player)
+			if err != nil {
+				return err
+			}
 
-		err = playersBucket.Put([]byte(player.Name), serialized)
-		if err != nil {
-			return err
+			err = playersBucket.Put([]byte(player.Name), serialized)
+			if err != nil {
+				return err
+			}
 		}
 
 		return nil

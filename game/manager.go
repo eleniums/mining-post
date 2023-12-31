@@ -6,6 +6,8 @@ import (
 	"log/slog"
 	"sync"
 	"time"
+
+	"github.com/eleniums/mining-post/data"
 )
 
 const updateInterval = 10 * time.Second
@@ -79,6 +81,8 @@ func (m *Manager) Stop() error {
 
 // Update happens on a regular time interval. This is the main game loop.
 func (m *Manager) update() {
+	slog.Info("Game update starting...")
+
 	startTime := time.Now()
 
 	// stop the world while updating
@@ -89,6 +93,8 @@ func (m *Manager) update() {
 	m.adjustMarketPrices()
 
 	// run updates for each player
+	playerSaveData := make([]data.Player, len(m.players))
+	playerSaveIndex := 0
 	for _, player := range m.players {
 		player.lock.Lock()
 		defer player.lock.Unlock()
@@ -115,14 +121,18 @@ func (m *Manager) update() {
 		if ranks[player.Rank].eligibleForPromotion(player) {
 			player.Rank++
 			player.Title = ranks[player.Rank].Name
-			slog.Info("player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
+			slog.Info("Player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
 		}
 
-		// last of all, save player data
-		err := m.db.SavePlayer(player.ToDB())
-		if err != nil {
-			slog.Error("Failed to save player data", "username", player.Name, ErrAttr(err))
-		}
+		// prepare player data to be saved
+		playerSaveData[playerSaveIndex] = player.ToDB()
+		playerSaveIndex++
+	}
+
+	// save all player data
+	err := m.db.SavePlayers(playerSaveData)
+	if err != nil {
+		slog.Error("Failed to save player data", ErrAttr(err))
 	}
 
 	slog.Info("Game update finished", "playerCount", len(m.players), "elapsed", time.Since(startTime))

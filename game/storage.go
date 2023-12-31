@@ -8,5 +8,5 @@ type Storage interface {
 	Open(conn string) error
 	Close() error
 	LoadPlayers() ([]data.Player, error)
-	SavePlayer(player data.Player) error
+	SavePlayers(players []data.Player) error
 }
