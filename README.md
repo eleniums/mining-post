@@ -64,7 +64,7 @@ If this project was going to be deployed and made available to the public, a mor
 
 ## Technical TODOs
 - [x] Better locking system.
-- [ ] Need a way to save player data. Postgres or maybe just hack JSON file for now? There are some decent free embedded databases, like maybe bolt or sqlite? Keep everything in memory and just save at the end of every update. Works for now, but won't allow scaling horizontally.
+- [x] Need a way to save player data. Postgres or maybe just hack JSON file for now? There are some decent free embedded databases, like maybe bolt or sqlite? Keep everything in memory and just save at the end of every update. Works for now, but won't allow scaling horizontally.
 - [ ] Need something to autogenerate developer docs. Swagger? OpenAPI?
 - [ ] Host developer docs on public endpoint
 - [ ] Need to perf test updates with a large number of users, like 1 million users
