@@ -15,6 +15,8 @@ const updateInterval = 10 * time.Second
 type Manager struct {
 	NextUpdate time.Time
 
+	startTime time.Time
+
 	market  map[string]*Listing
 	players map[string]*Player
 
@@ -26,6 +28,7 @@ type Manager struct {
 
 func NewManager(db Storage) (*Manager, error) {
 	manager := &Manager{
+		startTime: time.Now(),
 		market:    map[string]*Listing{},
 		players:   map[string]*Player{},
 		worldLock: &sync.RWMutex{},
@@ -81,7 +84,7 @@ func (m *Manager) Stop() error {
 
 // Update happens on a regular time interval. This is the main game loop.
 func (m *Manager) update() {
-	slog.Info("Game update starting...")
+	slog.Info("Game update starting...", "serverStarted", m.startTime.UTC(), "serverUptime", time.Since(m.startTime))
 
 	startTime := time.Now()
 
