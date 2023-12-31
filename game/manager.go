@@ -124,6 +124,7 @@ func (m *Manager) update() {
 		if ranks[player.Rank].eligibleForPromotion(player) {
 			player.Rank++
 			player.Title = ranks[player.Rank].Name
+			player.Salary = ranks[player.Rank].Salary
 			slog.Info("Player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
 		}
 
