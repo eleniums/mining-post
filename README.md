@@ -72,8 +72,9 @@ If this project was going to be deployed and made available to the public, a mor
 - [x] Add retries to client. Use Rican7 package.
 - [x] Add middleware to limit request size. Is there pre-existing middleware in the chi library? Write it myself?
 - [ ] Add middleware for request id. Add request id to all logs for a transaction. Maybe add a helper function like I have for errors, requestIDAttr?
-- [ ] Create dummy auth endpoint that generates a JWT regardless of password.
+- [ ] Create dummy auth endpoint that generates a JWT regardless of password. (/game/signup to create an account in the accounts db bucket. /game/token to get an access token.)
 - [ ] Create authorizer middleware to properly validate JWT. Client ID should be passed in headers and/or context. Is there anything out there I can use? Or just write it myself?
+- [ ] All /game endpoints need to be public, no auth. Everything else should be protected by auth.
 - [ ] Add rate limiting for requests. Is there pre-existing middleware in the chi library? (chi library only has throttling for total number of requests, not per user) Write it myself with semaphore? (need client id in headers/context from authorizer first)
 - [ ] Should I add middleware to allowlist certain content types and encodings? (go-chi has AllowContentType and AllowContentEncoding)
 - [x] Enforce TLS 1.2 or greater on the server (already enforced)
