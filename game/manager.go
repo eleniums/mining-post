@@ -33,15 +33,22 @@ func NewManager(db Storage) (*Manager, error) {
 	// create market listings
 	manager.market = stockMasterList
 
-	// load dbPlayers
+	// load player data from database
 	dbPlayers, err := manager.db.LoadPlayers()
 	if err != nil {
 		return nil, err
 	}
-	//players := loadTestPlayers() // TODO: remove
 	for _, dbPlayer := range dbPlayers {
 		player := NewPlayer(dbPlayer.Name)
 		manager.players[dbPlayer.Name] = player
+	}
+
+	// add in test users if they don't already exist
+	testPlayers := loadTestPlayers()
+	for _, player := range testPlayers {
+		if _, ok := manager.players[player.Name]; !ok {
+			manager.players[player.Name] = player
+		}
 	}
 
 	// randomize prices for all listings for the initial loop
@@ -118,7 +125,7 @@ func (m *Manager) update() {
 		}
 	}
 
-	slog.Info("Game update finished", "elapsed", time.Since(startTime))
+	slog.Info("Game update finished", "playerCount", len(m.players), "elapsed", time.Since(startTime))
 }
 
 func (m *Manager) adjustMarketPrices() {
