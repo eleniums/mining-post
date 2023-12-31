@@ -55,7 +55,7 @@ If this project was going to be deployed and made available to the public, a mor
 - [x] Related to ranks, adjust salaries. Should start with a very low salary.
 - [ ] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
-- [ ] Maybe a prospect option to find more land?
+- [ ] Maybe a prospect option to find more land? Call the land claims and they are non-producing unless you dig? Land can be built into mines?
 - [ ] Add high score table that lists the top ten players by net worth
 - [x] Put instructions in a markdown file and use embed to add to handler
 - [x] Should not be able to buy or sell quantity 0 or negative
@@ -71,6 +71,7 @@ If this project was going to be deployed and made available to the public, a mor
 - [x] Need to separate data models and contract models. I tried it both ways and keeping them combined, as expected, is turning into more of a pain than mapping
 - [x] Add retries to client. Use Rican7 package.
 - [x] Add middleware to limit request size. Is there pre-existing middleware in the chi library? Write it myself?
+- [ ] Add middleware for request id. Add request id to all logs for a transaction. Maybe add a helper function like I have for errors, requestIDAttr?
 - [ ] Create dummy auth endpoint that generates a JWT regardless of password.
 - [ ] Create authorizer middleware to properly validate JWT. Client ID should be passed in headers and/or context. Is there anything out there I can use? Or just write it myself?
 - [ ] Add rate limiting for requests. Is there pre-existing middleware in the chi library? (chi library only has throttling for total number of requests, not per user) Write it myself with semaphore? (need client id in headers/context from authorizer first)
