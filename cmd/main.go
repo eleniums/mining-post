@@ -110,6 +110,10 @@ func serve(srv *server.Server) {
 		r.Post("/buy", srv.BuyOrder)
 		r.Post("/sell", srv.SellOrder)
 	})
+	r.Route("/action", func(r chi.Router) {
+		r.Post("/dig", srv.DigAction)
+		r.Post("/prospect", srv.ProspectAction)
+	})
 
 	// create http server
 	s := &http.Server{
