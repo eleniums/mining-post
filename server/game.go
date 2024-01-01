@@ -10,7 +10,7 @@ type GameInfoResponse struct {
 	Info string `json:"info"`
 }
 
-// List entire market inventory.
+// Retrieve information about the game.
 func (s *Server) GameInfo(w http.ResponseWriter, req *http.Request) {
 	resp := GameInfoResponse{
 		Info: game.InfoFile,

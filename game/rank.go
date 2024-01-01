@@ -7,6 +7,7 @@ type Rank struct {
 	eligibleForPromotion func(player *Player) bool
 }
 
+// Master list of all ranks with associated salaries.
 var ranks = []Rank{
 	{
 		Name:   "Amateur Miner L1",

@@ -15,6 +15,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/eleniums/mining-post/data"
 	"github.com/eleniums/mining-post/game"
 	"github.com/eleniums/mining-post/server"
 	"github.com/go-chi/chi/v5"
@@ -33,7 +34,7 @@ var (
 var (
 	httpHost  string
 	httpPort  string
-	dbURI     string
+	dbConn    string
 	certFile  string
 	keyFile   string
 	logLevel  string
@@ -44,7 +45,7 @@ func main() {
 	// parse configuration - flags have highest priority, then env vars, and then defaults
 	flag.StringVar(&httpHost, "http-host", getEnvStr("HTTP_HOST", "127.0.0.1"), "HTTP_HOST: host to serve endpoint on")
 	flag.StringVar(&httpPort, "http-port", getEnvStr("HTTP_PORT", "9090"), "HTTP_PORT: port to serve endpoint on")
-	flag.StringVar(&dbURI, "db-uri", getEnvStr("DB_URI", ""), "DB_URI: connection string to database")
+	flag.StringVar(&dbConn, "db-conn", getEnvStr("DB_CONN", "game.db"), "DB_CONN: connection string for database")
 	flag.StringVar(&certFile, "tls-cert-file", getEnvStr("TLS_CERT_FILE", ""), "TLS_CERT_FILE: cert file for enabling a TLS connection")
 	flag.StringVar(&keyFile, "tls-key-file", getEnvStr("TLS_KEY_FILE", ""), "TLS_KEY_FILE: key file for enabling a TLS connection")
 	flag.StringVar(&logLevel, "log-level", getEnvStr("LOG_LEVEL", "info"), "LOG_LEVEL: level to use for logs (debug|info|warn|error)")
@@ -62,8 +63,21 @@ func main() {
 	})
 	slog.Debug("flags", flags...)
 
+	// open a connection to the database
+	db := data.NewBoltDB()
+	err := db.Open(dbConn)
+	if err != nil {
+		slog.Error("Failed to open database", game.ErrAttr(err))
+		os.Exit(1)
+	}
+	defer db.Close()
+
 	// initialize the game manager
-	manager := game.NewManager()
+	manager, err := game.NewManager(db)
+	if err != nil {
+		slog.Error("Failed to create game manager", game.ErrAttr(err))
+		os.Exit(1)
+	}
 	manager.Start()
 
 	// create the server
@@ -95,6 +109,10 @@ func serve(srv *server.Server) {
 		r.Get("/stock", srv.ListMarketStock)
 		r.Post("/buy", srv.BuyOrder)
 		r.Post("/sell", srv.SellOrder)
+	})
+	r.Route("/action", func(r chi.Router) {
+		r.Post("/dig", srv.DigAction)
+		r.Post("/prospect", srv.ProspectAction)
 	})
 
 	// create http server

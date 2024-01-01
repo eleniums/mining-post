@@ -11,7 +11,7 @@ type GetPlayerInventoryResponse struct {
 	Player Player `json:"player"`
 }
 
-// List stats for player, including the entire inventory.
+// List stats for player, including their entire inventory.
 func (s *Server) GetPlayerInventory(w http.ResponseWriter, req *http.Request) {
 	playerName := chi.URLParam(req, "player-name")
 

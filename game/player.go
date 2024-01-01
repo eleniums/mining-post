@@ -3,7 +3,7 @@ package game
 import (
 	"sync"
 
-	"github.com/google/uuid"
+	"github.com/eleniums/mining-post/data"
 )
 
 type Player struct {
@@ -31,6 +31,42 @@ func NewPlayer(name string) *Player {
 	}
 }
 
+// Map a database player to a game player.
+func NewPlayerFromDB(dbPlayer data.Player) *Player {
+	player := NewPlayer(dbPlayer.Name)
+	player.Title = dbPlayer.Title
+	player.Rank = dbPlayer.Rank
+	player.NetWorth = dbPlayer.NetWorth
+	player.Money = dbPlayer.Money
+	player.Salary = dbPlayer.Salary
+
+	player.Inventory = make([]*Item, len(dbPlayer.Inventory))
+	for i, dbItem := range dbPlayer.Inventory {
+		player.Inventory[i] = NewItemFromDB(dbItem)
+	}
+
+	return player
+}
+
+// Map game player to a database player.
+func (p *Player) ToDB() data.Player {
+	dbPlayer := data.Player{
+		Name:     p.Name,
+		Title:    p.Title,
+		Rank:     p.Rank,
+		NetWorth: p.NetWorth,
+		Money:    p.Money,
+		Salary:   p.Salary,
+	}
+
+	dbPlayer.Inventory = make([]data.Item, len(p.Inventory))
+	for i, item := range p.Inventory {
+		dbPlayer.Inventory[i] = item.ToDB()
+	}
+
+	return dbPlayer
+}
+
 // Add item to player's inventory.
 func (p *Player) AddItem(item *Item) {
 	p.Inventory = append(p.Inventory, item)
@@ -56,8 +92,9 @@ func (p *Player) RemoveItem(itemName string) {
 	}
 }
 
-// Load players into memory.
-func loadPlayers() []*Player {
+// Returns some fake players to test with.
+func loadTestPlayers() []*Player {
+	// TODO: these are for testing purposes. Need to remove later.
 	players := []*Player{
 		NewPlayer("bbanner"),
 		NewPlayer("tstark"),
@@ -66,9 +103,9 @@ func loadPlayers() []*Player {
 	}
 
 	// TODO: add some random other players for perf testing
-	for i := 0; i < 1_000; i++ {
-		players = append(players, NewPlayer(uuid.NewString()))
-	}
+	// for i := 0; i < 1_000; i++ {
+	// 	players = append(players, NewPlayer(strconv.Itoa(i)))
+	// }
 
 	return players
 }

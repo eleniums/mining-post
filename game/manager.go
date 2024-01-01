@@ -6,6 +6,8 @@ import (
 	"log/slog"
 	"sync"
 	"time"
+
+	"github.com/eleniums/mining-post/data"
 )
 
 const updateInterval = 10 * time.Second
@@ -13,36 +15,51 @@ const updateInterval = 10 * time.Second
 type Manager struct {
 	NextUpdate time.Time
 
+	startTime time.Time
+
 	market  map[string]*Listing
 	players map[string]*Player
 
 	worldLock *sync.RWMutex
 	ticker    *time.Ticker
+
+	db Storage
 }
 
-func NewManager() *Manager {
+func NewManager(db Storage) (*Manager, error) {
 	manager := &Manager{
+		startTime: time.Now(),
 		market:    map[string]*Listing{},
 		players:   map[string]*Player{},
 		worldLock: &sync.RWMutex{},
+		db:        db,
 	}
 
-	// create market listing
-	listings := getInitialStock()
-	for _, listing := range listings {
-		manager.market[listing.Name] = listing
+	// create market listings
+	manager.market = stockMasterList
+
+	// load player data from database
+	dbPlayers, err := manager.db.LoadPlayers()
+	if err != nil {
+		return nil, err
+	}
+	for _, dbPlayer := range dbPlayers {
+		player := NewPlayerFromDB(dbPlayer)
+		manager.players[dbPlayer.Name] = player
 	}
 
-	// load players
-	players := loadPlayers()
-	for _, player := range players {
-		manager.players[player.Name] = player
+	// add in test users if they don't already exist
+	testPlayers := loadTestPlayers()
+	for _, player := range testPlayers {
+		if _, ok := manager.players[player.Name]; !ok {
+			manager.players[player.Name] = player
+		}
 	}
 
 	// randomize prices for all listings for the initial loop
 	manager.adjustMarketPrices()
 
-	return manager
+	return manager, nil
 }
 
 // Start game engine with regular updates.
@@ -67,6 +84,8 @@ func (m *Manager) Stop() error {
 
 // Update happens on a regular time interval. This is the main game loop.
 func (m *Manager) update() {
+	slog.Info("Game update starting...", "serverStarted", m.startTime.UTC(), "serverUptime", time.Since(m.startTime))
+
 	startTime := time.Now()
 
 	// stop the world while updating
@@ -77,6 +96,8 @@ func (m *Manager) update() {
 	m.adjustMarketPrices()
 
 	// run updates for each player
+	playerSaveData := make([]data.Player, len(m.players))
+	playerSaveIndex := 0
 	for _, player := range m.players {
 		player.lock.Lock()
 		defer player.lock.Unlock()
@@ -103,11 +124,22 @@ func (m *Manager) update() {
 		if ranks[player.Rank].eligibleForPromotion(player) {
 			player.Rank++
 			player.Title = ranks[player.Rank].Name
-			slog.Info("player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
+			player.Salary = ranks[player.Rank].Salary
+			slog.Info("Player was promoted to a new rank", "username", player.Name, "title", player.Title, "rank", player.Rank)
 		}
+
+		// prepare player data to be saved
+		playerSaveData[playerSaveIndex] = player.ToDB()
+		playerSaveIndex++
 	}
 
-	slog.Info("Game update finished", "elapsed", time.Since(startTime))
+	// save all player data
+	err := m.db.SavePlayers(playerSaveData)
+	if err != nil {
+		slog.Error("Failed to save player data", ErrAttr(err))
+	}
+
+	slog.Info("Game update finished", "playerCount", len(m.players), "elapsed", time.Since(startTime))
 }
 
 func (m *Manager) adjustMarketPrices() {
