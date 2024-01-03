@@ -9,6 +9,17 @@ func MapValues[K comparable, V any](m map[K]V) []V {
 	return flattened
 }
 
+// Merges all given maps into a single new map.
+func MapMerge[K comparable, V any](maps ...map[K]V) map[K]V {
+	merged := map[K]V{}
+	for _, m := range maps {
+		for k, v := range m {
+			merged[k] = v
+		}
+	}
+	return merged
+}
+
 // Finds a value in a slice and if found, returns it.
 func Find[T any](s []T, val T, compare func(a, b T) bool) (T, bool) {
 	for _, v := range s {
