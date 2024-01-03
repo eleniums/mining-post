@@ -174,7 +174,37 @@ var equipmentList = map[string]*Listing{
 
 // List of all land in the game.
 var landList = map[string]*Listing{
-	// TODO: add land
+	// TODO: add land, low grade, medium grade, high grade, extreme grade? Silver vein, gold vein? Rare earth metal claim?
+	"River Claim": {
+		Resource: Resource{
+			Name:        "River Claim",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Mountain Claim": {
+		Resource: Resource{
+			Name:        "Mountain Claim",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Desert Claim": {
+		Resource: Resource{
+			Name:        "Desert Claim",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
 }
 
 // List of all employees in the game.
