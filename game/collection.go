@@ -9,7 +9,7 @@ func MapValues[K comparable, V any](m map[K]V) []V {
 	return flattened
 }
 
-// Merges all given maps into a single new map.
+// Merges all given maps into a single new map. In the case of duplicate keys, the last value merged will overwrite any previous value.
 func MapMerge[K comparable, V any](maps ...map[K]V) map[K]V {
 	merged := map[K]V{}
 	for _, m := range maps {

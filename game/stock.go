@@ -1,7 +1,10 @@
 package game
 
 // Master list of all resources used in the game. Modifying this map or an individual listing will affect all players.
-var stockMasterList = map[string]*Listing{
+var stockMasterList = MapMerge(commodityList, equipmentList, landList, employeeList)
+
+// List of all commodities in the game.
+var commodityList = map[string]*Listing{
 	"Limestone": {
 		Resource: Resource{
 			Name:        "Limestone",
@@ -162,4 +165,19 @@ var stockMasterList = map[string]*Listing{
 		buyRangeHigh: 15000,
 		sellDelta:    2000,
 	},
+}
+
+// List of all equipment in the game.
+var equipmentList = map[string]*Listing{
+	// TODO: add equipment
+}
+
+// List of all land in the game.
+var landList = map[string]*Listing{
+	// TODO: add land
+}
+
+// List of all employees in the game.
+var employeeList = map[string]*Listing{
+	// TODO: add employees
 }
