@@ -209,5 +209,45 @@ var landList = map[string]*Listing{
 
 // List of all employees in the game.
 var employeeList = map[string]*Listing{
-	// TODO: add employees
+	// TODO: finish filling out employees
+	"Worker": {
+		Resource: Resource{
+			Name:        "Worker",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EMPLOYEE,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Surveyor": {
+		Resource: Resource{
+			Name:        "Surveyor",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EMPLOYEE,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Specialist": {
+		Resource: Resource{
+			Name:        "Specialist",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EMPLOYEE,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Mining Engineer": {
+		Resource: Resource{
+			Name:        "Mining Engineer",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EMPLOYEE,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
 }
