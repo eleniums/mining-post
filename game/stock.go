@@ -170,6 +170,166 @@ var commodityList = map[string]*Listing{
 // List of all equipment in the game.
 var equipmentList = map[string]*Listing{
 	// TODO: add equipment
+	"Pickaxe": {
+		Resource: Resource{
+			Name:        "Pickaxe",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Gold Pan": {
+		Resource: Resource{
+			Name:        "Gold Pan",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Sluice Box": {
+		Resource: Resource{
+			Name:        "Sluice Box",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Map": {
+		Resource: Resource{
+			Name:        "Map",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Binoculars": {
+		Resource: Resource{
+			Name:        "Binoculars",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"GPS Unit": {
+		Resource: Resource{
+			Name:        "GPS Unit",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Mine Cart": {
+		Resource: Resource{
+			Name:        "Mine Cart",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Dynamite": {
+		Resource: Resource{
+			Name:        "Dynamite",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Small Dump Truck": {
+		Resource: Resource{
+			Name:        "Small Dump Truck",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Medium Dump Truck": {
+		Resource: Resource{
+			Name:        "Medium Dump Truck",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Large Dump Truck": {
+		Resource: Resource{
+			Name:        "Large Dump Truck",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Ultra-Heavy Dump Truck": {
+		Resource: Resource{
+			Name:        "Ultra-Heavy Dump Truck",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Small Crane": {
+		Resource: Resource{
+			Name:        "Small Crane",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Medium Crane": {
+		Resource: Resource{
+			Name:        "Medium Crane",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Large Crane": {
+		Resource: Resource{
+			Name:        "Large Crane",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Ultra-Heavy Crane": {
+		Resource: Resource{
+			Name:        "Ultra-Heavy Crane",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
 }
 
 // List of all land in the game.
