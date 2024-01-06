@@ -155,6 +155,16 @@ var commodityList = map[string]*Listing{
 		buyRangeHigh: 10000,
 		sellDelta:    2000,
 	},
+	"Gold Flakes": {
+		Resource: Resource{
+			Name:        "Gold",
+			Description: "Gold flakes are tiny, flat, and thin pieces of gold that are small in size and often resemble flakes of paint or glitter.",
+			Type:        RESOURCE_TYPE_COMMODITY,
+		},
+		buyRangeLow:  13,
+		buyRangeHigh: 17,
+		sellDelta:    2,
+	},
 	"Platinum": {
 		Resource: Resource{
 			Name:        "Platinum",
@@ -334,7 +344,7 @@ var equipmentList = map[string]*Listing{
 
 // List of all land in the game.
 var landList = map[string]*Listing{
-	// TODO: add land, low grade, medium grade, high grade, extreme grade? Silver vein, gold vein? Rare earth metal claim?
+	// TODO: river claims are for gold flakes only, desert claim for ore (copper through platinum), mountain claim for everything else, including diamonds
 	"River Claim - Low Grade": {
 		Resource: Resource{
 			Name:        "River Claim - Low Grade",
