@@ -335,9 +335,9 @@ var equipmentList = map[string]*Listing{
 // List of all land in the game.
 var landList = map[string]*Listing{
 	// TODO: add land, low grade, medium grade, high grade, extreme grade? Silver vein, gold vein? Rare earth metal claim?
-	"River Claim": {
+	"River Claim - Low Grade": {
 		Resource: Resource{
-			Name:        "River Claim",
+			Name:        "River Claim - Low Grade",
 			Description: "TODO",
 			Type:        RESOURCE_TYPE_LAND,
 		},
@@ -345,9 +345,9 @@ var landList = map[string]*Listing{
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
-	"Mountain Claim": {
+	"River Claim - High Grade": {
 		Resource: Resource{
-			Name:        "Mountain Claim",
+			Name:        "River Claim - High Grade",
 			Description: "TODO",
 			Type:        RESOURCE_TYPE_LAND,
 		},
@@ -355,9 +355,69 @@ var landList = map[string]*Listing{
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
-	"Desert Claim": {
+	"River Claim - Superior Grade": {
 		Resource: Resource{
-			Name:        "Desert Claim",
+			Name:        "River Claim - Superior Grade",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Mountain Claim - Low Grade": {
+		Resource: Resource{
+			Name:        "Mountain Claim - Low Grade",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Mountain Claim - High Grade": {
+		Resource: Resource{
+			Name:        "Mountain Claim - High Grade",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Mountain Claim - Superior Grade": {
+		Resource: Resource{
+			Name:        "Mountain Claim - Superior Grade",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Desert Claim - Low Grade": {
+		Resource: Resource{
+			Name:        "Desert Claim - Low Grade",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Desert Claim - High Grade": {
+		Resource: Resource{
+			Name:        "Desert Claim - High Grade",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Desert Claim - Superior Grade": {
+		Resource: Resource{
+			Name:        "Desert Claim - Superior Grade",
 			Description: "TODO",
 			Type:        RESOURCE_TYPE_LAND,
 		},
