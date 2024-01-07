@@ -438,7 +438,7 @@ var landList = map[string]*Listing{
 	"Hydraulic Mine - Low Yield": {
 		Resource: Resource{
 			Name:        "Hydraulic Mine - Low Yield",
-			Description: "TODO",
+			Description: "A hydraulic mine is a mining method that uses high-pressure water jets to dislodge soil and gravel for the extraction of gold.",
 			Type:        RESOURCE_TYPE_LAND,
 		},
 		buyRangeLow:  5,
@@ -448,7 +448,7 @@ var landList = map[string]*Listing{
 	"Hydraulic Mine - High Yield": {
 		Resource: Resource{
 			Name:        "Hydraulic Mine - High Yield",
-			Description: "TODO",
+			Description: "A hydraulic mine is a mining method that uses high-pressure water jets to dislodge soil and gravel for the extraction of gold.",
 			Type:        RESOURCE_TYPE_LAND,
 		},
 		buyRangeLow:  5,
@@ -458,7 +458,7 @@ var landList = map[string]*Listing{
 	"Hydraulic Mine - Superior Yield": {
 		Resource: Resource{
 			Name:        "Hydraulic Mine - Superior Yield",
-			Description: "TODO",
+			Description: "A hydraulic mine is a mining method that uses high-pressure water jets to dislodge soil and gravel for the extraction of gold.",
 			Type:        RESOURCE_TYPE_LAND,
 		},
 		buyRangeLow:  5,
