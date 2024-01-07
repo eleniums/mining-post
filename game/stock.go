@@ -435,6 +435,36 @@ var landList = map[string]*Listing{
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
+	"Hydraulic Mine - Low Yield": {
+		Resource: Resource{
+			Name:        "Hydraulic Mine - Low Yield",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Hydraulic Mine - High Yield": {
+		Resource: Resource{
+			Name:        "Hydraulic Mine - High Yield",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
+	"Hydraulic Mine - Superior Yield": {
+		Resource: Resource{
+			Name:        "Hydraulic Mine - Superior Yield",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_LAND,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
 }
 
 // List of all employees in the game.
