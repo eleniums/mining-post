@@ -210,6 +210,16 @@ var equipmentList = map[string]*Listing{
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
+	"Water Pump": {
+		Resource: Resource{
+			Name:        "Water Pump",
+			Description: "TODO",
+			Type:        RESOURCE_TYPE_EQUIPMENT,
+		},
+		buyRangeLow:  5,
+		buyRangeHigh: 20,
+		sellDelta:    4,
+	},
 	"Map": {
 		Resource: Resource{
 			Name:        "Map",
@@ -444,6 +454,8 @@ var landList = map[string]*Listing{
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
+		prebuy: func(player *Player) bool {
+			// TODO: subtract items from player inventory		},
 	},
 	"Hydraulic Mine - High Yield": {
 		Resource: Resource{
