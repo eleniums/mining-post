@@ -455,7 +455,12 @@ var landList = map[string]*Listing{
 		buyRangeHigh: 20,
 		sellDelta:    4,
 		prebuy: func(player *Player) bool {
-			// TODO: subtract items from player inventory		},
+			// TODO: subtract items from player inventory (sluice box, water pump, employees)
+			// TODO: need better helper functions on player to add/remove items or determine if inventory has items
+			// TODO: also maybe remove descriptions or at least stop worrying about descriptions?
+			// TODO: how to list prereqs? Put them in another string field or in the description or some structs and make the prereqs deduct automatically?
+			return true
+		},
 	},
 	"Hydraulic Mine - High Yield": {
 		Resource: Resource{
