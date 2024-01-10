@@ -67,6 +67,11 @@ func (p *Player) ToDB() data.Player {
 	return dbPlayer
 }
 
+// TODO: Maybe this should be how items are added or removed? Quantity can be positive or negative. Would couple it to the masterlist...
+// func (p *Player) AddItem(itemName string, quantity int64) error {
+// 	return nil
+// }
+
 // Add item to player's inventory.
 func (p *Player) AddItem(item *Item) {
 	p.Inventory = append(p.Inventory, item)
