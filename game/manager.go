@@ -224,8 +224,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 		item.Quantity += quantity
 	} else {
 		// if item doesn't exist, add item to player's inventory
-		item := NewItem(listing)
-		item.Quantity = quantity
+		item := NewItem(listing, quantity)
 		player.AddItem(item)
 	}
 

@@ -4,25 +4,24 @@ import (
 	"github.com/eleniums/mining-post/data"
 )
 
+// Inventory item which is a quantity of some resource.
 type Item struct {
 	Resource *Resource
-
 	Quantity int64
 }
 
-// Create an item from a listing with zero quantity.
-func NewItem(l *Listing) *Item {
+// Create an inventory item from a market listing with given quantity.
+func NewItem(l *Listing, quantity int64) *Item {
 	return &Item{
 		Resource: l.Resource,
-		Quantity: 0,
+		Quantity: quantity,
 	}
 }
 
 // Map a database item to a game item.
 func NewItemFromDB(dbItem data.Item) *Item {
 	listing := stockMasterList[dbItem.Name]
-	item := NewItem(listing)
-	item.Quantity = dbItem.Quantity
+	item := NewItem(listing, dbItem.Quantity)
 	return item
 }
 
