@@ -2,16 +2,16 @@
 An API-based multiplayer game where you purchase mining equipment and various resources to become rich.
 
 ## Instructions
-Use the REST API to buy and sell commodities, equipment, land, and employees. Every world update will pay out your salary and trigger any special effects of items you hold. The objective of the game is simple: become the richest miner in the world. By playing the stock market through buying and selling commodities, acquiring land and equipment, and expanding your corporate empire, you will grow your net worth and climb to the top of the charts!
+Use the REST API to buy and sell commodities, equipment, land, and employees. Every world update will pay out your salary and trigger any special effects of resources you hold. The objective of the game is simple: become the richest miner in the world. By playing the stock market through buying and selling commodities, acquiring land and equipment, and expanding your corporate empire, you will grow your net worth and climb to the top of the charts!
 
 ## World updates
 All world updates to market prices, player inventory, etc., happen at the same time. This is based on an internal timer that triggers on a regular cadence. During a world update, everything is locked and nothing can be purchased or sold.
 
 During a world update:
 - Prices in the marketplace are updated.
-- Player inventory is updated based on the player's items in their inventory.
+- Player inventory is updated based on the player's resources in their inventory.
 - Player is paid their salary.
-- Player net worth is calculated based on the player's current money and items.
+- Player net worth is calculated based on the player's current money and resources.
 
 ## Types of resources
 There are different types of resources that can be purchased on the market:
