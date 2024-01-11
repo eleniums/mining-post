@@ -107,7 +107,6 @@ func loadTestPlayers() []*Player {
 		NewPlayer("dhayter"),
 	}
 
-	// TODO: add some random other players for perf testing
 	// for i := 0; i < 1_000; i++ {
 	// 	players = append(players, NewPlayer(strconv.Itoa(i)))
 	// }
