@@ -5,6 +5,7 @@ const (
 	LISTING_FILTER_TYPE = "Type"
 )
 
+// Filter to be used on market listings.
 type ListingFilter struct {
 	Property string
 	Value    string

@@ -9,6 +9,7 @@ const (
 	RESOURCE_TYPE_EMPLOYEE  ResourceType = "Employee"
 )
 
+// Represents a singular resource that can be obtained.
 type Resource struct {
 	Name        string
 	Description string

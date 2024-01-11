@@ -1,5 +1,6 @@
 package game
 
+// Represents a rank that a player could achieve.
 type Rank struct {
 	Name   string
 	Salary float64

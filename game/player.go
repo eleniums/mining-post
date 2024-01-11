@@ -6,6 +6,7 @@ import (
 	"github.com/eleniums/mining-post/data"
 )
 
+// Represents a player in the game.
 type Player struct {
 	Name      string
 	Title     string
