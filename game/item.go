@@ -5,7 +5,7 @@ import (
 )
 
 type Item struct {
-	Resource
+	Resource *Resource
 
 	Quantity int64
 
@@ -34,7 +34,7 @@ func NewItemFromDB(dbItem data.Item) *Item {
 // Map game item to a database item.
 func (i *Item) ToDB() data.Item {
 	return data.Item{
-		Name:     i.Name,
+		Name:     i.Resource.Name,
 		Quantity: i.Quantity,
 	}
 }

@@ -37,7 +37,7 @@ type Resource struct {
 	Type        string `json:"type"`
 }
 
-func NewResource(src game.Resource) Resource {
+func NewResource(src *game.Resource) Resource {
 	return Resource{
 		Name:        src.Name,
 		Description: src.Description,

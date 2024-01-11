@@ -80,7 +80,7 @@ func (p *Player) AddItem(item *Item) {
 // Get item from player's inventory.
 func (p *Player) GetItem(itemName string) *Item {
 	for _, item := range p.Inventory {
-		if item.Name == itemName {
+		if item.Resource.Name == itemName {
 			return item
 		}
 	}
@@ -90,7 +90,7 @@ func (p *Player) GetItem(itemName string) *Item {
 // Remove item from player's inventory.
 func (p *Player) RemoveItem(itemName string) {
 	for i, item := range p.Inventory {
-		if item.Name == itemName {
+		if item.Resource.Name == itemName {
 			p.Inventory = append(p.Inventory[:i], p.Inventory[i+1:]...)
 			return
 		}

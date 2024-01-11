@@ -115,7 +115,7 @@ func (m *Manager) update() {
 		// calculate player net worth
 		player.NetWorth = player.Money
 		for _, item := range player.Inventory {
-			if listing, ok := m.market[item.Name]; ok {
+			if listing, ok := m.market[item.Resource.Name]; ok {
 				player.NetWorth += float64(item.Quantity) * listing.SellPrice
 			}
 		}
@@ -158,11 +158,11 @@ func (m *Manager) GetMarketStock(filters ...ListingFilter) []*Listing {
 		switch filter.Property {
 		case LISTING_FILTER_NAME:
 			listings = Filter(listings, func(val *Listing) bool {
-				return val.Name == filter.Value
+				return val.Resource.Name == filter.Value
 			})
 		case LISTING_FILTER_TYPE:
 			listings = Filter(listings, func(val *Listing) bool {
-				return string(val.Type) == filter.Value
+				return string(val.Resource.Type) == filter.Value
 			})
 		}
 	}
@@ -219,7 +219,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	// buy item for player
 	player.Money -= cost
 
-	if item := player.GetItem(listing.Name); item != nil {
+	if item := player.GetItem(listing.Resource.Name); item != nil {
 		// if item already exists, just add to quantity
 		item.Quantity += quantity
 	} else {
