@@ -13,4 +13,8 @@ type Resource struct {
 	Name        string
 	Description string
 	Type        ResourceType
+
+	// If set, this function will be called every world update. Useful for
+	// generating materials or performing some action.
+	update func(player *Player, item *Item)
 }

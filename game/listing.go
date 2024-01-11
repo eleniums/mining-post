@@ -30,11 +30,6 @@ type Listing struct {
 	// used to check for prereqs to selling equipment. If the prereqs are met,
 	// can be used to add inventory back as part of the selling process.
 	presell func(player *Player) bool
-
-	// If set and in player inventory, this function will be called every world
-	// update. Useful for generating materials or something extra from
-	// equipment.
-	update func(player *Player, item *Item) // TODO: move this to resource
 }
 
 // Adjust the market price for this listing.
