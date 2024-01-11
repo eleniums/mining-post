@@ -68,8 +68,8 @@ func (p *Player) ToDB() data.Player {
 	return dbPlayer
 }
 
-// TODO: Maybe this should be how items are added or removed? Quantity can be positive or negative. Would couple it to the masterlist...
-// func (p *Player) AddItem(itemName string, quantity int64) error {
+// TODO: Maybe this should be how items are added or removed? Quantity can be positive or negative.
+// func (p *Player) AddResource(resource *Resource, quantity int64) error {
 // 	return nil
 // }
 
