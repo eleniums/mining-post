@@ -11,9 +11,9 @@ type Item struct {
 }
 
 // Create an inventory item from a market listing with given quantity.
-func NewItem(l *Listing, quantity int64) *Item {
+func NewItem(resource *Resource, quantity int64) *Item {
 	return &Item{
-		Resource: l.Resource,
+		Resource: resource,
 		Quantity: quantity,
 	}
 }
@@ -21,7 +21,7 @@ func NewItem(l *Listing, quantity int64) *Item {
 // Map a database item to a game item.
 func NewItemFromDB(dbItem data.Item) *Item {
 	listing := stockMasterList[dbItem.Name]
-	item := NewItem(listing, dbItem.Quantity)
+	item := NewItem(listing.Resource, dbItem.Quantity)
 	return item
 }
 
