@@ -70,23 +70,23 @@ func (p *Player) ToDB() data.Player {
 
 // Add or remove resource quantity from player's inventory.
 func (p *Player) AddResource(resource *Resource, quantity int64) {
-	if item := p.GetResource(resource.Name); item != nil {
-		// if item already exists, just add to quantity
-		item.Quantity += quantity
+	for i, item := range p.Inventory {
+		if item.Resource.Name == resource.Name {
+			// if item already exists, just add to quantity
+			item.Quantity += quantity
 
-		// TODO: switch to only have one for loop for this
-		// if quantity is 0 or less, remove it from player's inventory
-		for i, item := range p.Inventory {
-			if item.Resource.Name == resource.Name {
+			// if quantity is 0 or less, remove it from player's inventory
+			if item.Quantity <= 0 {
 				p.Inventory = append(p.Inventory[:i], p.Inventory[i+1:]...)
-				return
 			}
+
+			return
 		}
-	} else {
-		// if item doesn't exist, add item to player's inventory
-		item := NewItem(resource, quantity)
-		p.Inventory = append(p.Inventory, item)
 	}
+
+	// if item doesn't exist, add item to player's inventory
+	item := NewItem(resource, quantity)
+	p.Inventory = append(p.Inventory, item)
 }
 
 // Get item from player's inventory.
