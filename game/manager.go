@@ -218,15 +218,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 
 	// buy item for player
 	player.Money -= cost
-
-	if item := player.GetItem(listing.Resource.Name); item != nil {
-		// if item already exists, just add to quantity
-		item.Quantity += quantity
-	} else {
-		// if item doesn't exist, add item to player's inventory
-		item := NewItem(listing, quantity)
-		player.AddItem(item)
-	}
+	player.AddResource(listing.Resource, quantity)
 
 	return cost, nil
 }
@@ -256,7 +248,7 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	profit := listing.SellPrice * float64(quantity)
 
 	// determine if player has enough quantity to sell
-	item := player.GetItem(itemName)
+	item := player.GetResource(itemName)
 	if item == nil {
 		return 0, fmt.Errorf("player does not have item in inventory: %s", itemName)
 	}
@@ -273,10 +265,7 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	player.Money += profit
 
 	// remove quantity from player's inventory
-	item.Quantity -= quantity
-	if item.Quantity <= 0 {
-		player.RemoveItem(itemName)
-	}
+	player.AddResource(item.Resource, -quantity)
 
 	return profit, nil
 }

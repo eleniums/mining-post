@@ -68,34 +68,35 @@ func (p *Player) ToDB() data.Player {
 	return dbPlayer
 }
 
-// TODO: Maybe this should be how items are added or removed? Quantity can be positive or negative.
-// func (p *Player) AddResource(resource *Resource, quantity int64) error {
-// 	return nil
-// }
+// Add or remove resource quantity from player's inventory.
+func (p *Player) AddResource(resource *Resource, quantity int64) {
+	if item := p.GetResource(resource.Name); item != nil {
+		// if item already exists, just add to quantity
+		item.Quantity += quantity
 
-// Add item to player's inventory.
-func (p *Player) AddItem(item *Item) {
-	p.Inventory = append(p.Inventory, item)
+		// TODO: switch to only have one for loop for this
+		// if quantity is 0 or less, remove it from player's inventory
+		for i, item := range p.Inventory {
+			if item.Resource.Name == resource.Name {
+				p.Inventory = append(p.Inventory[:i], p.Inventory[i+1:]...)
+				return
+			}
+		}
+	} else {
+		// if item doesn't exist, add item to player's inventory
+		item := NewItem(resource, quantity)
+		p.Inventory = append(p.Inventory, item)
+	}
 }
 
 // Get item from player's inventory.
-func (p *Player) GetItem(itemName string) *Item {
+func (p *Player) GetResource(name string) *Item {
 	for _, item := range p.Inventory {
-		if item.Resource.Name == itemName {
+		if item.Resource.Name == name {
 			return item
 		}
 	}
 	return nil
-}
-
-// Remove item from player's inventory.
-func (p *Player) RemoveItem(itemName string) {
-	for i, item := range p.Inventory {
-		if item.Resource.Name == itemName {
-			p.Inventory = append(p.Inventory[:i], p.Inventory[i+1:]...)
-			return
-		}
-	}
 }
 
 // Returns some fake players to test with.
