@@ -20,6 +20,21 @@ type Resource struct {
 	update func(player *Player)
 }
 
+// Commodity resources.
+var (
+// TODO: Commodity resources
+)
+
+// Equipment resources.
+var (
+// TODO: Equipment resources
+)
+
+// Land resources.
+var (
+// TODO: Land resources
+)
+
 // Employee resources.
 var (
 	RESOURCE_WORKER = &Resource{
