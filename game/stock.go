@@ -189,6 +189,7 @@ var equipmentList = map[string]*Listing{
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
+		// TODO: all properties should be merged together into resource, except the buy and sell price. Resources should be defined in the resource file.
 	},
 	"Gold Pan": {
 		Resource: &Resource{
