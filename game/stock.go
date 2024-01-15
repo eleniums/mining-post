@@ -450,15 +450,15 @@ var landList = map[string]*Listing{
 			Name:        "Hydraulic Mine - Low Yield",
 			Description: "A hydraulic mine is a mining method that uses high-pressure water jets to dislodge soil and gravel for the extraction of gold.",
 			Type:        RESOURCE_TYPE_LAND,
+			update: func(player *Player) {
+				player.AddResource(commodityList["Gold Flakes"].Resource, randInt64(1, 5))
+			},
 		},
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
 		prebuy: func(player *Player) bool {
 			// TODO: subtract items from player inventory (sluice box, water pump, employees)
-			// TODO: need better helper functions on player to add/remove items or determine if inventory has items
-			// TODO: also maybe remove descriptions or at least stop worrying about descriptions?
-			// TODO: how to list prereqs? Put them in another string field or in the description or some structs and make the prereqs deduct automatically?
 			return true
 		},
 	},
