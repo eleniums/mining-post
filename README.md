@@ -57,6 +57,7 @@ If this project was going to be deployed and made available to the public, a mor
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
 - [ ] Maybe a prospect option to find more land? Call the land claims and they are non-producing unless you dig? Land can be built into mines?
 - [ ] Add high score table that lists the top ten players by net worth
+- [ ] Add item info endpoint to retrieve item description
 - [x] Put instructions in a markdown file and use embed to add to handler
 - [x] Should not be able to buy or sell quantity 0 or negative
 - [x] List market should show time remaining.
