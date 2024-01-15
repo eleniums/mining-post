@@ -157,7 +157,7 @@ var commodityList = map[string]*Listing{
 	},
 	"Gold Flakes": {
 		Resource: &Resource{
-			Name:        "Gold",
+			Name:        "Gold Flakes",
 			Description: "Gold flakes are tiny, flat, and thin pieces of gold that are small in size and often resemble flakes of paint or glitter.",
 			Type:        RESOURCE_TYPE_COMMODITY,
 		},
