@@ -1,6 +1,7 @@
 package game
 
 import (
+	"errors"
 	"sync"
 
 	"github.com/eleniums/mining-post/data"
@@ -69,9 +70,13 @@ func (p *Player) ToDB() data.Player {
 }
 
 // Add or remove resource quantity from player's inventory.
-func (p *Player) AddResource(resource *Resource, quantity int64) {
+func (p *Player) AddResource(resource *Resource, quantity int64) error {
 	for i, item := range p.Inventory {
 		if item.Resource.Name == resource.Name {
+			if item.Quantity+quantity < 0 {
+				return errors.New("quantity cannot be negative for existing item")
+			}
+
 			// if item already exists, just add to quantity
 			item.Quantity += quantity
 
@@ -80,13 +85,19 @@ func (p *Player) AddResource(resource *Resource, quantity int64) {
 				p.Inventory = append(p.Inventory[:i], p.Inventory[i+1:]...)
 			}
 
-			return
+			return nil
 		}
+	}
+
+	if quantity < 1 {
+		return errors.New("quantity cannot be less than 1 for new item")
 	}
 
 	// if item doesn't exist, add item to player's inventory
 	item := NewItem(resource, quantity)
 	p.Inventory = append(p.Inventory, item)
+
+	return nil
 }
 
 // Get item from player's inventory.

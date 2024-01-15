@@ -218,7 +218,10 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 
 	// buy item for player
 	player.Money -= cost
-	player.AddResource(listing.Resource, quantity)
+	err := player.AddResource(listing.Resource, quantity)
+	if err != nil {
+		return 0, err
+	}
 
 	return cost, nil
 }
@@ -265,7 +268,10 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	player.Money += profit
 
 	// remove quantity from player's inventory
-	player.AddResource(item.Resource, -quantity)
+	err := player.AddResource(item.Resource, -quantity)
+	if err != nil {
+		return 0, err
+	}
 
 	return profit, nil
 }
