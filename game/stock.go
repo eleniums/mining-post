@@ -450,8 +450,8 @@ var landList = map[string]*Listing{
 			Name:        "Hydraulic Mine - Low Yield",
 			Description: "A hydraulic mine is a mining method that uses high-pressure water jets to dislodge soil and gravel for the extraction of gold.",
 			Type:        RESOURCE_TYPE_LAND,
-			update: func(player *Player) {
-				player.AddResource(commodityList["Gold Flakes"].Resource, randInt64(1, 5))
+			update: func(player *Player, item *Item) {
+				player.AddResource(commodityList["Gold Flakes"].Resource, randInt64(1*item.Quantity, 5*item.Quantity))
 			},
 		},
 		buyRangeLow:  5,
