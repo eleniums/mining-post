@@ -1,7 +1,7 @@
 package game
 
 // Master list of all resources used in the game. Modifying this map or an individual listing will affect all players.
-var stockMasterList = MapMerge(commodityList, equipmentList, landList, employeeList)
+var stockMasterList = MapMerge(commodityList, equipmentList, landList, createStockMap(employeeList))
 
 // List of all commodities in the game.
 var commodityList = map[string]*Listing{
@@ -485,46 +485,39 @@ var landList = map[string]*Listing{
 }
 
 // List of all employees in the game.
-var employeeList = map[string]*Listing{
+var employeeList = []*Listing{
 	// TODO: finish filling out employees
-	"Worker": {
-		Resource: &Resource{
-			Name:        "Worker",
-			Description: "TODO",
-			Type:        RESOURCE_TYPE_EMPLOYEE,
-		},
+	{
+		Resource:     RESOURCE_WORKER,
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
-	"Surveyor": {
-		Resource: &Resource{
-			Name:        "Surveyor",
-			Description: "TODO",
-			Type:        RESOURCE_TYPE_EMPLOYEE,
-		},
+	{
+		Resource:     RESOURCE_SURVEYOR,
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
-	"Specialist": {
-		Resource: &Resource{
-			Name:        "Specialist",
-			Description: "TODO",
-			Type:        RESOURCE_TYPE_EMPLOYEE,
-		},
+	{
+		Resource:     RESOURCE_SPECIALIST,
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
-	"Mining Engineer": {
-		Resource: &Resource{
-			Name:        "Mining Engineer",
-			Description: "TODO",
-			Type:        RESOURCE_TYPE_EMPLOYEE,
-		},
+	{
+		Resource:     RESOURCE_MINING_ENGINEER,
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
+}
+
+// Takes a slice of listings and converts into a map for easy lookup by name.
+func createStockMap(src []*Listing) map[string]*Listing {
+	listings := map[string]*Listing{}
+	for _, v := range src {
+		listings[v.Resource.Name] = v
+	}
+	return listings
 }

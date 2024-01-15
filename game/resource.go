@@ -19,3 +19,30 @@ type Resource struct {
 	// generating materials or performing some action.
 	update func(player *Player)
 }
+
+// Employee resources.
+var (
+	RESOURCE_WORKER = &Resource{
+		Name:        "Worker",
+		Description: "",
+		Type:        RESOURCE_TYPE_EMPLOYEE,
+	}
+
+	RESOURCE_SURVEYOR = &Resource{
+		Name:        "Surveyor",
+		Description: "",
+		Type:        RESOURCE_TYPE_EMPLOYEE,
+	}
+
+	RESOURCE_SPECIALIST = &Resource{
+		Name:        "Specialist",
+		Description: "",
+		Type:        RESOURCE_TYPE_EMPLOYEE,
+	}
+
+	RESOURCE_MINING_ENGINEER = &Resource{
+		Name:        "Mining Engineer",
+		Description: "",
+		Type:        RESOURCE_TYPE_EMPLOYEE,
+	}
+)
