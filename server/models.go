@@ -33,7 +33,7 @@ func NewPlayer(src *game.Player) Player {
 
 type Resource struct {
 	Name        string `json:"name"`
-	Description string `json:"description"`
+	Description string `json:"-"` // TODO: item description should be separate, clutters the response
 	Type        string `json:"type"`
 }
 
