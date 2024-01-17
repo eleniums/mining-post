@@ -212,7 +212,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	}
 
 	// check if player meets prerequisites to purchase item (and adjust player inventory as needed)
-	if listing.prebuy != nil && !listing.prebuy(player) {
+	if listing.Resource.prebuy != nil && !listing.Resource.prebuy(player) {
 		return 0, fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
 	}
 
