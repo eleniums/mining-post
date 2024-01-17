@@ -58,7 +58,6 @@ GET /player/tstark/inventory
         "inventory": [
             {
                 "name": "Limestone",
-                "description": "Limestone is a sedimentary rock composed mainly of calcium carbonate, often used in construction for its durability.",
                 "type": "Commodity",
                 "quantity": 2
             }
