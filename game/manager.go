@@ -107,8 +107,8 @@ func (m *Manager) update() {
 
 		// run updates on any items as needed
 		for _, item := range player.Inventory {
-			if item.Resource.update != nil {
-				item.Resource.update(player, item)
+			if item.Resource.Update != nil {
+				item.Resource.Update(player, item)
 			}
 		}
 
