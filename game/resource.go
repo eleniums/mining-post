@@ -27,11 +27,6 @@ type Resource struct {
 	// be used to check for prereqs to purchasing equipment. If the prereqs are
 	// met, can be used to consume items as part of the purchase process.
 	prebuy func(player *Player) bool
-
-	// If set, this function will be called before this item can be sold. Can be
-	// used to check for prereqs to selling equipment. If the prereqs are met,
-	// can be used to add inventory back as part of the selling process.
-	presell func(player *Player) bool
 }
 
 // List of all commodities in the game.

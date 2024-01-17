@@ -259,11 +259,6 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 		return 0, fmt.Errorf("insufficient quantity to sell %d of item: %s", quantity, itemName)
 	}
 
-	// check if player meets prerequisites to sell item (and adjust player inventory as needed)
-	if listing.presell != nil && !listing.presell(player) {
-		return 0, fmt.Errorf("player does not meet prerequisites to sell item: %s", itemName)
-	}
-
 	// sell item for player
 	player.Money += profit
 
