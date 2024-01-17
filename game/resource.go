@@ -14,6 +14,11 @@ type Resource struct {
 	Name string
 	Type ResourceType
 
+	// Prerequisites to purchasing a resource. If the prerequisites are all met,
+	// they will be consumed from the player's inventory as part of the purchase
+	// process.
+	Prerequisites []Prerequisite
+
 	// If set, this function will be called every world update. Useful for
 	// generating materials or performing some action.
 	update func(player *Player, item *Item)
@@ -21,11 +26,12 @@ type Resource struct {
 	buyRangeLow  float64 // lowest possible buy price for resource
 	buyRangeHigh float64 // highest possible buy price for resource
 	sellDelta    float64 // highest potential difference of selling price. Selling price is always lower than buying price
+}
 
-	// If set, this function will be called before this item can be bought. Can
-	// be used to check for prereqs to purchasing equipment. If the prereqs are
-	// met, can be used to consume items as part of the purchase process.
-	prebuy func(player *Player) bool
+// Prerequisite for purchasing a resource. Includes name of resource and amount to subtract from player inventory.
+type Prerequisite struct {
+	Name     string
+	Quantity int64
 }
 
 // List of all commodities in the game.
@@ -352,10 +358,10 @@ var landList = []*Resource{
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
-		prebuy: func(player *Player) bool {
-			// TODO: subtract items from player inventory (sluice box, water pump, employees)
-			return true
-		},
+		// Prerequisites: func(player *Player) bool {
+		// TODO: subtract items from player inventory (sluice box, water pump, employees)
+		// 	return true
+		// },
 	},
 	{
 		Name:         "Hydraulic Mine - High Yield",
