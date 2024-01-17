@@ -36,7 +36,7 @@ func NewManager(db Storage) (*Manager, error) {
 	}
 
 	// create market listings
-	manager.market = stockMasterList
+	manager.market = marketMasterList
 
 	// load player data from database
 	dbPlayers, err := manager.db.LoadPlayers()
@@ -142,6 +142,7 @@ func (m *Manager) update() {
 	slog.Info("Game update finished", "playerCount", len(m.players), "elapsed", time.Since(startTime))
 }
 
+// Used internally to adjust all market prices.
 func (m *Manager) adjustMarketPrices() {
 	for _, listing := range m.market {
 		listing.adjustMarketPrice()
@@ -212,7 +213,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	}
 
 	// check if player meets prerequisites to purchase item (and adjust player inventory as needed)
-	if listing.prebuy != nil && !listing.prebuy(player) {
+	if listing.Resource.prebuy != nil && !listing.Resource.prebuy(player) {
 		return 0, fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
 	}
 
@@ -257,11 +258,6 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	}
 	if item.Quantity < quantity {
 		return 0, fmt.Errorf("insufficient quantity to sell %d of item: %s", quantity, itemName)
-	}
-
-	// check if player meets prerequisites to sell item (and adjust player inventory as needed)
-	if listing.presell != nil && !listing.presell(player) {
-		return 0, fmt.Errorf("player does not meet prerequisites to sell item: %s", itemName)
 	}
 
 	// sell item for player

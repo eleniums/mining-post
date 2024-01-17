@@ -32,16 +32,14 @@ func NewPlayer(src *game.Player) Player {
 }
 
 type Resource struct {
-	Name        string `json:"name"`
-	Description string `json:"-"` // TODO: item description should be separate, clutters the response
-	Type        string `json:"type"`
+	Name string `json:"name"`
+	Type string `json:"type"`
 }
 
 func NewResource(src *game.Resource) Resource {
 	return Resource{
-		Name:        src.Name,
-		Description: src.Description,
-		Type:        string(src.Type),
+		Name: src.Name,
+		Type: string(src.Type),
 	}
 }
 
