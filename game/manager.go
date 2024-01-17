@@ -142,6 +142,7 @@ func (m *Manager) update() {
 	slog.Info("Game update finished", "playerCount", len(m.players), "elapsed", time.Since(startTime))
 }
 
+// Used internally to adjust all market prices.
 func (m *Manager) adjustMarketPrices() {
 	for _, listing := range m.market {
 		listing.adjustMarketPrice()

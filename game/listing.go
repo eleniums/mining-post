@@ -5,6 +5,9 @@ const (
 	LISTING_FILTER_TYPE = "Type"
 )
 
+// Master list of all resources used in the game. Modifying this map or an individual listing will affect all players.
+var stockMasterList = MapMerge(createListings(commodityList), createListings(equipmentList), createListings(landList), createListings(employeeList))
+
 // Filter to be used on market listings.
 type ListingFilter struct {
 	Property string
@@ -23,4 +26,15 @@ type Listing struct {
 func (l *Listing) adjustMarketPrice() {
 	l.BuyPrice = randFloat64(l.Resource.buyRangeLow, l.Resource.buyRangeHigh)
 	l.SellPrice = l.BuyPrice - randFloat64(0.01, l.Resource.sellDelta)
+}
+
+// Takes a slice of resources and converts into a map for easy lookup by name.
+func createListings(src []*Resource) map[string]*Listing {
+	listings := map[string]*Listing{}
+	for _, v := range src {
+		listings[v.Name] = &Listing{
+			Resource: v,
+		}
+	}
+	return listings
 }
