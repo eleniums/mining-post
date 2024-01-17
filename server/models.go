@@ -39,9 +39,8 @@ type Resource struct {
 
 func NewResource(src *game.Resource) Resource {
 	return Resource{
-		Name:        src.Name,
-		Description: src.Description,
-		Type:        string(src.Type),
+		Name: src.Name,
+		Type: string(src.Type),
 	}
 }
 

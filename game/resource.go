@@ -11,9 +11,8 @@ const (
 
 // Represents a singular resource that can be obtained.
 type Resource struct {
-	Name        string
-	Description string
-	Type        ResourceType
+	Name string
+	Type ResourceType
 
 	// If set, this function will be called every world Update. Useful for
 	// generating materials or performing some action.
@@ -33,7 +32,6 @@ type Resource struct {
 var commodityList = []*Resource{
 	{
 		Name:         "Limestone",
-		Description:  "Limestone is a sedimentary rock composed mainly of calcium carbonate, often used in construction for its durability.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -41,7 +39,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Sandstone",
-		Description:  "Sandstone is a sedimentary rock with a granular texture, commonly employed in construction and known for its porous qualities.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  8,
 		BuyRangeHigh: 30,
@@ -49,7 +46,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Granite",
-		Description:  "Granite is a coarse-grained, igneous rock with a speckled appearance, widely used in construction for its hardness and durability.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 50,
@@ -57,7 +53,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Marble",
-		Description:  "Marble is a metamorphic rock prized for its smooth texture and distinctive veining, commonly used in sculpture and building materials.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  10,
 		BuyRangeHigh: 100,
@@ -65,7 +60,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Quartz",
-		Description:  "Quartz is a hard, crystalline mineral composed of silicon and oxygen atoms, often used in the production of jewelry and electronic devices for its durability and piezoelectric properties.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  25,
 		BuyRangeHigh: 90,
@@ -73,7 +67,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Onyx",
-		Description:  "Onyx is a type of cryptocrystalline quartz known for its smooth, banded layers of alternating colors, often used in jewelry and decorative items.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  30,
 		BuyRangeHigh: 100,
@@ -81,7 +74,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Jade",
-		Description:  "Jade is a dense, ornamental mineral prized for its rich green color, often used in traditional art and jewelry.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  50,
 		BuyRangeHigh: 150,
@@ -89,7 +81,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Garnet",
-		Description:  "Garnet is a group of minerals with deep red to vibrant green hues, commonly used as gemstones and abrasives.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  300,
 		BuyRangeHigh: 600,
@@ -97,7 +88,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Sapphire",
-		Description:  "Sapphire is a precious gemstone, typically blue in color, composed of corundum and valued for its hardness and luster.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  1000,
 		BuyRangeHigh: 3000,
@@ -105,7 +95,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Ruby",
-		Description:  "Ruby is a red precious gemstone, a variety of corundum, prized for its vibrant color and considered one of the most precious gems.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  1000,
 		BuyRangeHigh: 3000,
@@ -113,7 +102,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Emerald",
-		Description:  "Emerald is a green precious gemstone, a variety of the mineral beryl, celebrated for its vivid color and historical significance.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  1000,
 		BuyRangeHigh: 3000,
@@ -121,7 +109,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Diamond",
-		Description:  "Diamond is a brilliant and exceptionally hard precious gemstone, composed of carbon atoms arranged in a crystal lattice, prized for its rarity and used in various luxury applications.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  6000,
 		BuyRangeHigh: 12000,
@@ -129,7 +116,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Copper",
-		Description:  "Copper is a reddish-brown metal known for its conductivity and malleability.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  20,
 		BuyRangeHigh: 50,
@@ -137,7 +123,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Silver",
-		Description:  "Silver is a lustrous, precious metal admired for its conductivity and versatile use in jewelry and industry.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  250,
 		BuyRangeHigh: 750,
@@ -145,7 +130,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Gold",
-		Description:  "Gold is a prized, yellow metal celebrated for its rarity, beauty, and historical significance in various cultural and economic contexts.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  5000,
 		BuyRangeHigh: 10000,
@@ -153,7 +137,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Gold Flakes",
-		Description:  "Gold flakes are tiny, flat, and thin pieces of gold that are small in size and often resemble flakes of paint or glitter.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  13,
 		BuyRangeHigh: 17,
@@ -161,7 +144,6 @@ var commodityList = []*Resource{
 	},
 	{
 		Name:         "Platinum",
-		Description:  "Platinum is a dense, silvery-white metal valued for its durability and use in jewelry and catalytic converters.",
 		Type:         RESOURCE_TYPE_COMMODITY,
 		BuyRangeLow:  7500,
 		BuyRangeHigh: 15000,
@@ -174,7 +156,6 @@ var equipmentList = []*Resource{
 	// TODO: add equipment
 	{
 		Name:         "Pickaxe",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -183,7 +164,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Gold Pan",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -191,7 +171,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Sluice Box",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -199,7 +178,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Water Pump",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -207,7 +185,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Map",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -215,7 +192,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Binoculars",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -223,7 +199,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "GPS Unit",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -231,7 +206,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Mine Cart",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -239,7 +213,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Dynamite",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -247,7 +220,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Small Dump Truck",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -255,7 +227,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Medium Dump Truck",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -263,7 +234,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Large Dump Truck",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -271,7 +241,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Ultra-Heavy Dump Truck",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -279,7 +248,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Small Crane",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -287,7 +255,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Medium Crane",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -295,7 +262,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Large Crane",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -303,7 +269,6 @@ var equipmentList = []*Resource{
 	},
 	{
 		Name:         "Ultra-Heavy Crane",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EQUIPMENT,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -316,7 +281,6 @@ var landList = []*Resource{
 	// TODO: river claims are for gold flakes only, desert claim for ore (copper through platinum), mountain claim for everything else, including diamonds
 	{
 		Name:         "River Claim - Low Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -324,7 +288,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "River Claim - High Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -332,7 +295,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "River Claim - Superior Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -340,7 +302,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "Mountain Claim - Low Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -348,7 +309,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "Mountain Claim - High Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -356,7 +316,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "Mountain Claim - Superior Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -364,7 +323,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "Desert Claim - Low Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -372,7 +330,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "Desert Claim - High Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -380,16 +337,14 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "Desert Claim - Superior Grade",
-		Description:  "",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
 		SellDelta:    4,
 	},
 	{
-		Name:        "Hydraulic Mine - Low Yield",
-		Description: "A hydraulic mine is a mining method that uses high-pressure water jets to dislodge soil and gravel for the extraction of gold.",
-		Type:        RESOURCE_TYPE_LAND,
+		Name: "Hydraulic Mine - Low Yield",
+		Type: RESOURCE_TYPE_LAND,
 		// TODO: update func for hydraulic mine
 		// update: func(player *Player, item *Item) {
 		// 	player.AddResource(commodityList["Gold Flakes"].Resource, randInt64(1*item.Quantity, 5*item.Quantity))
@@ -404,7 +359,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "Hydraulic Mine - High Yield",
-		Description:  "A hydraulic mine is a mining method that uses high-pressure water jets to dislodge soil and gravel for the extraction of gold.",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -412,7 +366,6 @@ var landList = []*Resource{
 	},
 	{
 		Name:         "Hydraulic Mine - Superior Yield",
-		Description:  "A hydraulic mine is a mining method that uses high-pressure water jets to dislodge soil and gravel for the extraction of gold.",
 		Type:         RESOURCE_TYPE_LAND,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -425,7 +378,6 @@ var employeeList = []*Resource{
 	// TODO: finish filling out employees
 	{
 		Name:         "Worker",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EMPLOYEE,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -433,7 +385,6 @@ var employeeList = []*Resource{
 	},
 	{
 		Name:         "Surveyor",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EMPLOYEE,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -441,7 +392,6 @@ var employeeList = []*Resource{
 	},
 	{
 		Name:         "Specialist",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EMPLOYEE,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
@@ -449,7 +399,6 @@ var employeeList = []*Resource{
 	},
 	{
 		Name:         "Mining Engineer",
-		Description:  "",
 		Type:         RESOURCE_TYPE_EMPLOYEE,
 		BuyRangeLow:  5,
 		BuyRangeHigh: 20,
