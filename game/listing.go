@@ -6,7 +6,7 @@ const (
 )
 
 // Master list of all resources used in the game. Modifying this map or an individual listing will affect all players.
-var stockMasterList = MapMerge(createListings(commodityList), createListings(equipmentList), createListings(landList), createListings(employeeList))
+var marketMasterList = MapMerge(createListings(commodityList), createListings(equipmentList), createListings(landList), createListings(employeeList))
 
 // Filter to be used on market listings.
 type ListingFilter struct {

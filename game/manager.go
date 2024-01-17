@@ -36,7 +36,7 @@ func NewManager(db Storage) (*Manager, error) {
 	}
 
 	// create market listings
-	manager.market = stockMasterList
+	manager.market = marketMasterList
 
 	// load player data from database
 	dbPlayers, err := manager.db.LoadPlayers()
