@@ -100,7 +100,7 @@ func (p *Player) AddResource(resource *Resource, quantity int64) error {
 	return nil
 }
 
-// Get item from player's inventory.
+// Get resource from player's inventory.
 func (p *Player) GetResource(name string) *Item {
 	for _, item := range p.Inventory {
 		if item.Resource.Name == name {
