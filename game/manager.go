@@ -212,11 +212,18 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 		return 0, fmt.Errorf("insufficient funds to purchase %d of item: %s, cost: %.2f", quantity, itemName, cost)
 	}
 
-	// TODO: maybe add a player function to check and consume prereqs?
 	// TODO: map prereqs to responses, so you can see them in market listing (not inventory though)
-	// check if player meets prerequisites to purchase item (and adjust player inventory as needed)
-	if listing.Resource.Prerequisites != nil && !listing.Resource.Prerequisites(player) {
-		return 0, fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
+	// check if player meets prerequisites to purchase item
+	for _, v := range listing.Resource.Prerequisites {
+		item := player.GetResource(v.Name)
+		if item == nil || item.Quantity < v.Quantity*quantity {
+			return 0, fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
+		}
+	}
+
+	// remove prerequisite resources from player's inventory
+	for _, v := range listing.Resource.Prerequisites {
+		player.AddResource(player.GetResource(v.Name).Resource, -v.Quantity*quantity)
 	}
 
 	// buy item for player
