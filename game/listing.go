@@ -8,6 +8,9 @@ const (
 // Master list of all resources used in the game. Modifying this map or an individual listing will affect all players.
 var marketMasterList = MapMerge(createListings(commodityList), createListings(equipmentList), createListings(landList), createListings(employeeList))
 
+// Master list of just the commodities.
+var commodityMasterList = createListings(commodityList)
+
 // Filter to be used on market listings.
 type ListingFilter struct {
 	Property string
@@ -37,4 +40,13 @@ func createListings(src []*Resource) map[string]*Listing {
 		}
 	}
 	return listings
+}
+
+// Find and retrieve a resource from the master list.
+func findResource(name string) *Resource {
+	listing, ok := commodityMasterList[name]
+	if !ok {
+		return nil
+	}
+	return listing.Resource
 }

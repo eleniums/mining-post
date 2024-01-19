@@ -213,6 +213,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	}
 
 	// TODO: map prereqs to responses, so you can see them in market listing (not inventory though)
+	// TODO: profit field in json response needs to be formatted for money to two decimal places
 	// check if player meets prerequisites to purchase item
 	for _, v := range listing.Resource.Prerequisites {
 		item := player.GetResource(v.Name)

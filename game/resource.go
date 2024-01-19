@@ -351,15 +351,18 @@ var landList = []*Resource{
 	{
 		Name: "Hydraulic Mine - Low Yield",
 		Type: RESOURCE_TYPE_LAND,
-		// TODO: update func for hydraulic mine
-		// update: func(player *Player, item *Item) {
-		// 	player.AddResource(commodityList["Gold Flakes"].Resource, randInt64(1*item.Quantity, 5*item.Quantity))
-		// },
+		update: func(player *Player, item *Item) {
+			player.AddResource(findResource("Gold Flakes"), randInt64(1*item.Quantity, 5*item.Quantity))
+		},
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
+		Prerequisites: []Prerequisite{
+			{Name: "River Claim - Low Grade", Quantity: 1},
+		},
 		// Prerequisites: func(player *Player) bool {
 		// TODO: subtract items from player inventory (sluice box, water pump, employees)
+		// TODO: also I saw item name in a request somewhere
 		// 	return true
 		// },
 	},

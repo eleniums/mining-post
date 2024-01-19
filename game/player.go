@@ -71,6 +71,10 @@ func (p *Player) ToDB() data.Player {
 
 // Add or remove resource quantity from player's inventory.
 func (p *Player) AddResource(resource *Resource, quantity int64) error {
+	if resource == nil {
+		return errors.New("resource cannot be nil")
+	}
+
 	for i, item := range p.Inventory {
 		if item.Resource.Name == resource.Name {
 			if item.Quantity+quantity < 0 {
