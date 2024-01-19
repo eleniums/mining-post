@@ -20,7 +20,7 @@ func NewItem(resource *Resource, quantity int64) *Item {
 
 // Map a database item to a game item.
 func NewItemFromDB(dbItem data.Item) *Item {
-	listing := marketMasterList[dbItem.Name]
+	listing := resourceMap[dbItem.Name]
 	item := NewItem(listing.Resource, dbItem.Quantity)
 	return item
 }
