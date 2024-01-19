@@ -359,6 +359,9 @@ var landList = []*Resource{
 		sellDelta:    4,
 		Prerequisites: []Prerequisite{
 			{Name: "River Claim - Low Grade", Quantity: 1},
+			{Name: "Sluice Box", Quantity: 1},
+			{Name: "Water Pump", Quantity: 1},
+			{Name: "Worker", Quantity: 1},
 		},
 		// Prerequisites: func(player *Player) bool {
 		// TODO: subtract items from player inventory (sluice box, water pump, employees)
