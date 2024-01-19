@@ -352,7 +352,7 @@ var landList = []*Resource{
 		Name: "Hydraulic Mine - Low Yield",
 		Type: RESOURCE_TYPE_LAND,
 		update: func(player *Player, item *Item) {
-			player.AddResource(findResource("Gold Flakes"), randInt64(1*item.Quantity, 5*item.Quantity))
+			player.AddResource(findCommodity("Gold Flakes"), randInt64(1*item.Quantity, 5*item.Quantity))
 		},
 		buyRangeLow:  5,
 		buyRangeHigh: 20,

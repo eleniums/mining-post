@@ -43,8 +43,8 @@ func createListings(src []*Resource) map[string]*Listing {
 	return listings
 }
 
-// Find and retrieve a resource from the master list.
-func findResource(name string) *Resource {
+// Find and retrieve a commodity from the master list.
+func findCommodity(name string) *Resource {
 	listing, ok := commodityMap[name]
 	if !ok {
 		return nil
