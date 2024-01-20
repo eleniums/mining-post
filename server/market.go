@@ -53,9 +53,9 @@ func (s *Server) ListMarketStock(w http.ResponseWriter, req *http.Request) {
 }
 
 type BuyOrderRequest struct {
-	PlayerName string `json:"player"`
-	ItemName   string `json:"item"`
-	Quantity   int64  `json:"quantity"`
+	PlayerName   string `json:"player"`
+	ResourceName string `json:"resource"`
+	Quantity     int64  `json:"quantity"`
 }
 
 type BuyOrderResponse struct {
@@ -72,24 +72,24 @@ func (s *Server) BuyOrder(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	cost, err := s.manager.BuyOrder(in.PlayerName, in.ItemName, in.Quantity)
+	cost, err := s.manager.BuyOrder(in.PlayerName, in.ResourceName, in.Quantity)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to purchase %d of item: %s, err: %v", in.Quantity, in.ItemName, err), http.StatusBadRequest)
+		http.Error(w, fmt.Sprintf("Failed to purchase %d of resource: %s, err: %v", in.Quantity, in.ResourceName, err), http.StatusBadRequest)
 		return
 	}
 
 	resp := BuyOrderResponse{
 		Cost:    cost,
-		Message: fmt.Sprintf("Successfully purchased %d of item: %s, total cost: $%.2f", in.Quantity, in.ItemName, cost),
+		Message: fmt.Sprintf("Successfully purchased %d of resource: %s, total cost: $%.2f", in.Quantity, in.ResourceName, cost),
 	}
 
 	writeResponse(w, resp)
 }
 
 type SellOrderRequest struct {
-	PlayerName string `json:"player"`
-	ItemName   string `json:"item"`
-	Quantity   int64  `json:"quantity"`
+	PlayerName   string `json:"player"`
+	ResourceName string `json:"resource"`
+	Quantity     int64  `json:"quantity"`
 }
 
 type SellOrderResponse struct {
@@ -106,15 +106,15 @@ func (s *Server) SellOrder(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	profit, err := s.manager.SellOrder(in.PlayerName, in.ItemName, in.Quantity)
+	profit, err := s.manager.SellOrder(in.PlayerName, in.ResourceName, in.Quantity)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to sell %d of item: %s, err: %v", in.Quantity, in.ItemName, err), http.StatusBadRequest)
+		http.Error(w, fmt.Sprintf("Failed to sell %d of resource: %s, err: %v", in.Quantity, in.ResourceName, err), http.StatusBadRequest)
 		return
 	}
 
 	resp := SellOrderResponse{
 		Profit:  profit,
-		Message: fmt.Sprintf("Successfully sold %d of item: %s, total profit: $%.2f", in.Quantity, in.ItemName, profit),
+		Message: fmt.Sprintf("Successfully sold %d of resource: %s, total profit: $%.2f", in.Quantity, in.ResourceName, profit),
 	}
 
 	writeResponse(w, resp)

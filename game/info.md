@@ -71,7 +71,7 @@ Purchase resource:
 POST /market/buy
 {
     "player": "tstark",
-    "item": "Limestone",
+    "resource": "Limestone",
     "quantity": 2
 }
 
@@ -87,7 +87,7 @@ Sell resource:
 POST /market/sell
 {
     "player": "tstark",
-    "item": "Limestone",
+    "resource": "Limestone",
     "quantity": 2
 }
 

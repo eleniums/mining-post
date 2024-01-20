@@ -5,9 +5,9 @@ import (
 )
 
 type DigActionRequest struct {
-	PlayerName string `json:"player"`
-	ItemName   string `json:"item"`
-	Quantity   int64  `json:"quantity"`
+	PlayerName   string `json:"player"`
+	ResourceName string `json:"resource"`
+	Quantity     int64  `json:"quantity"`
 }
 
 type DigActionResponse struct {
@@ -25,24 +25,24 @@ func (s *Server) DigAction(w http.ResponseWriter, req *http.Request) {
 	// 	return
 	// }
 
-	// cost, err := s.manager.DigAction(in.PlayerName, in.ItemName, in.Quantity)
+	// cost, err := s.manager.DigAction(in.PlayerName, in.ResourceName, in.Quantity)
 	// if err != nil {
-	// 	http.Error(w, fmt.Sprintf("Failed to purchase %d of item: %s, err: %v", in.Quantity, in.ItemName, err), http.StatusBadRequest)
+	// 	http.Error(w, fmt.Sprintf("Failed to purchase %d of item: %s, err: %v", in.Quantity, in.ResourceName, err), http.StatusBadRequest)
 	// 	return
 	// }
 
 	// resp := DigActionResponse{
 	// 	Cost:    cost,
-	// 	Message: fmt.Sprintf("Successfully purchased %d of item: %s, total cost: $%.2f", in.Quantity, in.ItemName, cost),
+	// 	Message: fmt.Sprintf("Successfully purchased %d of item: %s, total cost: $%.2f", in.Quantity, in.ResourceName, cost),
 	// }
 
 	// writeResponse(w, resp)
 }
 
 type ProspectActionRequest struct {
-	PlayerName string `json:"player"`
-	ItemName   string `json:"item"`
-	Quantity   int64  `json:"quantity"`
+	PlayerName   string `json:"player"`
+	ResourceName string `json:"resource"`
+	Quantity     int64  `json:"quantity"`
 }
 
 type ProspectActionResponse struct {
@@ -60,15 +60,15 @@ func (s *Server) ProspectAction(w http.ResponseWriter, req *http.Request) {
 	// 	return
 	// }
 
-	// profit, err := s.manager.ProspectAction(in.PlayerName, in.ItemName, in.Quantity)
+	// profit, err := s.manager.ProspectAction(in.PlayerName, in.ResourceName, in.Quantity)
 	// if err != nil {
-	// 	http.Error(w, fmt.Sprintf("Failed to sell %d of item: %s, err: %v", in.Quantity, in.ItemName, err), http.StatusBadRequest)
+	// 	http.Error(w, fmt.Sprintf("Failed to sell %d of item: %s, err: %v", in.Quantity, in.ResourceName, err), http.StatusBadRequest)
 	// 	return
 	// }
 
 	// resp := ProspectActionResponse{
 	// 	Profit:  profit,
-	// 	Message: fmt.Sprintf("Successfully sold %d of item: %s, total profit: $%.2f", in.Quantity, in.ItemName, profit),
+	// 	Message: fmt.Sprintf("Successfully sold %d of item: %s, total profit: $%.2f", in.Quantity, in.ResourceName, profit),
 	// }
 
 	// writeResponse(w, resp)

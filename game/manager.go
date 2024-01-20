@@ -105,7 +105,7 @@ func (m *Manager) update() {
 		// give player salary
 		player.Money += player.Salary
 
-		// run updates on any items as needed
+		// run updates on any resources as needed
 		for _, item := range player.Inventory {
 			if item.Resource.update != nil {
 				item.Resource.update(player, item)
@@ -183,7 +183,7 @@ func (m *Manager) GetPlayer(name string) (*Player, error) {
 	return Copy(player), nil
 }
 
-func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (float64, error) {
+func (m *Manager) BuyOrder(playerName string, resourceName string, quantity int64) (float64, error) {
 	if quantity <= 0 {
 		return 0, errors.New("quantity must be greater than 0")
 	}
@@ -199,26 +199,26 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	player.lock.Lock()
 	defer player.lock.Unlock()
 
-	listing, ok := m.market[itemName]
+	listing, ok := m.market[resourceName]
 	if !ok {
-		return 0, fmt.Errorf("item not found for purchase: %s", itemName)
+		return 0, fmt.Errorf("resource not found for purchase: %s", resourceName)
 	}
 
-	// determine cost of item at requested quantity
+	// determine cost of resource at requested quantity
 	cost := listing.BuyPrice * float64(quantity)
 
 	// determine if player can afford to purchase the requested quantity
 	if player.Money < cost {
-		return 0, fmt.Errorf("insufficient funds to purchase %d of item: %s, cost: %.2f", quantity, itemName, cost)
+		return 0, fmt.Errorf("insufficient funds to purchase %d of resource: %s, cost: %.2f", quantity, resourceName, cost)
 	}
 
 	// TODO: map prereqs to responses, so you can see them in market listing (not inventory though)
 	// TODO: profit field in json response needs to be formatted for money to two decimal places
-	// check if player meets prerequisites to purchase item
+	// check if player meets prerequisites to purchase resource
 	for _, v := range listing.Resource.Prerequisites {
 		item := player.GetResource(v.Name)
 		if item == nil || item.Quantity < v.Quantity*quantity {
-			return 0, fmt.Errorf("player does not meet prerequisites to purchase item: %s", itemName)
+			return 0, fmt.Errorf("player does not meet prerequisites to purchase resource: %s", resourceName)
 		}
 	}
 
@@ -227,7 +227,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 		player.AddResource(player.GetResource(v.Name).Resource, -v.Quantity*quantity)
 	}
 
-	// buy item for player
+	// buy resource for player
 	player.Money -= cost
 	err := player.AddResource(listing.Resource, quantity)
 	if err != nil {
@@ -237,7 +237,7 @@ func (m *Manager) BuyOrder(playerName string, itemName string, quantity int64) (
 	return cost, nil
 }
 
-func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) (float64, error) {
+func (m *Manager) SellOrder(playerName string, resourceName string, quantity int64) (float64, error) {
 	if quantity <= 0 {
 		return 0, errors.New("quantity must be greater than 0")
 	}
@@ -253,24 +253,24 @@ func (m *Manager) SellOrder(playerName string, itemName string, quantity int64) 
 	player.lock.Lock()
 	defer player.lock.Unlock()
 
-	listing, ok := m.market[itemName]
+	listing, ok := m.market[resourceName]
 	if !ok {
-		return 0, fmt.Errorf("item not found for sale: %s", itemName)
+		return 0, fmt.Errorf("resource not found for sale: %s", resourceName)
 	}
 
-	// determine profit of item at requested quantity
+	// determine profit of resource at requested quantity
 	profit := listing.SellPrice * float64(quantity)
 
 	// determine if player has enough quantity to sell
-	item := player.GetResource(itemName)
+	item := player.GetResource(resourceName)
 	if item == nil {
-		return 0, fmt.Errorf("player does not have item in inventory: %s", itemName)
+		return 0, fmt.Errorf("player does not have resource in inventory: %s", resourceName)
 	}
 	if item.Quantity < quantity {
-		return 0, fmt.Errorf("insufficient quantity to sell %d of item: %s", quantity, itemName)
+		return 0, fmt.Errorf("insufficient quantity to sell %d of resource: %s", quantity, resourceName)
 	}
 
-	// sell item for player
+	// sell resource for player
 	player.Money += profit
 
 	// remove quantity from player's inventory

@@ -52,9 +52,9 @@ func Test_Integration_ListMarketStock_Filtered(t *testing.T) {
 
 func Test_Integration_BuyOrder_Success(t *testing.T) {
 	req := server.BuyOrderRequest{
-		PlayerName: testPlayer,
-		ItemName:   "Limestone",
-		Quantity:   2,
+		PlayerName:   testPlayer,
+		ResourceName: "Limestone",
+		Quantity:     2,
 	}
 
 	// act
@@ -67,9 +67,9 @@ func Test_Integration_BuyOrder_Success(t *testing.T) {
 
 func Test_Integration_BuyOrder_InvalidQuantity(t *testing.T) {
 	req := server.BuyOrderRequest{
-		PlayerName: testPlayer,
-		ItemName:   "Limestone",
-		Quantity:   0,
+		PlayerName:   testPlayer,
+		ResourceName: "Limestone",
+		Quantity:     0,
 	}
 
 	// act
@@ -82,9 +82,9 @@ func Test_Integration_BuyOrder_InvalidQuantity(t *testing.T) {
 
 func Test_Integration_SellOrder_Success(t *testing.T) {
 	req := server.SellOrderRequest{
-		PlayerName: testPlayer,
-		ItemName:   "Limestone",
-		Quantity:   2,
+		PlayerName:   testPlayer,
+		ResourceName: "Limestone",
+		Quantity:     2,
 	}
 
 	// act
@@ -97,9 +97,9 @@ func Test_Integration_SellOrder_Success(t *testing.T) {
 
 func Test_Integration_SellOrder_InvalidQuantity(t *testing.T) {
 	req := server.SellOrderRequest{
-		PlayerName: testPlayer,
-		ItemName:   "Limestone",
-		Quantity:   0,
+		PlayerName:   testPlayer,
+		ResourceName: "Limestone",
+		Quantity:     0,
 	}
 
 	// act
