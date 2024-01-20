@@ -59,8 +59,8 @@ type BuyOrderRequest struct {
 }
 
 type BuyOrderResponse struct {
-	Cost    float64 `json:"cost"`
-	Message string  `json:"message"`
+	Cost    string `json:"cost"`
+	Message string `json:"message"`
 }
 
 // Buy an item from the market.
@@ -79,7 +79,7 @@ func (s *Server) BuyOrder(w http.ResponseWriter, req *http.Request) {
 	}
 
 	resp := BuyOrderResponse{
-		Cost:    cost,
+		Cost:    fmt.Sprintf("$%.2f", cost),
 		Message: fmt.Sprintf("Successfully purchased %d of resource: %s, total cost: $%.2f", in.Quantity, in.ResourceName, cost),
 	}
 
@@ -93,8 +93,8 @@ type SellOrderRequest struct {
 }
 
 type SellOrderResponse struct {
-	Profit  float64 `json:"profit"`
-	Message string  `json:"message"`
+	Profit  string `json:"profit"`
+	Message string `json:"message"`
 }
 
 // Sell an item on the market.
@@ -113,7 +113,7 @@ func (s *Server) SellOrder(w http.ResponseWriter, req *http.Request) {
 	}
 
 	resp := SellOrderResponse{
-		Profit:  profit,
+		Profit:  fmt.Sprintf("$%.2f", profit),
 		Message: fmt.Sprintf("Successfully sold %d of resource: %s, total profit: $%.2f", in.Quantity, in.ResourceName, profit),
 	}
 
