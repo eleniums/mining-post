@@ -21,6 +21,7 @@ type Resource struct {
 
 	// If set, this function will be called every world update. Useful for
 	// generating materials or performing some action.
+	// TODO: do I ever need to perform an action or can I just turn this into a loot table?
 	update func(player *Player, item *Item)
 
 	buyRangeLow  float64 // lowest possible buy price for resource
