@@ -31,41 +31,31 @@ func NewPlayer(src *game.Player) Player {
 	}
 }
 
-type Resource struct {
-	Name string `json:"name"`
-	Type string `json:"type"`
-}
-
-func NewResource(src *game.Resource) Resource {
-	return Resource{
-		Name: src.Name,
-		Type: string(src.Type),
-	}
-}
-
 type Item struct {
-	Resource
-
-	Quantity int64 `json:"quantity"`
+	Name     string `json:"name"`
+	Type     string `json:"type"`
+	Quantity int64  `json:"quantity"`
 }
 
 func NewItem(src *game.Item) Item {
 	return Item{
-		Resource: NewResource(src.Resource),
+		Name:     src.Resource.Name,
+		Type:     string(src.Resource.Type),
 		Quantity: src.Quantity,
 	}
 }
 
 type Listing struct {
-	Resource
-
+	Name      string `json:"name"`
+	Type      string `json:"type"`
 	BuyPrice  string `json:"buy_price"`
 	SellPrice string `json:"sell_price"`
 }
 
 func NewListing(src *game.Listing) Listing {
 	return Listing{
-		Resource:  NewResource(src.Resource),
+		Name:      src.Resource.Name,
+		Type:      string(src.Resource.Type),
 		BuyPrice:  formatMoney(src.BuyPrice),
 		SellPrice: formatMoney(src.SellPrice),
 	}
