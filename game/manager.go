@@ -212,7 +212,6 @@ func (m *Manager) BuyOrder(playerName string, resourceName string, quantity int6
 		return 0, fmt.Errorf("insufficient funds to purchase %d of resource: %s, cost: %.2f", quantity, resourceName, cost)
 	}
 
-	// TODO: map prereqs to responses, so you can see them in market listing (not inventory though)
 	// check if player meets prerequisites to purchase resource
 	for _, v := range listing.Resource.Prerequisites {
 		item := player.GetResource(v.Name)

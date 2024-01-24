@@ -46,19 +46,34 @@ func NewItem(src *game.Item) Item {
 }
 
 type Listing struct {
-	Name      string `json:"name"`
-	Type      string `json:"type"`
-	BuyPrice  string `json:"buy_price"`
-	SellPrice string `json:"sell_price"`
+	Name          string         `json:"name"`
+	Type          string         `json:"type"`
+	BuyPrice      string         `json:"buy_price"`
+	SellPrice     string         `json:"sell_price"`
+	Prerequisites []Prerequisite `json:"prerequisites,omitempty"`
 }
 
 func NewListing(src *game.Listing) Listing {
-	return Listing{
-		Name:      src.Resource.Name,
-		Type:      string(src.Resource.Type),
-		BuyPrice:  formatMoney(src.BuyPrice),
-		SellPrice: formatMoney(src.SellPrice),
+	prerequisites := make([]Prerequisite, len(src.Resource.Prerequisites))
+	for i, v := range src.Resource.Prerequisites {
+		prerequisites[i] = Prerequisite{
+			Name:     v.Name,
+			Quantity: v.Quantity,
+		}
 	}
+
+	return Listing{
+		Name:          src.Resource.Name,
+		Type:          string(src.Resource.Type),
+		BuyPrice:      formatMoney(src.BuyPrice),
+		SellPrice:     formatMoney(src.SellPrice),
+		Prerequisites: prerequisites,
+	}
+}
+
+type Prerequisite struct {
+	Name     string `json:"name"`
+	Quantity int64  `json:"quantity"`
 }
 
 func formatMoney(src float64) string {
