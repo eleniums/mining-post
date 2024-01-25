@@ -107,8 +107,11 @@ func (m *Manager) update() {
 
 		// run updates on any resources as needed
 		for _, item := range player.Inventory {
-			if item.Resource.update != nil {
-				item.Resource.update(player, item)
+			if item.Resource.Loot != nil {
+				for i := 0; i < int(item.Quantity); i++ {
+					resourceName, resourceQuantity := item.Resource.Loot.CalculateLoot()
+					player.AddResource(player.GetResource(resourceName).Resource, resourceQuantity)
+				}
 			}
 		}
 
