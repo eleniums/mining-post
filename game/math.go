@@ -5,6 +5,11 @@ import (
 )
 
 // Returns a random value in the range [low, high] inclusive.
+func randInt(low int, high int) int {
+	return rand.Intn(high-low+1) + low
+}
+
+// Returns a random value in the range [low, high] inclusive.
 func randInt64(low int64, high int64) int64 {
 	return rand.Int63n(high-low+1) + low
 }
