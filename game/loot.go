@@ -1,9 +1,7 @@
 package game
 
 // Loot table for calculating production of mines.
-type LootTable struct {
-	Loot []LootEntry // Entries in the loot table.
-}
+type LootTable []LootEntry
 
 // Single entry in a loot table.
 type LootEntry struct {
