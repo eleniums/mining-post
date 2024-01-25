@@ -7,11 +7,32 @@ type LootTable []LootEntry
 type LootEntry struct {
 	Name      string // Name of resource to provide.
 	Weight    int    // Weight (or chance) for this entry in the loot table.
-	CountLow  int    // Lowest number of resource to provide if chosen.
-	CountHigh int    // Highest number of resource to provide if chosen.
+	CountLow  int64  // Lowest number of resource to provide if chosen.
+	CountHigh int64  // Highest number of resource to provide if chosen.
 }
 
-func (lt *LootTable) CalculateLoot() (name string, quantity int64) {
-	// TODO: calculate drops from table
-	return "", 0 // resource name, quantity of resource
+// Roll and return the name and quantity of loot.
+func (lt LootTable) CalculateLoot() (string, int64) {
+	// get total weight
+	weight := 0
+	for _, v := range lt {
+		weight += v.Weight
+	}
+
+	// roll a random number
+	roll := randInt(1, weight)
+
+	// get associated loot entry
+	prevTotal := 0
+	total := 0
+	for _, v := range lt {
+		prevTotal = total
+		total += v.Weight
+		if roll > prevTotal && roll <= total {
+			return v.Name, randInt64(v.CountLow, v.CountHigh)
+		}
+	}
+
+	// this should not happen, no loot returned
+	return "", 0
 }
