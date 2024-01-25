@@ -12,3 +12,8 @@ type LootEntry struct {
 	CountLow  int    // Lowest number of resource to provide if chosen.
 	CountHigh int    // Highest number of resource to provide if chosen.
 }
+
+func (lt *LootTable) CalculateLoot() (name string, quantity int64) {
+	// TODO: calculate drops from table
+	return "", 0 // resource name, quantity of resource
+}
