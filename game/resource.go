@@ -19,10 +19,9 @@ type Resource struct {
 	// process.
 	Prerequisites []Prerequisite
 
-	// If set, this function will be called every world update. Useful for
-	// generating materials or performing some action.
-	// TODO: do I ever need to perform an action or can I just turn this into a loot table?
-	update func(player *Player, item *Item)
+	// Loot table will be processed every world update. Used to generate
+	// resources from mines.
+	Loot LootTable
 
 	buyRangeLow  float64 // lowest possible buy price for resource
 	buyRangeHigh float64 // highest possible buy price for resource
@@ -349,11 +348,8 @@ var landList = []*Resource{
 		sellDelta:    4,
 	},
 	{
-		Name: "Hydraulic Mine - Low Yield",
-		Type: RESOURCE_TYPE_LAND,
-		update: func(player *Player, item *Item) {
-			player.AddResource(findCommodity("Gold Flakes"), randInt64(1*item.Quantity, 5*item.Quantity))
-		},
+		Name:         "Hydraulic Mine - Low Yield",
+		Type:         RESOURCE_TYPE_LAND,
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
@@ -362,6 +358,14 @@ var landList = []*Resource{
 			{Name: "Sluice Box", Quantity: 1},
 			{Name: "Water Pump", Quantity: 1},
 			{Name: "Worker", Quantity: 1},
+		},
+		Loot: LootTable{
+			{
+				Name:      "Gold Flakes",
+				Weight:    1,
+				CountLow:  1,
+				CountHigh: 5,
+			},
 		},
 	},
 	{
