@@ -105,12 +105,12 @@ func (m *Manager) update() {
 		// give player salary
 		player.Money += player.Salary
 
-		// run updates on any resources as needed
+		// roll for loot on any resources as needed
 		for _, item := range player.Inventory {
 			if item.Resource.Loot != nil {
 				for i := 0; i < int(item.Quantity); i++ {
 					resourceName, resourceQuantity := item.Resource.Loot.CalculateLoot()
-					player.AddResource(player.GetResource(resourceName).Resource, resourceQuantity)
+					player.AddResource(findCommodity(resourceName), resourceQuantity)
 				}
 			}
 		}
