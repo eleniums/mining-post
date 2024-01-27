@@ -376,6 +376,7 @@ var landList = []*Resource{
 		sellDelta:    4,
 	},
 	{
+		// TODO: this should have a low chance of producing actual gold instead of flakes
 		Name:         "Hydraulic Mine - Superior Yield",
 		Type:         RESOURCE_TYPE_LAND,
 		buyRangeLow:  5,
