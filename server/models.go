@@ -77,5 +77,6 @@ type Prerequisite struct {
 }
 
 func formatMoney(src float64) string {
+	// TODO: add commas to money
 	return fmt.Sprintf("$%.2f", src)
 }
