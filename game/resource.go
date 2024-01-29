@@ -387,33 +387,32 @@ var landList = []*Resource{
 
 // List of all employees in the game.
 var employeeList = []*Resource{
-	// TODO: finish filling out employees
 	{
 		Name:         "Worker",
 		Type:         RESOURCE_TYPE_EMPLOYEE,
-		buyRangeLow:  5,
-		buyRangeHigh: 20,
-		sellDelta:    4,
+		buyRangeLow:  30_000,
+		buyRangeHigh: 30_000,
+		sellDelta:    0,
 	},
 	{
 		Name:         "Surveyor",
 		Type:         RESOURCE_TYPE_EMPLOYEE,
-		buyRangeLow:  5,
-		buyRangeHigh: 20,
-		sellDelta:    4,
+		buyRangeLow:  45_000,
+		buyRangeHigh: 45_000,
+		sellDelta:    0,
 	},
 	{
 		Name:         "Specialist",
 		Type:         RESOURCE_TYPE_EMPLOYEE,
-		buyRangeLow:  5,
-		buyRangeHigh: 20,
-		sellDelta:    4,
+		buyRangeLow:  85_000,
+		buyRangeHigh: 85_000,
+		sellDelta:    0,
 	},
 	{
 		Name:         "Mining Engineer",
 		Type:         RESOURCE_TYPE_EMPLOYEE,
-		buyRangeLow:  5,
-		buyRangeHigh: 20,
-		sellDelta:    4,
+		buyRangeLow:  150_000,
+		buyRangeHigh: 150_000,
+		sellDelta:    0,
 	},
 }
