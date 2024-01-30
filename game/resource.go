@@ -347,6 +347,7 @@ var landList = []*Resource{
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
+	// TODO: anything with prerequisites should include prerequisites in sell price so net worth calculations are accurate
 	{
 		Name:         "Hydraulic Mine - Low Yield",
 		Type:         RESOURCE_TYPE_LAND,
