@@ -1,10 +1,12 @@
 package server
 
 import (
-	"fmt"
-
 	"github.com/eleniums/mining-post/game"
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
 )
+
+var textPrinter = message.NewPrinter(language.English)
 
 type Player struct {
 	Name      string `json:"name"`
@@ -76,7 +78,7 @@ type Prerequisite struct {
 	Quantity int64  `json:"quantity"`
 }
 
+// Formats value as money with dollar sign, 2 decimal precision, and comma delimiters. Ex: 12345.678 -> "$12,345.67"
 func formatMoney(src float64) string {
-	// TODO: add commas to money
-	return fmt.Sprintf("$%.2f", src)
+	return textPrinter.Sprintf("$%.2f", src)
 }
