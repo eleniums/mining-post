@@ -119,7 +119,7 @@ func (m *Manager) update() {
 		player.NetWorth = player.Money
 		for _, item := range player.Inventory {
 			if listing, ok := m.market[item.Resource.Name]; ok {
-				player.NetWorth += float64(item.Quantity) * listing.SellPrice
+				player.NetWorth += float64(item.Quantity) * listing.Resource.CalculateNetWorth()
 			}
 		}
 

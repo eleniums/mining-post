@@ -26,12 +26,27 @@ type Resource struct {
 	buyRangeLow  float64 // lowest possible buy price for resource
 	buyRangeHigh float64 // highest possible buy price for resource
 	sellDelta    float64 // highest potential difference of selling price. Selling price is always lower than buying price
+	netWorth     float64 // this is calculated based on the average of the buy low and buy high and includes prereqs
 }
 
 // Prerequisite for purchasing a resource. Includes name of resource and amount to subtract from player inventory.
 type Prerequisite struct {
 	Name     string
 	Quantity int64
+}
+
+// This will calculate and return net worth for a resource.
+func (r *Resource) CalculateNetWorth() float64 {
+	// only calculate net worth if it has not been calculated already
+	if r.netWorth > 0 {
+		return r.netWorth
+	}
+
+	r.netWorth = (r.buyRangeLow + r.buyRangeHigh) / 2.0
+
+	// TODO: include prereqs in calculation
+
+	return r.netWorth
 }
 
 // List of all commodities in the game.
