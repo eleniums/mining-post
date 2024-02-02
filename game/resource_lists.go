@@ -297,22 +297,22 @@ var landList = []*Resource{
 	{
 		Name:      "River Claim - Low Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    1_000,
+		buyHigh:   1_000,
 		sellDelta: 0,
 	},
 	{
 		Name:      "River Claim - High Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    10_000,
+		buyHigh:   10_000,
 		sellDelta: 0,
 	},
 	{
 		Name:      "River Claim - Superior Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    100_000,
+		buyHigh:   100_000,
 		sellDelta: 0,
 	},
 	{
