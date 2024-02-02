@@ -23,10 +23,10 @@ type Resource struct {
 	// resources from mines.
 	Loot LootTable
 
-	buyRangeLow  float64 // lowest possible buy price for resource
-	buyRangeHigh float64 // highest possible buy price for resource
-	sellDelta    float64 // highest potential difference of selling price. Selling price is always lower than buying price
-	netWorth     float64 // this is calculated based on the average of the buy low and buy high and includes prereqs
+	buyLow    float64 // lowest possible buy price for resource
+	buyHigh   float64 // highest possible buy price for resource
+	sellDelta float64 // highest potential difference of selling price. Selling price is always lower than buying price
+	netWorth  float64 // this is calculated based on the average of the buy low and buy high and includes prereqs
 }
 
 // Prerequisite for purchasing a resource. Includes name of resource and amount to subtract from player inventory.
@@ -52,7 +52,7 @@ func (r *Resource) CalculateNetWorth() float64 {
 	}
 
 	// average buy low/high and add prereq total
-	r.netWorth = (r.buyRangeLow+r.buyRangeHigh)/2.0 + prereqTotal
+	r.netWorth = (r.buyLow+r.buyHigh)/2.0 + prereqTotal
 
 	return r.netWorth
 }
