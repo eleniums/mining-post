@@ -329,12 +329,7 @@ var landList = []*Resource{
 			{Name: "Worker", Quantity: 1},
 		},
 		Loot: LootTable{
-			{
-				Name:      "Gold Flakes",
-				Weight:    1,
-				CountLow:  1,
-				CountHigh: 5,
-			},
+			{Name: "Gold Flakes", Weight: 100, CountLow: 1, CountHigh: 5},
 		},
 	},
 	{
@@ -343,14 +338,36 @@ var landList = []*Resource{
 		buyLow:    5,
 		buyHigh:   20,
 		sellDelta: 4,
+		Prerequisites: []Prerequisite{
+			{Name: "River Claim - High Grade", Quantity: 1},
+			{Name: "Sluice Box", Quantity: 3},
+			{Name: "Water Pump", Quantity: 3},
+			{Name: "Worker", Quantity: 2},
+		},
+		Loot: LootTable{
+			{Name: "Gold Flakes", Weight: 60, CountLow: 10, CountHigh: 20},
+			{Name: "Gold Flakes", Weight: 29, CountLow: 30, CountHigh: 50},
+			{Name: "Gold", Weight: 1, CountLow: 1, CountHigh: 1},
+		},
 	},
 	{
-		// TODO: this should have a low chance of producing actual gold instead of flakes
 		Name:      "Hydraulic Mine - Superior Yield",
 		Type:      RESOURCE_TYPE_LAND,
 		buyLow:    5,
 		buyHigh:   20,
 		sellDelta: 4,
+		Prerequisites: []Prerequisite{
+			{Name: "River Claim - Superior Grade", Quantity: 1},
+			{Name: "Sluice Box", Quantity: 6},
+			{Name: "Water Pump", Quantity: 6},
+			{Name: "Worker", Quantity: 3},
+			{Name: "Specialist", Quantity: 1},
+		},
+		Loot: LootTable{
+			{Name: "Gold Flakes", Weight: 50, CountLow: 30, CountHigh: 50},
+			{Name: "Gold Flakes", Weight: 35, CountLow: 60, CountHigh: 100},
+			{Name: "Gold", Weight: 15, CountLow: 1, CountHigh: 3},
+		},
 	},
 }
 
