@@ -253,27 +253,6 @@ var equipmentList = []*Resource{
 var landList = []*Resource{
 	// TODO: river claims are for gold flakes only, desert claim for ore (copper through platinum), mountain claim for everything else, including diamonds
 	{
-		Name:      "River Claim - Low Grade",
-		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
-		sellDelta: 0,
-	},
-	{
-		Name:      "River Claim - High Grade",
-		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
-		sellDelta: 0,
-	},
-	{
-		Name:      "River Claim - Superior Grade",
-		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
-		sellDelta: 0,
-	},
-	{
 		Name:      "Mountain Claim - Low Grade",
 		Type:      RESOURCE_TYPE_LAND,
 		buyLow:    5,
@@ -310,6 +289,27 @@ var landList = []*Resource{
 	},
 	{
 		Name:      "Desert Claim - Superior Grade",
+		Type:      RESOURCE_TYPE_LAND,
+		buyLow:    5,
+		buyHigh:   20,
+		sellDelta: 0,
+	},
+	{
+		Name:      "River Claim - Low Grade",
+		Type:      RESOURCE_TYPE_LAND,
+		buyLow:    5,
+		buyHigh:   20,
+		sellDelta: 0,
+	},
+	{
+		Name:      "River Claim - High Grade",
+		Type:      RESOURCE_TYPE_LAND,
+		buyLow:    5,
+		buyHigh:   20,
+		sellDelta: 0,
+	},
+	{
+		Name:      "River Claim - Superior Grade",
 		Type:      RESOURCE_TYPE_LAND,
 		buyLow:    5,
 		buyHigh:   20,
