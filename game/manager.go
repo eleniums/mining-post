@@ -110,7 +110,7 @@ func (m *Manager) update() {
 			if item.Resource.Loot != nil {
 				for i := 0; i < int(item.Quantity); i++ {
 					resourceName, resourceQuantity := item.Resource.Loot.CalculateLoot()
-					player.AddResource(findCommodity(resourceName), resourceQuantity)
+					player.AddResource(findResource(resourceName), resourceQuantity)
 				}
 			}
 		}
