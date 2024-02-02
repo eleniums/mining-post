@@ -316,15 +316,12 @@ var landList = []*Resource{
 		buyRangeHigh: 20,
 		sellDelta:    4,
 	},
-	// TODO: anything with prerequisites should include prerequisites in sell price so net worth calculations are accurate?
-	// TODO: or maybe I just need to add a net worth field separate for calculating net worth
 	{
 		Name:         "Hydraulic Mine - Low Yield",
 		Type:         RESOURCE_TYPE_LAND,
 		buyRangeLow:  5,
 		buyRangeHigh: 20,
 		sellDelta:    4,
-		// TODO: add net worth and calculate it as average between buy low and high
 		Prerequisites: []Prerequisite{
 			{Name: "River Claim - Low Grade", Quantity: 1},
 			{Name: "Sluice Box", Quantity: 1},
