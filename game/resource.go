@@ -42,9 +42,17 @@ func (r *Resource) CalculateNetWorth() float64 {
 		return r.netWorth
 	}
 
-	r.netWorth = (r.buyRangeLow + r.buyRangeHigh) / 2.0
+	// calculate total worth of prereqs
+	var prereqTotal float64 = 0
+	for _, prereq := range r.Prerequisites {
+		resource := findResource(prereq.Name)
+		if resource != nil {
+			prereqTotal += resource.CalculateNetWorth() * float64(prereq.Quantity)
+		}
+	}
 
-	// TODO: include prereqs in calculation
+	// average buy low/high and add prereq total
+	r.netWorth = (r.buyRangeLow+r.buyRangeHigh)/2.0 + prereqTotal
 
 	return r.netWorth
 }
