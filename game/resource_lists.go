@@ -199,13 +199,6 @@ var equipmentList = []*Resource{
 		sellDelta: 0,
 	},
 	{
-		Name:      "Medium Dump Truck",
-		Type:      RESOURCE_TYPE_EQUIPMENT,
-		buyLow:    150_000,
-		buyHigh:   150_000,
-		sellDelta: 0,
-	},
-	{
 		Name:      "Large Dump Truck",
 		Type:      RESOURCE_TYPE_EQUIPMENT,
 		buyLow:    500_000,
@@ -224,13 +217,6 @@ var equipmentList = []*Resource{
 		Type:      RESOURCE_TYPE_EQUIPMENT,
 		buyLow:    80_000,
 		buyHigh:   80_000,
-		sellDelta: 0,
-	},
-	{
-		Name:      "Medium Crane",
-		Type:      RESOURCE_TYPE_EQUIPMENT,
-		buyLow:    200_000,
-		buyHigh:   200_000,
 		sellDelta: 0,
 	},
 	{
@@ -302,11 +288,12 @@ var landList = []*Resource{
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Desert Claim - Low Grade", Quantity: 1},
-			{Name: "Sluice Box", Quantity: 1},
-			{Name: "Water Pump", Quantity: 1},
-			{Name: "Worker", Quantity: 1},
+			{Name: "Small Dump Truck", Quantity: 1},
+			{Name: "Small Crane", Quantity: 1},
+			{Name: "Worker", Quantity: 3},
 		},
 		Loot: LootTable{
+			// TODO: loot table
 			{Name: "Gold Flakes", Weight: 100, CountLow: 1, CountHigh: 5},
 		},
 	},
@@ -318,11 +305,13 @@ var landList = []*Resource{
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Desert Claim - High Grade", Quantity: 1},
-			{Name: "Sluice Box", Quantity: 3},
-			{Name: "Water Pump", Quantity: 3},
-			{Name: "Worker", Quantity: 2},
+			{Name: "Large Dump Truck", Quantity: 2},
+			{Name: "Large Crane", Quantity: 1},
+			{Name: "Worker", Quantity: 4},
+			{Name: "Specialist", Quantity: 1},
 		},
 		Loot: LootTable{
+			// TODO: loot table
 			{Name: "Gold Flakes", Weight: 60, CountLow: 10, CountHigh: 20},
 			{Name: "Gold Flakes", Weight: 29, CountLow: 30, CountHigh: 50},
 			{Name: "Gold", Weight: 1, CountLow: 1, CountHigh: 1},
@@ -336,12 +325,14 @@ var landList = []*Resource{
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Desert Claim - Superior Grade", Quantity: 1},
-			{Name: "Sluice Box", Quantity: 6},
-			{Name: "Water Pump", Quantity: 6},
-			{Name: "Worker", Quantity: 3},
-			{Name: "Specialist", Quantity: 1},
+			{Name: "Ultra-Heavy Dump Truck", Quantity: 2},
+			{Name: "Ultra-Heavy Crane", Quantity: 1},
+			{Name: "Worker", Quantity: 6},
+			{Name: "Specialist", Quantity: 3},
+			{Name: "Mining Engineer", Quantity: 1},
 		},
 		Loot: LootTable{
+			// TODO: loot table
 			{Name: "Gold Flakes", Weight: 50, CountLow: 30, CountHigh: 50},
 			{Name: "Gold Flakes", Weight: 35, CountLow: 60, CountHigh: 100},
 			{Name: "Gold", Weight: 15, CountLow: 1, CountHigh: 3},
