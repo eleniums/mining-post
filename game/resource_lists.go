@@ -293,8 +293,10 @@ var landList = []*Resource{
 			{Name: "Worker", Quantity: 3},
 		},
 		Loot: LootTable{
-			// TODO: loot table
-			{Name: "Gold Flakes", Weight: 100, CountLow: 1, CountHigh: 5},
+			{Name: "Copper", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 50 * 50 = 2500
+			{Name: "Silver", Weight: 35, CountLow: 4, CountHigh: 10},  // max value: 750 * 8 = 7500
+			{Name: "Gold", Weight: 14, CountLow: 1, CountHigh: 3},     // max value: 10000 * 3 = 30000
+			{Name: "Platinum", Weight: 1, CountLow: 1, CountHigh: 3},  // max value: 15000 * 3 = 45000
 		},
 	},
 	{
@@ -311,10 +313,10 @@ var landList = []*Resource{
 			{Name: "Specialist", Quantity: 1},
 		},
 		Loot: LootTable{
-			// TODO: loot table
-			{Name: "Gold Flakes", Weight: 60, CountLow: 10, CountHigh: 20},
-			{Name: "Gold Flakes", Weight: 29, CountLow: 30, CountHigh: 50},
-			{Name: "Gold", Weight: 1, CountLow: 1, CountHigh: 1},
+			{Name: "Copper", Weight: 20, CountLow: 50, CountHigh: 100}, // max value: 50 * 100 = 5000
+			{Name: "Silver", Weight: 50, CountLow: 15, CountHigh: 30},  // max value: 750 * 30 = 22500
+			{Name: "Gold", Weight: 20, CountLow: 5, CountHigh: 10},     // max value: 10000 * 10 = 100000
+			{Name: "Platinum", Weight: 10, CountLow: 5, CountHigh: 10}, // max value: 15000 * 10 = 150000
 		},
 	},
 	{
@@ -332,10 +334,10 @@ var landList = []*Resource{
 			{Name: "Mining Engineer", Quantity: 1},
 		},
 		Loot: LootTable{
-			// TODO: loot table
-			{Name: "Gold Flakes", Weight: 50, CountLow: 30, CountHigh: 50},
-			{Name: "Gold Flakes", Weight: 35, CountLow: 60, CountHigh: 100},
-			{Name: "Gold", Weight: 15, CountLow: 1, CountHigh: 3},
+			{Name: "Copper", Weight: 14, CountLow: 150, CountHigh: 300}, // max value: 50 * 300 = 15000
+			{Name: "Silver", Weight: 16, CountLow: 40, CountHigh: 70},   // max value: 750 * 70 = 52500
+			{Name: "Gold", Weight: 35, CountLow: 20, CountHigh: 50},     // max value: 10000 * 50 = 500000
+			{Name: "Platinum", Weight: 35, CountLow: 20, CountHigh: 50}, // max value: 15000 * 50 = 750000
 		},
 	},
 	{
@@ -372,7 +374,7 @@ var landList = []*Resource{
 			{Name: "Worker", Quantity: 1},
 		},
 		Loot: LootTable{
-			{Name: "Gold Flakes", Weight: 100, CountLow: 1, CountHigh: 5},
+			{Name: "Gold Flakes", Weight: 100, CountLow: 1, CountHigh: 5}, // max value: 17 * 5 = 85
 		},
 	},
 	{
@@ -388,9 +390,9 @@ var landList = []*Resource{
 			{Name: "Worker", Quantity: 2},
 		},
 		Loot: LootTable{
-			{Name: "Gold Flakes", Weight: 60, CountLow: 10, CountHigh: 20},
-			{Name: "Gold Flakes", Weight: 29, CountLow: 30, CountHigh: 50},
-			{Name: "Gold", Weight: 1, CountLow: 1, CountHigh: 1},
+			{Name: "Gold Flakes", Weight: 60, CountLow: 10, CountHigh: 20}, // max value: 17 * 20 = 340
+			{Name: "Gold Flakes", Weight: 29, CountLow: 30, CountHigh: 50}, // max value: 17 * 50 = 850
+			{Name: "Gold", Weight: 1, CountLow: 1, CountHigh: 1},           // max value: 10000 * 1 = 10000
 		},
 	},
 	{
@@ -407,9 +409,9 @@ var landList = []*Resource{
 			{Name: "Specialist", Quantity: 1},
 		},
 		Loot: LootTable{
-			{Name: "Gold Flakes", Weight: 50, CountLow: 30, CountHigh: 50},
-			{Name: "Gold Flakes", Weight: 35, CountLow: 60, CountHigh: 100},
-			{Name: "Gold", Weight: 15, CountLow: 1, CountHigh: 3},
+			{Name: "Gold Flakes", Weight: 50, CountLow: 30, CountHigh: 50},  // max value: 17 * 50 = 850
+			{Name: "Gold Flakes", Weight: 35, CountLow: 60, CountHigh: 100}, // max value: 17 * 100 = 1700
+			{Name: "Gold", Weight: 15, CountLow: 1, CountHigh: 3},           // max value: 10000 * 3 = 30000
 		},
 	},
 }
