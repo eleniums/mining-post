@@ -280,11 +280,11 @@ var landList = []*Resource{
 		buyHigh:   1_000_000,
 		sellDelta: 0,
 	},
-	{ // TODO: change stats for desert mines
+	{
 		Name:      "Desert Mine - Low Yield",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    50_000,
-		buyHigh:   50_000,
+		buyLow:    600_000,
+		buyHigh:   600_000,
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Desert Claim - Low Grade", Quantity: 1},
@@ -302,8 +302,8 @@ var landList = []*Resource{
 	{
 		Name:      "Desert Mine - High Yield",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    450_000,
-		buyHigh:   450_000,
+		buyLow:    2_500_000,
+		buyHigh:   2_500_000,
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Desert Claim - High Grade", Quantity: 1},
@@ -322,8 +322,8 @@ var landList = []*Resource{
 	{
 		Name:      "Desert Mine - Superior Yield",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    950_000,
-		buyHigh:   950_000,
+		buyLow:    10_000_000,
+		buyHigh:   10_000_000,
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Desert Claim - Superior Grade", Quantity: 1},
