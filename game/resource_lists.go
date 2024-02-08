@@ -262,22 +262,22 @@ var landList = []*Resource{
 	{
 		Name:      "Desert Claim - Low Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    10_000,
+		buyHigh:   10_000,
 		sellDelta: 0,
 	},
 	{
 		Name:      "Desert Claim - High Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    100_000,
+		buyHigh:   100_000,
 		sellDelta: 0,
 	},
 	{
 		Name:      "Desert Claim - Superior Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    1_000_000,
+		buyHigh:   1_000_000,
 		sellDelta: 0,
 	},
 	{ // TODO: change stats for desert mines
