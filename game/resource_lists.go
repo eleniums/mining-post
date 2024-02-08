@@ -259,6 +259,67 @@ var landList = []*Resource{
 		buyHigh:   20,
 		sellDelta: 0,
 	},
+	// TODO: update mountain mine values
+	{
+		Name:      "Mountain Mine - Low Yield",
+		Type:      RESOURCE_TYPE_LAND,
+		buyLow:    600_000,
+		buyHigh:   600_000,
+		sellDelta: 0,
+		Prerequisites: []Prerequisite{
+			{Name: "Mountain Claim - Low Grade", Quantity: 1},
+			{Name: "Small Dump Truck", Quantity: 1},
+			{Name: "Small Crane", Quantity: 1},
+			{Name: "Worker", Quantity: 3},
+		},
+		Loot: LootTable{
+			{Name: "Copper", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 50 * 50 = 2500
+			{Name: "Silver", Weight: 35, CountLow: 4, CountHigh: 10},  // max value: 750 * 8 = 7500
+			{Name: "Gold", Weight: 14, CountLow: 1, CountHigh: 3},     // max value: 10000 * 3 = 30000
+			{Name: "Platinum", Weight: 1, CountLow: 1, CountHigh: 3},  // max value: 15000 * 3 = 45000
+		},
+	},
+	{
+		Name:      "Mountain Mine - High Yield",
+		Type:      RESOURCE_TYPE_LAND,
+		buyLow:    2_500_000,
+		buyHigh:   2_500_000,
+		sellDelta: 0,
+		Prerequisites: []Prerequisite{
+			{Name: "Mountain Claim - High Grade", Quantity: 1},
+			{Name: "Large Dump Truck", Quantity: 2},
+			{Name: "Large Crane", Quantity: 1},
+			{Name: "Worker", Quantity: 4},
+			{Name: "Specialist", Quantity: 1},
+		},
+		Loot: LootTable{
+			{Name: "Copper", Weight: 20, CountLow: 50, CountHigh: 100}, // max value: 50 * 100 = 5000
+			{Name: "Silver", Weight: 50, CountLow: 15, CountHigh: 30},  // max value: 750 * 30 = 22500
+			{Name: "Gold", Weight: 20, CountLow: 5, CountHigh: 10},     // max value: 10000 * 10 = 100000
+			{Name: "Platinum", Weight: 10, CountLow: 5, CountHigh: 10}, // max value: 15000 * 10 = 150000
+		},
+	},
+	{
+		Name:      "Mountain Mine - Superior Yield",
+		Type:      RESOURCE_TYPE_LAND,
+		buyLow:    10_000_000,
+		buyHigh:   10_000_000,
+		sellDelta: 0,
+		Prerequisites: []Prerequisite{
+			{Name: "Mountain Claim - Superior Grade", Quantity: 1},
+			{Name: "Ultra-Heavy Dump Truck", Quantity: 2},
+			{Name: "Ultra-Heavy Crane", Quantity: 1},
+			{Name: "Worker", Quantity: 6},
+			{Name: "Specialist", Quantity: 3},
+			{Name: "Mining Engineer", Quantity: 1},
+		},
+		Loot: LootTable{
+			{Name: "Copper", Weight: 14, CountLow: 150, CountHigh: 300}, // max value: 50 * 300 = 15000
+			{Name: "Silver", Weight: 16, CountLow: 40, CountHigh: 70},   // max value: 750 * 70 = 52500
+			{Name: "Gold", Weight: 35, CountLow: 20, CountHigh: 50},     // max value: 10000 * 50 = 500000
+			{Name: "Platinum", Weight: 35, CountLow: 20, CountHigh: 50}, // max value: 15000 * 50 = 750000
+		},
+	},
 	{
 		Name:      "Desert Claim - Low Grade",
 		Type:      RESOURCE_TYPE_LAND,
