@@ -262,8 +262,8 @@ var landList = []*Resource{
 	{
 		Name:      "Mountain Mine - Low Yield",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    600_000,
-		buyHigh:   600_000,
+		buyLow:    300_000,
+		buyHigh:   300_000,
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Mountain Claim - Low Grade", Quantity: 1},
@@ -272,25 +272,25 @@ var landList = []*Resource{
 			{Name: "Worker", Quantity: 3},
 		},
 		Loot: LootTable{
-			{Name: "Limestone", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 0 * 20 = 0
-			{Name: "Sandstone", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 0 * 30 = 0
-			{Name: "Granite", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 50 = 0
-			{Name: "Quartz", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 90 = 0
-			{Name: "Marble", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 100 = 0
-			{Name: "Onyx", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 100 = 0
-			{Name: "Jade", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 150 = 0
-			{Name: "Garnet", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 600 = 0
-			{Name: "Sapphire", Weight: 50, CountLow: 20, CountHigh: 50},  // max value: 0 * 3000 = 0
-			{Name: "Ruby", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 3000 = 0
-			{Name: "Emerald", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 3000 = 0
-			{Name: "Diamond", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 12000 = 0
+			{Name: "Limestone", Weight: 11, CountLow: 5, CountHigh: 22}, // max value: 22 * 20 = 440
+			{Name: "Sandstone", Weight: 11, CountLow: 5, CountHigh: 15}, // max value: 15 * 30 = 450
+			{Name: "Granite", Weight: 11, CountLow: 4, CountHigh: 9},    // max value: 9 * 50 = 450
+			{Name: "Quartz", Weight: 11, CountLow: 4, CountHigh: 6},     // max value: 6 * 90 = 540
+			{Name: "Marble", Weight: 10, CountLow: 2, CountHigh: 8},     // max value: 8 * 100 = 800
+			{Name: "Onyx", Weight: 10, CountLow: 2, CountHigh: 8},       // max value: 8 * 100 = 800
+			{Name: "Jade", Weight: 10, CountLow: 2, CountHigh: 8},       // max value: 8 * 150 = 1200
+			{Name: "Garnet", Weight: 10, CountLow: 2, CountHigh: 4},     // max value: 4 * 600 = 2400
+			{Name: "Sapphire", Weight: 5, CountLow: 1, CountHigh: 2},    // max value: 2 * 3000 = 6000
+			{Name: "Ruby", Weight: 5, CountLow: 1, CountHigh: 2},        // max value: 2 * 3000 = 6000
+			{Name: "Emerald", Weight: 5, CountLow: 1, CountHigh: 2},     // max value: 2 * 3000 = 6000
+			{Name: "Diamond", Weight: 1, CountLow: 1, CountHigh: 1},     // max value: 1 * 12000 = 12000
 		},
 	},
 	{
 		Name:      "Mountain Mine - High Yield",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    2_500_000,
-		buyHigh:   2_500_000,
+		buyLow:    1_500_000,
+		buyHigh:   1_500_000,
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Mountain Claim - High Grade", Quantity: 1},
@@ -317,8 +317,8 @@ var landList = []*Resource{
 	{
 		Name:      "Mountain Mine - Superior Yield",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    10_000_000,
-		buyHigh:   10_000_000,
+		buyLow:    6_000_000,
+		buyHigh:   6_000_000,
 		sellDelta: 0,
 		Prerequisites: []Prerequisite{
 			{Name: "Mountain Claim - Superior Grade", Quantity: 1},
