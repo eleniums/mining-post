@@ -237,26 +237,25 @@ var equipmentList = []*Resource{
 
 // List of all land in the game.
 var landList = []*Resource{
-	// TODO: update claim costs
 	{
 		Name:      "Mountain Claim - Low Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    6_000,
+		buyHigh:   6_000,
 		sellDelta: 0,
 	},
 	{
 		Name:      "Mountain Claim - High Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    60_000,
+		buyHigh:   60_000,
 		sellDelta: 0,
 	},
 	{
 		Name:      "Mountain Claim - Superior Grade",
 		Type:      RESOURCE_TYPE_LAND,
-		buyLow:    5,
-		buyHigh:   20,
+		buyLow:    600_000,
+		buyHigh:   600_000,
 		sellDelta: 0,
 	},
 	{
