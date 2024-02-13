@@ -53,7 +53,7 @@ If this project was going to be deployed and made available to the public, a mor
 - [x] Add type to listings and filter capability for name and type
 - [x] More ranks? Like amatuer and apprentice and mining engineer?
 - [x] Related to ranks, adjust salaries. Should start with a very low salary.
-- [ ] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
+- [x] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
 - [ ] Maybe a prospect option to find more land? Call the land claims and they are non-producing unless you dig? Land can be built into mines?
 - [ ] Add high score table that lists the top ten players by net worth
