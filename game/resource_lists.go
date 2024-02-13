@@ -258,7 +258,6 @@ var landList = []*Resource{
 		buyHigh:   20,
 		sellDelta: 0,
 	},
-	// TODO: update mountain mine values
 	{
 		Name:      "Mountain Mine - Low Yield",
 		Type:      RESOURCE_TYPE_LAND,
@@ -300,20 +299,21 @@ var landList = []*Resource{
 			{Name: "Specialist", Quantity: 1},
 		},
 		Loot: LootTable{
-			{Name: "Limestone", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 0 * 20 = 0
-			{Name: "Sandstone", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 0 * 30 = 0
-			{Name: "Granite", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 50 = 0
-			{Name: "Quartz", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 90 = 0
-			{Name: "Marble", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 100 = 0
-			{Name: "Onyx", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 100 = 0
-			{Name: "Jade", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 150 = 0
-			{Name: "Garnet", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 600 = 0
-			{Name: "Sapphire", Weight: 50, CountLow: 20, CountHigh: 50},  // max value: 0 * 3000 = 0
-			{Name: "Ruby", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 3000 = 0
-			{Name: "Emerald", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 3000 = 0
-			{Name: "Diamond", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 12000 = 0
+			{Name: "Limestone", Weight: 3, CountLow: 20, CountHigh: 50}, // max value: 50 * 20 = 1000
+			{Name: "Sandstone", Weight: 3, CountLow: 15, CountHigh: 35}, // max value: 35 * 30 = 1050
+			{Name: "Granite", Weight: 3, CountLow: 10, CountHigh: 22},   // max value: 22 * 50 = 1100
+			{Name: "Quartz", Weight: 3, CountLow: 8, CountHigh: 15},     // max value: 15 * 90 = 1350
+			{Name: "Marble", Weight: 11, CountLow: 10, CountHigh: 20},   // max value: 20 * 100 = 2000
+			{Name: "Onyx", Weight: 11, CountLow: 10, CountHigh: 20},     // max value: 20 * 100 = 2000
+			{Name: "Jade", Weight: 11, CountLow: 10, CountHigh: 20},     // max value: 20 * 150 = 3000
+			{Name: "Garnet", Weight: 11, CountLow: 5, CountHigh: 10},    // max value: 10 * 600 = 6000
+			{Name: "Sapphire", Weight: 13, CountLow: 3, CountHigh: 5},   // max value: 5 * 3000 = 15000
+			{Name: "Ruby", Weight: 13, CountLow: 3, CountHigh: 5},       // max value: 5 * 3000 = 15000
+			{Name: "Emerald", Weight: 13, CountLow: 3, CountHigh: 5},    // max value: 5 * 3000 = 15000
+			{Name: "Diamond", Weight: 5, CountLow: 1, CountHigh: 2},     // max value: 2 * 12000 = 24000
 		},
 	},
+	// TODO: update mountain mine values
 	{
 		Name:      "Mountain Mine - Superior Yield",
 		Type:      RESOURCE_TYPE_LAND,
