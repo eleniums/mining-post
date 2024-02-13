@@ -237,6 +237,7 @@ var equipmentList = []*Resource{
 
 // List of all land in the game.
 var landList = []*Resource{
+	// TODO: update claim costs
 	{
 		Name:      "Mountain Claim - Low Grade",
 		Type:      RESOURCE_TYPE_LAND,
@@ -313,7 +314,6 @@ var landList = []*Resource{
 			{Name: "Diamond", Weight: 5, CountLow: 1, CountHigh: 2},     // max value: 2 * 12000 = 24000
 		},
 	},
-	// TODO: update mountain mine values
 	{
 		Name:      "Mountain Mine - Superior Yield",
 		Type:      RESOURCE_TYPE_LAND,
@@ -329,18 +329,18 @@ var landList = []*Resource{
 			{Name: "Mining Engineer", Quantity: 1},
 		},
 		Loot: LootTable{
-			{Name: "Limestone", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 0 * 20 = 0
-			{Name: "Sandstone", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 0 * 30 = 0
-			{Name: "Granite", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 50 = 0
-			{Name: "Quartz", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 90 = 0
-			{Name: "Marble", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 100 = 0
-			{Name: "Onyx", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 100 = 0
-			{Name: "Jade", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 150 = 0
-			{Name: "Garnet", Weight: 50, CountLow: 20, CountHigh: 50},    // max value: 0 * 600 = 0
-			{Name: "Sapphire", Weight: 50, CountLow: 20, CountHigh: 50},  // max value: 0 * 3000 = 0
-			{Name: "Ruby", Weight: 50, CountLow: 20, CountHigh: 50},      // max value: 0 * 3000 = 0
-			{Name: "Emerald", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 3000 = 0
-			{Name: "Diamond", Weight: 50, CountLow: 20, CountHigh: 50},   // max value: 0 * 12000 = 0
+			{Name: "Limestone", Weight: 3, CountLow: 200, CountHigh: 500}, // max value: 500 * 20 = 10000
+			{Name: "Sandstone", Weight: 3, CountLow: 200, CountHigh: 500}, // max value: 500 * 30 = 15000
+			{Name: "Granite", Weight: 3, CountLow: 200, CountHigh: 500},   // max value: 500 * 50 = 25000
+			{Name: "Quartz", Weight: 3, CountLow: 200, CountHigh: 500},    // max value: 500 * 90 = 45000
+			{Name: "Marble", Weight: 3, CountLow: 200, CountHigh: 500},    // max value: 500 * 100 = 50000
+			{Name: "Onyx", Weight: 5, CountLow: 200, CountHigh: 500},      // max value: 500 * 100 = 50000
+			{Name: "Jade", Weight: 5, CountLow: 200, CountHigh: 500},      // max value: 500 * 150 = 75000
+			{Name: "Garnet", Weight: 5, CountLow: 100, CountHigh: 200},    // max value: 200 * 600 = 120000
+			{Name: "Sapphire", Weight: 13, CountLow: 20, CountHigh: 50},   // max value: 50 * 3000 = 150000
+			{Name: "Ruby", Weight: 13, CountLow: 20, CountHigh: 50},       // max value: 50 * 3000 = 150000
+			{Name: "Emerald", Weight: 13, CountLow: 20, CountHigh: 50},    // max value: 50 * 3000 = 150000
+			{Name: "Diamond", Weight: 31, CountLow: 20, CountHigh: 40},    // max value: 40 * 12000 = 480000
 		},
 	},
 	{
