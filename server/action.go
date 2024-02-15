@@ -18,6 +18,8 @@ type DigActionResponse struct {
 // Buy an item from the market.
 func (s *Server) DigAction(w http.ResponseWriter, req *http.Request) {
 	// TODO: dig action
+	http.Error(w, "", http.StatusNotImplemented)
+
 	// var in DigActionRequest
 	// err := readBody(req, &in)
 	// if err != nil {
@@ -53,6 +55,8 @@ type ProspectActionResponse struct {
 // Sell an item on the market.
 func (s *Server) ProspectAction(w http.ResponseWriter, req *http.Request) {
 	// TODO: prospect action
+	http.Error(w, "", http.StatusNotImplemented)
+
 	// var in ProspectActionRequest
 	// err := readBody(req, &in)
 	// if err != nil {
