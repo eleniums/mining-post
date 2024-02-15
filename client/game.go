@@ -63,6 +63,24 @@ func (c *GameClient) SellOrder(req server.SellOrderRequest) (*server.SellOrderRe
 	return handleClientResp[server.SellOrderResponse](c.client.Post(fmt.Sprintf("%s/market/sell", c.rootURL), payload))
 }
 
+func (c *GameClient) Dig(req server.DigActionRequest) (*server.DigActionResponse, error) {
+	payload, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling request: %v", err)
+	}
+
+	return handleClientResp[server.DigActionResponse](c.client.Post(fmt.Sprintf("%s/action/dig", c.rootURL), payload))
+}
+
+func (c *GameClient) Prospect(req server.ProspectActionRequest) (*server.ProspectActionResponse, error) {
+	payload, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling request: %v", err)
+	}
+
+	return handleClientResp[server.ProspectActionResponse](c.client.Post(fmt.Sprintf("%s/action/prospect", c.rootURL), payload))
+}
+
 func handleClientResp[T any](code int, body []byte, err error) (*T, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error calling service: %v", err)
