@@ -30,10 +30,10 @@ There are different types of resources that can be purchased on the market:
 
 ## Actions
 In addition to money used to purchase resources, players also have action points they can spend. Action points are allocated based on player rank. Every world update refills the player's action points to the maximum for their rank and they cannot hold more than the maximum. Action points can be used to:
-- Dig for rocks and minerals
-- Prospect for land
+- Dig for rocks and minerals.
+- Prospect for land.
 
-**Dig** is an action that produces rocks and minerals from your claims. Mines are automated and do not need to be manually worked. The more action points you spend to dig in a single attempt, the better your results will be. Various equipment can improve your digging results.
+**Dig** is an action that produces rocks and minerals from your claims. Unlike claims, mines are automated and do not need to be manually worked. The more action points you spend to dig in a single attempt, the better your results will be. Various equipment can improve your digging results.
 
 **Prospect** is an action that allows you to discover new land. Discovered land is always a claim. Claims are necessary to dig or build mines, so prospecting is important. Various equipment can improve your prospecting results.
 
@@ -77,8 +77,8 @@ POST /market/buy
 
 200 OK
 {
-    "cost": 19.04,
-    "message": "Successfully purchased 2 of item: Limestone, total cost: $19.04"
+    "cost": "$19.04",
+    "message": "Successfully purchased 2 of resource: Limestone, total cost: $19.04"
 }
 ```
 
@@ -93,7 +93,7 @@ POST /market/sell
 
 200 OK
 {
-    "profit": 25.58,
-    "message": "Successfully sold 2 of item: Limestone, total profit: $25.58"
+    "profit": "$25.58",
+    "message": "Successfully sold 2 of resource: Limestone, total profit: $25.58"
 }
 ```
