@@ -17,7 +17,7 @@ type DigActionResponse struct {
 
 // Buy an item from the market.
 func (s *Server) DigAction(w http.ResponseWriter, req *http.Request) {
-	// TODO: dig action
+	// TODO: dig action - see description of dig action in info.md
 	http.Error(w, "", http.StatusNotImplemented)
 
 	// var in DigActionRequest
@@ -54,7 +54,7 @@ type ProspectActionResponse struct {
 
 // Sell an item on the market.
 func (s *Server) ProspectAction(w http.ResponseWriter, req *http.Request) {
-	// TODO: prospect action
+	// TODO: prospect action - see description of prospect action in info.md
 	http.Error(w, "", http.StatusNotImplemented)
 
 	// var in ProspectActionRequest
