@@ -51,7 +51,7 @@ If this project was going to be deployed and made available to the public, a mor
 ## Gameplay TODOs
 - [x] Need a way to calculate net worth outside of current money (use net worth for promotions). Net worth would be value of resources, equipment, employees, land, etc.
 - [x] Add type to listings and filter capability for name and type
-- [x] More ranks? Like amatuer and apprentice and mining engineer?
+- [x] More ranks? Like amateur and apprentice and mining engineer?
 - [x] Related to ranks, adjust salaries. Should start with a very low salary.
 - [x] Add equipment (like pickaxes and mine carts) and buildings (like a mine)
 - [ ] Add a mine/dig option? Use pickaxes to get minerals?
