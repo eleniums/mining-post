@@ -52,7 +52,9 @@ func Copy[T any](src *T) *T {
 func CopySlice[T any](src []*T) []*T {
 	new := make([]*T, len(src))
 	for i, v := range src {
-		new[i] = Copy(v)
+		if v != nil {
+			new[i] = Copy(v)
+		}
 	}
 	return new
 }
