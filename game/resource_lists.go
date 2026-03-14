@@ -377,7 +377,7 @@ var landList = []*Resource{
 		},
 		Loot: LootTable{
 			{Name: "Copper", Weight: 50, CountLow: 20, CountHigh: 50}, // max value: 50 * 50 = 2500
-			{Name: "Silver", Weight: 35, CountLow: 4, CountHigh: 10},  // max value: 750 * 8 = 7500
+			{Name: "Silver", Weight: 35, CountLow: 4, CountHigh: 10},  // max value: 750 * 10 = 7500
 			{Name: "Gold", Weight: 14, CountLow: 1, CountHigh: 3},     // max value: 10000 * 3 = 30000
 			{Name: "Platinum", Weight: 1, CountLow: 1, CountHigh: 3},  // max value: 15000 * 3 = 45000
 		},
